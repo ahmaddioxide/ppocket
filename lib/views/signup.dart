@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../components/button.dart';
 import '../components/text_input.dart';
 import '../controllers/signup_controller.dart';
@@ -13,25 +14,27 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
             child: Column(
-
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: Get.height * .15),
+                SizedBox(height: Get.height * .05),
                 const Center(
                   child: Text(
-                    "Welcome to",
-                    style: TextStyle(fontSize: 24),
+                    'Welcome to',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
 
-              Center(
-                    child: Image.asset('assets/images/ppocket_land.png',height: 200,width: 200,),
+                Center(
+                  child: Image.asset(
+                    'assets/images/ppocket_land.png',
                   ),
+                ),
 
                 SizedBox(height: Get.height * .02),
                 InputField(

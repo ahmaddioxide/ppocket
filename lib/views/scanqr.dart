@@ -10,7 +10,7 @@ class ScanQr extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Scan QR",
+          'Scan QR',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
@@ -27,37 +27,42 @@ class ScanQr extends StatelessWidget {
         foregroundColor: Colors.black,
       ),
       body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: Get.height * .04,
-            ),
-            const Text('Scan Your QR Code ',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                )),
-            SizedBox(
-              height: Get.height * .10,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.qr_code_2,
-                size: 300,
-                color: Colors.black,
+        child: SizedBox(
+          width: Get.width * .9,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: Get.height * .04,
               ),
-            ),
-            SizedBox(
-              height: Get.height * .10,
-            ),
-            ButtonGreen(
-              text: 'Scan the QR Code',
-              onPressed: () {
-                //  debugPrint("Scan the QR Please");
-              },
-            )
-          ],
+              const Text('Scan Your QR Code ',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )),
+              SizedBox(
+                height: Get.height * .01,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.qr_code_2,
+                  size: 300,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                height: Get.height * .02,
+              ),
+              ButtonGreen(
+                text: 'Scan the QR Code',
+                onPressed: () {
+                  //  debugPrint("Scan the QR Please");
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

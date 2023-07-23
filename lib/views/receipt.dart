@@ -234,7 +234,7 @@ class Reciept extends StatelessWidget {
           child: Row(
             children: [
               const Text(
-                "Total",
+                'Total',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 30,
@@ -261,7 +261,7 @@ class Reciept extends StatelessWidget {
           child: Row(
             children: [
               const Text(
-                "Order No",
+                'Order No',
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 20,

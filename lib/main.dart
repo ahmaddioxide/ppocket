@@ -1,16 +1,28 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ppocket/components/navigation.dart';
+// import 'package:ppocket/views/login.dart';
+// import 'package:ppocket/views/scanqr.dart';
+// import 'package:ppocket/views/signup.dart';
 
+import 'firebase_options.dart';
 
-import 'components/navigation.dart';
+Future<void> main() async {
 
-
-
-void main() {
-  runApp(DevicePreview(
-    enabled: true,
-    builder: (context) => const MyApp(),
-  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,13 +32,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: DevicePreview.appBuilder,
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'PPocket',
       theme: ThemeData(
+        //theme data should be in theme folder
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const NavBar(),
+      home:  const BottomNavigationBarScreen(),
     );
   }
 }
