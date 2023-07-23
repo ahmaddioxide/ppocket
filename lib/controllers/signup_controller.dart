@@ -16,7 +16,7 @@ class SignupController extends GetxController {
     // String confirmPasswordValue = confirmPassword.value;
 
     // Your signup logic here
-
+    //
     // After successful signup, you can perform any necessary actions
     // such as navigating to the next screen or showing a success message
   }
