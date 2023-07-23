@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>736475837178-iqirkar43cac6go47kk9c5k2sh0papsp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.736475837178-iqirkar43cac6go47kk9c5k2sh0papsp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBLutB2csXgzyFus7bugp_x-yi_X-N9k_A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>736475837178</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.atinity.ppocket</string>
+	<key>PROJECT_ID</key>
+	<string>paperlesspocket-5418</string>
+	<key>STORAGE_BUCKET</key>
+	<string>paperlesspocket-5418.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:736475837178:ios:6e0f50ec5379613fc38f43</string>
+</dict>
+</plist>

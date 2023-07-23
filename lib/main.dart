@@ -8,7 +8,6 @@ import 'package:ppocket/components/navigation.dart';
 // import 'package:ppocket/views/login.dart';
 // import 'package:ppocket/views/scanqr.dart';
 // import 'package:ppocket/views/signup.dart';
-
 import 'firebase_options.dart';
 
 Future<void> main() async {
