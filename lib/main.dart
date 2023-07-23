@@ -4,10 +4,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ppocket/components/navigation.dart';
-// import 'package:ppocket/views/login.dart';
-// import 'package:ppocket/views/scanqr.dart';
-// import 'package:ppocket/views/signup.dart';
+import 'package:get/get.dart';
+import 'package:ppocket/views/signup_screen.dart';
+
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       builder: DevicePreview.appBuilder,
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  const BottomNavigationBarScreen(),
+      home:   const SignUpPage(),
     );
   }
 }

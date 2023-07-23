@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../components/button.dart';
 
 class ScanQr extends StatelessWidget {
@@ -16,13 +17,14 @@ class ScanQr extends StatelessWidget {
         backgroundColor: Colors.black,
         actions: [
           IconButton(
-              onPressed: () {
-                // debugPrint("DashBoard");
-              },
-              icon: const Icon(
-                Icons.line_weight_outlined,
-                color: Colors.white,
-              ))
+            onPressed: () {
+              // debugPrint("DashBoard");
+            },
+            icon: const Icon(
+              Icons.line_weight_outlined,
+              color: Colors.white,
+            ),
+          )
         ],
         foregroundColor: Colors.black,
       ),
@@ -36,11 +38,13 @@ class ScanQr extends StatelessWidget {
               SizedBox(
                 height: Get.height * .04,
               ),
-              const Text('Scan Your QR Code ',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  )),
+              const Text(
+                'Scan Your QR Code ',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               SizedBox(
                 height: Get.height * .01,
               ),
