@@ -3,6 +3,7 @@ import 'package:ppocket/components/snackbars.dart';
 
 class FirebaseAuthService {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static final currentUser = _firebaseAuth.currentUser;
 
   static String get currentUserId => _firebaseAuth.currentUser!.uid;
 

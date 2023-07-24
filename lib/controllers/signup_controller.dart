@@ -28,7 +28,7 @@ class SignupController extends GetxController {
     isSignUpLoading.value = true;
     userOfApp.id = await FirebaseAuthService.signUpWithEmailAndPassword(
       email: userOfApp.email,
-      password: userOfApp.password,
+      password: userOfApp.password!,
     ).onError((error, stackTrace) {
       isSignUpLoading.value = false;
       return 'Error while creating user';

@@ -23,7 +23,7 @@ class FireStoreService {
     });
   }
 
-  updateUserInFireStore({required UserOfApp userOfApp}) async {
+  static updateUserInFireStore({required UserOfApp userOfApp}) async {
     await fireStore
         .collection('users')
         .doc(userOfApp.id)
@@ -34,15 +34,30 @@ class FireStoreService {
     await fireStore.collection('users').doc(userId).delete();
   }
 
-  static Future<UserOfApp?> getUserFromFireStore({required String userId}) async {
+  static Future<UserOfApp?> getUserFromFireStore(
+      {required String userId}) async {
     final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await fireStore.collection('users').doc(userId).get();
-        print('documentSnapshot.exists ${documentSnapshot.exists}');
+    if (kDebugMode) {
+      print('documentSnapshot.exists ${documentSnapshot.exists}');
+    }
     if (documentSnapshot.exists) {
-      print('documentSnapshot.data() ${documentSnapshot.data()}');
+      if (kDebugMode) {
+        print('documentSnapshot.data() ${documentSnapshot.data()}');
+      }
       return UserOfApp.fromDocumentSnapshot(documentSnapshot: documentSnapshot);
     } else {
       return null;
     }
+  }
+
+  static Stream<UserOfApp> getUserStreamFromFireStore(
+      {required String userId}) {
+    return fireStore.collection('users').doc(userId).snapshots().map((event) {
+      if (kDebugMode) {
+        print('event.data() ${event.data()}');
+      }
+      return UserOfApp.fromDocumentSnapshot(documentSnapshot: event);
+    });
   }
 }

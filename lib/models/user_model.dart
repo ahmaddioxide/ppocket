@@ -4,13 +4,13 @@ class UserOfApp {
   String id;
   String? name;
   final String email;
-  String password;
+  String? password;
 
   UserOfApp({
     required this.id,
     required this.name,
     required this.email,
-    required this.password,
+     this.password,
   });
 
   void updateId(String newId) {
@@ -35,7 +35,7 @@ class UserOfApp {
       'id': id,
       'name': name,
       'email': email,
-      'password': password,
+      'password': password ?? '',
     };
   }
 
