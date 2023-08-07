@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/navigation.dart';
 import 'package:ppocket/services/auth_service.dart';
+import 'package:ppocket/views/scanqr.dart';
 import 'package:ppocket/views/signup_screen.dart';
 
 import 'firebase_options.dart';
@@ -41,9 +42,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: FirebaseAuthService.currentUser == null
-          ? const SignUpPage()
-          : const BottomNavigationBarScreen(),
+      // home: FirebaseAuthService.currentUser == null
+      //     ? const SignUpPage()
+      //     : const SignUpPage(),
+
+      home: const ScanQr(),
     );
   }
 }

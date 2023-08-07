@@ -1,10 +1,57 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:ppocket/views/scanned_screen/scanned_data_screen.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../components/button.dart';
 
-class ScanQr extends StatelessWidget {
+class ScanQr extends StatefulWidget {
   const ScanQr({Key? key}) : super(key: key);
+
+  @override
+  State<ScanQr> createState() => _ScanQrState();
+}
+
+class _ScanQrState extends State<ScanQr> {
+  Barcode? result;
+  QRViewController? qrController;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No Permission')),
+      );
+    }
+  }
+
+  // Function to handle the QR code scanning result
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      qrController = controller;
+    });
+
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        result = scanData;
+      });
+
+      // Navigate to the ScannedDataScreen and pass the scanned data
+      if (result != null && result!.code!.isNotEmpty) {
+        Get.to(ScannedDataScreen(data: result!.code!));
+      }
+    });
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      qrController!.pauseCamera();
+    }
+    qrController!.resumeCamera();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +65,7 @@ class ScanQr extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // debugPrint("DashBoard");
+              // Navigate to Dashboard screen
             },
             icon: const Icon(
               Icons.line_weight_outlined,
@@ -33,7 +80,6 @@ class ScanQr extends StatelessWidget {
           width: Get.width * .9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: Get.height * .04,
@@ -48,12 +94,20 @@ class ScanQr extends StatelessWidget {
               SizedBox(
                 height: Get.height * .01,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.qr_code_2,
-                  size: 300,
-                  color: Colors.black,
+              SizedBox(
+                height: Get.height * .5,
+                width: Get.width * .8,
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                  overlay: QrScannerOverlayShape(
+                    borderColor: Colors.red,
+                    borderRadius: 10,
+                    borderLength: 30,
+                    borderWidth: 10,
+                    cutOutSize: 150,
+                  ),
+                  onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
                 ),
               ),
               SizedBox(
@@ -62,7 +116,7 @@ class ScanQr extends StatelessWidget {
               ButtonGreen(
                 text: 'Scan the QR Code',
                 onPressed: () {
-                  //  debugPrint("Scan the QR Please");
+                  // debugPrint("Scan the QR Please");
                 },
               )
             ],

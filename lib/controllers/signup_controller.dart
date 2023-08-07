@@ -8,6 +8,7 @@ class SignupController extends GetxController {
   RxBool isPasswordVisible = false.obs;
   RxBool isConfirmPasswordVisible = false.obs;
   RxBool isSignUpLoading = false.obs;
+  // UserOfApp userOfApp = UserOfApp.obs;
 
   void createUserOfApp({
     required String id,
@@ -30,15 +31,22 @@ class SignupController extends GetxController {
       email: userOfApp.email,
       password: userOfApp.password!,
     ).onError((error, stackTrace) {
+      Get.snackbar(
+        'Error',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
       isSignUpLoading.value = false;
       return 'Error while creating user';
     });
+
     // if (userOfApp.id != FirebaseAuthService.currentUserId) {
     //   AppSnackBar.errorSnackbar(
     //       title: 'Error',
     //       message: 'userOfApp.id!=FirebaseAuthService.currentUserId');
     //   return;
     // }
+
     await FireStoreService.addUserToFireStore(userOfApp: userOfApp)
         .then((value) {
       isSignUpLoading.value = false;
