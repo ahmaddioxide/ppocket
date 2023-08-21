@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/navigation.dart';
 import 'package:ppocket/services/auth_service.dart';
+import 'package:ppocket/views/budget_screens/budget_home_screen.dart';
+import 'package:ppocket/views/budget_screens/budget_screen.dart';
 import 'package:ppocket/views/scanqr.dart';
 import 'package:ppocket/views/signup_screen.dart';
 
@@ -32,21 +34,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      builder: DevicePreview.appBuilder,
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      debugShowCheckedModeBanner: false,
-      title: 'PPocket',
-      theme: ThemeData(
-        //theme data should be in theme folder
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      // home: FirebaseAuthService.currentUser == null
-      //     ? const SignUpPage()
-      //     : const SignUpPage(),
+        builder: DevicePreview.appBuilder,
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        debugShowCheckedModeBanner: false,
+        title: 'PPocket',
+        theme: ThemeData(
+          //theme data should be in theme folder
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        // home: FirebaseAuthService.currentUser == null
+        //     ? const SignUpPage()
+        //     : const SignUpPage(),
+        home: const BudgetHome()
 
-      home: const ScanQr(),
-    );
+        // home: const ScanQr(),
+        );
   }
 }
