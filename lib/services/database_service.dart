@@ -34,8 +34,9 @@ class FireStoreService {
     await fireStore.collection('users').doc(userId).delete();
   }
 
-  static Future<UserOfApp?> getUserFromFireStore(
-      {required String userId}) async {
+  static Future<UserOfApp?> getUserFromFireStore({
+    required String userId,
+  }) async {
     final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await fireStore.collection('users').doc(userId).get();
     if (kDebugMode) {
@@ -51,8 +52,9 @@ class FireStoreService {
     }
   }
 
-  static Stream<UserOfApp> getUserStreamFromFireStore(
-      {required String userId}) {
+  static Stream<UserOfApp> getUserStreamFromFireStore({
+    required String userId,
+  }) {
     return fireStore.collection('users').doc(userId).snapshots().map((event) {
       if (kDebugMode) {
         print('event.data() ${event.data()}');

@@ -10,20 +10,27 @@ class LoginController extends GetxController {
   Future<void> login({required String email, required String password}) async {
     isLoginLoading.value = true;
     await FirebaseAuthService.signInWithEmailAndPassword(
-            email: email, password: password,)
-        .then((value) {
+      email: email,
+      password: password,
+    ).then((value) {
       isLoginLoading.value = false;
-      FireStoreService.getUserFromFireStore(userId: FirebaseAuthService.currentUserId).then((value) {
+      FireStoreService.getUserFromFireStore(
+        userId: FirebaseAuthService.currentUserId,
+      ).then((value) {
         if (value == null) {
           AppSnackBar.errorSnackbar(
-              title: 'Error', message: 'User Not Found in FireStore');
+            title: 'Error',
+            message: 'User Not Found in FireStore',
+          );
           return;
         }
         // AppSnackBar.successSnackbar(
         //     title: 'Success', message: value.email,);
       });
       AppSnackBar.successSnackbar(
-          title: 'Success', message: 'Logged in Successfully',);
+        title: 'Success',
+        message: 'Logged in Successfully',
+      );
     }).onError((error, stackTrace) {
       isLoginLoading.value = false;
     });
