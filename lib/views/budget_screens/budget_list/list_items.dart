@@ -4,5 +4,6 @@ class Itemlist {
   String? date;
   String? category;
   String? id;
-  // String? image;
+  String? image;
+  bool? isIncome;
 }

@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:ppocket/views/budget_screens/budget_list/list_data.dart';
+// import 'budget_list/list_items.dart';
+
 class BudgetHome extends StatelessWidget {
   const BudgetHome({super.key});
 
@@ -153,35 +156,39 @@ class BudgetHome extends StatelessWidget {
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Image.asset(
-                      'images/ppocket_logo.png',
+                      // 'images/${geter()[index].image!}',
+                      'assets/images/ppocket_logo.png',
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
                     ),
                   ),
                   title: Text(
-                    'Transaction $index',
+                    geter()[index].name!,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   subtitle: Text(
-                    'Today ',
+                    geter()[index].date!,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   trailing: Text(
-                    "Rs 1000",
+                    geter()[index].price!,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
+                      color:
+                          geter()[index].isIncome! ? Colors.green : Colors.red,
                     ),
                   ),
                 );
               },
+              childCount: geter().length,
             ),
           ),
         ],
