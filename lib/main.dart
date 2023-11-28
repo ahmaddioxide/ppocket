@@ -5,11 +5,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppocket/components/navigation.dart';
-import 'package:ppocket/services/auth_service.dart';
+// import 'package:ppocket/components/navigation.dart';
+// import 'package:ppocket/services/auth_service.dart';
 import 'package:ppocket/views/budget_screens/budget_home_screen.dart';
-import 'package:ppocket/views/scanqr.dart';
-import 'package:ppocket/views/signup_screen.dart';
+import 'package:ppocket/views/budget_screens/stats_screen.dart';
+// import 'package:ppocket/views/scanqr.dart';
+// import 'package:ppocket/views/signup_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
       // home: FirebaseAuthService.currentUser == null
       //     ? const SignUpPage()
       //     : const SignUpPage(),
-      home: const BudgetHome(),
+      // home: const BudgetHome(),
+      home: const StatScreen(),
 
       // home: const ScanQr(),
     );
