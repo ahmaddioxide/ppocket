@@ -182,8 +182,9 @@ class BudgetHome extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
-                      color:
-                          geter()[index].isIncome! ? Colors.green : Colors.red,
+                      color: geter()[index].isIncome!
+                          ? Colors.green
+                          : Color.fromARGB(232, 247, 26, 10),
                     ),
                   ),
                 );
