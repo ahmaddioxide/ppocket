@@ -12,8 +12,8 @@ class BudgetHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PPocket'),
-        backgroundColor: Colors.blue[200],
+        title: const Text('Jawad'),
+        backgroundColor: Colors.green[600],
         titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 30.0,

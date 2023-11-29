@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:ppocket/views/budget_screens/stats/budget_chart.dart';
 
 class StatScreen extends StatefulWidget {
   const StatScreen({super.key});
@@ -15,10 +16,9 @@ class _StatScreenState extends State<StatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: CustomScrollView(
+      body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
+          SliverFillRemaining(
             child: Column(
               children: [
                 SizedBox(
@@ -105,12 +105,16 @@ class _StatScreenState extends State<StatScreen> {
                       )
                     ],
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                BudgetChart(),
               ],
             ),
           )
         ],
-      )),
+      ),
     );
   }
 }
