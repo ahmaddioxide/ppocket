@@ -22,7 +22,7 @@ class _AddBudgetState extends State<AddBudget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           alignment: AlignmentDirectional.center,
@@ -42,7 +42,7 @@ class _AddBudgetState extends State<AddBudget> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
+        color: Colors.grey.shade100,
       ),
       height: 550,
       width: 340,
@@ -250,7 +250,7 @@ class _AddBudgetState extends State<AddBudget> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Icon(Icons.arrow_back, color: Colors.white),
+                      child: Icon(Icons.arrow_back, color: Colors.green[600]),
                     ),
                     Text(
                       'Add Budget',
@@ -261,8 +261,8 @@ class _AddBudgetState extends State<AddBudget> {
                       ),
                     ),
                     Icon(
-                      Icons.attach_file_outlined,
-                      color: Colors.white,
+                      Icons.qr_code,
+                      color: Colors.green[600],
                     ),
                   ],
                 ),

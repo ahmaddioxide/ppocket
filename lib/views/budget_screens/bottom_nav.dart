@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ppocket/views/budget_screens/add_budget_screen.dart';
 import 'package:ppocket/views/budget_screens/budget_home_screen.dart';
 import 'package:ppocket/views/budget_screens/stats_screen.dart';
+import 'package:ppocket/views/scanqr.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class BottomNav extends StatefulWidget {
 
 class _BottomState extends State<BottomNav> {
   int index_color = 0;
-  List Screen = [BudgetHome(), StatScreen(), BudgetHome(), StatScreen()];
+  List Screen = [BudgetHome(), StatScreen(), ScanQr(), StatScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +69,7 @@ class _BottomState extends State<BottomNav> {
                   });
                 },
                 child: Icon(
-                  Icons.account_balance_wallet_outlined,
+                  Icons.qr_code_outlined,
                   size: 30,
                   color: index_color == 2 ? Color(0xff368983) : Colors.grey,
                 ),
@@ -80,7 +81,7 @@ class _BottomState extends State<BottomNav> {
                   });
                 },
                 child: Icon(
-                  Icons.person_outlined,
+                  Icons.group_outlined,
                   size: 30,
                   color: index_color == 3 ? Color(0xff368983) : Colors.grey,
                 ),
