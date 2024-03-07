@@ -12,8 +12,16 @@ class BudgetHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jawad'),
-        backgroundColor: Colors.green[600],
+        elevation: 4,
+        title: const Text(
+          'Budget',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.black,
         titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 30.0,
@@ -26,13 +34,22 @@ class BudgetHome extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(19),
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: MediaQuery.of(context).size.height * 0.27,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(18),
                     color: Colors.green[600],
+                    //elevation
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
                   // padding: const EdgeInsets.all(20.0),
                   // color: Colors.green,
@@ -50,84 +67,104 @@ class BudgetHome extends StatelessWidget {
                         '1200',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30.0,
+                          fontSize: 26.0,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            // margin: const EdgeInsets.all(20),
-                            decoration: const BoxDecoration(
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.36,
+                            child: Card(
+                              elevation: 5,
                               color: Colors.blueAccent,
-                            ),
-                            child: const Column(
-                              children: [
-                                Row(
+                              child: Center(
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.arrow_downward,
-                                      color: Colors.white,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_downward,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          'Income',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Text(
-                                      'Income',
+                                      //TODO : Add the total income
+                                      '4500',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 20.0,
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  '4500',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            // // width: MediaQuery.of(context).size.width * 0.3,
-                            // margin: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.36,
+                            child: Card(
+                              elevation: 5,
                               color: Colors.redAccent,
-                            ),
-                            child: const Column(
-                              children: [
-                                Row(
+                              child: Center(
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.arrow_upward,
-                                      color: Colors.white,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.arrow_upward,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          'Expense',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Text(
-                                      'Expense',
+                                      //TODO : Add the total expense
+                                      '4500',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 20.0,
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  '4500',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       )
                     ],
@@ -138,11 +175,12 @@ class BudgetHome extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   'Transactions',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 28,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -152,39 +190,41 @@ class BudgetHome extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.asset(
-                      // 'images/${geter()[index].image!}',
-                      'assets/images/ppocket_logo.png',
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
+                return InkWell(
+                  onTap: () {},
+                  child: ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.asset(
+                        'assets/images/ppocket_logo.png',
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  title: Text(
-                    geter()[index].name!,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+                    title: Text(
+                      geter()[index].name!,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    geter()[index].date!,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                    subtitle: Text(
+                      geter()[index].date!,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  trailing: Text(
-                    geter()[index].price!,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: geter()[index].isIncome!
-                          ? Colors.green
-                          : Color.fromARGB(232, 247, 26, 10),
+                    trailing: Text(
+                      geter()[index].price!,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: geter()[index].isIncome!
+                            ? Colors.green
+                            : Colors.redAccent
+                      ),
                     ),
                   ),
                 );

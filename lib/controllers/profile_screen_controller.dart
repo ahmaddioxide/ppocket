@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
@@ -7,6 +8,10 @@ import 'package:ppocket/services/database_service.dart';
 
 class ProfileScreenController extends GetxController {
   final isLoading = false.obs;
+
+  Future<void> signOut()async {
+   await FirebaseAuthService.signOut();
+  }
 
   Stream<UserOfApp> getUserProfileData() {
     final userOfApp = FireStoreService.getUserStreamFromFireStore(

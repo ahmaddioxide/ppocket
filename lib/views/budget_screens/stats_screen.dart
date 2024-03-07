@@ -21,17 +21,18 @@ class _StatScreenState extends State<StatScreen> {
           SliverFillRemaining(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'Statistics',
                   style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87),
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -59,19 +60,20 @@ class _StatScreenState extends State<StatScreen> {
                             child: Text(
                               day[index],
                               style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: index_color == index
-                                      ? Colors.white
-                                      : Colors.black87),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: index_color == index
+                                    ? Colors.white
+                                    : Colors.black87,
+                              ),
                             ),
                           ),
                         );
-                      })
+                      }),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -82,37 +84,38 @@ class _StatScreenState extends State<StatScreen> {
                       Container(
                         width: 120,
                         height: 40,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "Expense",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Icon(
-                              Icons.arrow_downward,
-                              color: Colors.blue,
-                            )
-                          ],
-                        ),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.blue, width: 2),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                      )
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Expense',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_downward,
+                              color: Colors.blue,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                BudgetChart(),
+                const BudgetChart(),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

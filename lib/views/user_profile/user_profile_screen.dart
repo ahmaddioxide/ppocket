@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ppocket/components/button.dart';
 import 'package:ppocket/controllers/profile_screen_controller.dart';
 import 'package:ppocket/models/user_model.dart';
+import 'package:ppocket/views/signup_screen.dart';
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({super.key});
@@ -18,6 +19,33 @@ class UserProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Profile'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                profileScreenController.signOut().then((value) {
+                  Get.offAll(() => const SignUpPage());
+                });
+              },
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                    size: 26.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(14.0),

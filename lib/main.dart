@@ -45,12 +45,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: FirebaseAuthService.currentUser == null
-      //     ? const SignUpPage()
-      //     : const SignUpPage(),
+      home: FirebaseAuthService.currentUser == null
+          ? const SignUpPage()
+          : const BottomNav(),
       // home: const BudgetHome(),
       // home: const StatScreen(),
-      home: const BottomNav(),
+      // home: const BottomNav(),
 
       // home: const ScanQr(),
     );

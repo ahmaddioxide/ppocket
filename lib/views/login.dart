@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/constants/assets.dart';
 import 'package:ppocket/controllers/login_controller.dart';
+import 'package:ppocket/views/budget_screens/bottom_nav.dart';
 
 import '../components/button.dart';
 
@@ -15,6 +16,7 @@ class LoginScreen extends StatelessWidget {
     final LoginController loginController = Get.put(LoginController());
     final formKey = GlobalKey<FormState>();
     return Scaffold(
+      appBar: AppBar(),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -117,7 +119,9 @@ class LoginScreen extends StatelessWidget {
                           loginController.login(
                             email: emailController.text,
                             password: passwordController.text,
-                          );
+                          ).then((value){
+                            Get.offAll(() => const BottomNav());
+                          });
                         }
                       },
                       isLoading: loginController.isLoginLoading.value,

@@ -34,11 +34,15 @@ class _ScanQrState extends State<ScanQr> {
 
     controller.scannedDataStream.listen((scanData) {
       setState(() {
+        debugPrint(scanData.code!);
+
         result = scanData;
+
       });
 
       // Navigate to the ScannedDataScreen and pass the scanned data
       if (result != null && result!.code!.isNotEmpty) {
+        debugPrint(result!.code!);
         Get.to(ScannedDataScreen(data: result!.code!));
       }
     });
