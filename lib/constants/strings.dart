@@ -1,1 +1,1 @@
-const String dashboard ='Dashboard';
+const String dashboard = 'Dashboard';

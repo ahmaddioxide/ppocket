@@ -10,12 +10,13 @@ class UserOfApp {
     required this.id,
     required this.name,
     required this.email,
-     this.password,
+    this.password,
   });
 
   void updateId(String newId) {
     id = newId;
   }
+
   void updatePassword(String newPassword) {
     password = newPassword;
   }
@@ -39,9 +40,9 @@ class UserOfApp {
     };
   }
 
-  UserOfApp.fromDocumentSnapshot(
-      {required DocumentSnapshot<Map<String, dynamic>> documentSnapshot,})
-      : id = documentSnapshot.id,
+  UserOfApp.fromDocumentSnapshot({
+    required DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
+  })  : id = documentSnapshot.id,
         name = documentSnapshot.data()!['name'],
         email = documentSnapshot.data()!['email'],
         password = documentSnapshot.data()!['password'];

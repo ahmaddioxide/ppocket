@@ -116,10 +116,12 @@ class LoginScreen extends StatelessWidget {
                       text: 'Login',
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          loginController.login(
+                          loginController
+                              .login(
                             email: emailController.text,
                             password: passwordController.text,
-                          ).then((value){
+                          )
+                              .then((value) {
                             Get.offAll(() => const BottomNav());
                           });
                         }

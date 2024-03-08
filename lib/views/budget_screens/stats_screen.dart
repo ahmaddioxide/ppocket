@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:ppocket/views/budget_screens/stats/budget_chart.dart';
 
 class StatScreen extends StatefulWidget {
@@ -16,6 +15,18 @@ class _StatScreenState extends State<StatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text(
+          'Statistics',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -25,9 +36,9 @@ class _StatScreenState extends State<StatScreen> {
                   height: 20,
                 ),
                 const Text(
-                  'Statistics',
+                  'Spending Statistics',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 26,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),

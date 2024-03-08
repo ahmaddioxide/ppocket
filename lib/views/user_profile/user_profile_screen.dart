@@ -18,7 +18,8 @@ class UserProfileScreen extends StatelessWidget {
     final TextEditingController nameController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Profile'),
+        backgroundColor: Colors.black,
+        title: const Text('User Profile', style: TextStyle(color: Colors.white)),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -29,16 +30,16 @@ class UserProfileScreen extends StatelessWidget {
                 });
               },
               child: Container(
-                height: 50,
-                width: 50,
+                height: 40,
+                width: 40,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Center(
                   child: Icon(
                     Icons.logout,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: 26.0,
                   ),
                 ),

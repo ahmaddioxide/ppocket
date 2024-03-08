@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppSnackBar {
-
   static void successSnackbar({
     required String title,
     required String message,
@@ -19,10 +18,11 @@ class AppSnackBar {
       ),
     );
   }
- static errorSnackbar({
+
+  static errorSnackbar({
     required String title,
     required String message,
-  })  {
+  }) {
     Get.snackbar(
       title,
       message,
@@ -34,5 +34,5 @@ class AppSnackBar {
         color: Colors.white,
       ),
     );
- }
+  }
 }

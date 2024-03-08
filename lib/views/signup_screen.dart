@@ -169,7 +169,7 @@ class SignUpPage extends StatelessWidget {
                     const Text('Already have an account?'),
                     TextButton(
                       onPressed: () {
-                        Get.to(() =>  const LoginScreen());
+                        Get.to(() => const LoginScreen());
                       },
                       child: const Text(
                         'Login',

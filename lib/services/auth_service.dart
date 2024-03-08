@@ -41,7 +41,6 @@ class FirebaseAuthService {
     await _firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password)
         .onError((error, stackTrace) {
-
       if (error.toString().contains('invalid-email')) {
         AppSnackBar.errorSnackbar(title: 'Error', message: 'Invalid Email');
         return Future.error('Invalid Email');
@@ -58,7 +57,7 @@ class FirebaseAuthService {
     });
   }
 
-  static Future<void> signOut()async {
+  static Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
 }

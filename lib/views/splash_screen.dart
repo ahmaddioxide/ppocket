@@ -8,9 +8,15 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-         const SizedBox(height: 300,),
+          const SizedBox(
+            height: 300,
+          ),
           Center(
-            child: Image.asset('assets/images/ppocket_logo.png',height: 200,width: 200,),
+            child: Image.asset(
+              'assets/images/ppocket_logo.png',
+              height: 200,
+              width: 200,
+            ),
           )
         ],
       ),

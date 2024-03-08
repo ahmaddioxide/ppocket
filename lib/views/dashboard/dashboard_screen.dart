@@ -7,28 +7,28 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text(dashboard, style: TextStyle(color: Colors.white)),
-          leading: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.line_weight,
-                  color: Colors.white,
-                  size: 26.0,
-                ),
+        backgroundColor: Colors.black,
+        title: const Text(dashboard, style: TextStyle(color: Colors.white)),
+        leading: const Icon(
+          Icons.arrow_back_ios,
+          color: Colors.white,
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: const Icon(
+                Icons.line_weight,
+                color: Colors.white,
+                size: 26.0,
               ),
             ),
-          ],),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           SizedBox(

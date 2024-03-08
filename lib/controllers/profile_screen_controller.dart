@@ -9,8 +9,8 @@ import 'package:ppocket/services/database_service.dart';
 class ProfileScreenController extends GetxController {
   final isLoading = false.obs;
 
-  Future<void> signOut()async {
-   await FirebaseAuthService.signOut();
+  Future<void> signOut() async {
+    await FirebaseAuthService.signOut();
   }
 
   Stream<UserOfApp> getUserProfileData() {

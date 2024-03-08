@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '736475837178',
     projectId: 'paperlesspocket-5418',
     storageBucket: 'paperlesspocket-5418.appspot.com',
-    iosClientId: '736475837178-iqirkar43cac6go47kk9c5k2sh0papsp.apps.googleusercontent.com',
+    iosClientId:
+        '736475837178-iqirkar43cac6go47kk9c5k2sh0papsp.apps.googleusercontent.com',
     iosBundleId: 'com.atinity.ppocket',
   );
 }

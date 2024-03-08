@@ -219,12 +219,11 @@ class BudgetHome extends StatelessWidget {
                     trailing: Text(
                       geter()[index].price!,
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: geter()[index].isIncome!
-                            ? Colors.green
-                            : Colors.redAccent
-                      ),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: geter()[index].isIncome!
+                              ? Colors.green
+                              : Colors.redAccent),
                     ),
                   ),
                 );

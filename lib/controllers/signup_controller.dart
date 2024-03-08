@@ -8,6 +8,7 @@ class SignupController extends GetxController {
   RxBool isPasswordVisible = false.obs;
   RxBool isConfirmPasswordVisible = false.obs;
   RxBool isSignUpLoading = false.obs;
+
   // UserOfApp userOfApp = UserOfApp.obs;
 
   void createUserOfApp({

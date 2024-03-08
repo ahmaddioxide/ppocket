@@ -33,6 +33,7 @@ class BudgetChart extends StatelessWidget {
 
 class BudgetData {
   BudgetData(this.date, this.expense);
+
   final String date;
   final double expense;
 }

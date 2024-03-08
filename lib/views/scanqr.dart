@@ -37,7 +37,6 @@ class _ScanQrState extends State<ScanQr> {
         debugPrint(scanData.code!);
 
         result = scanData;
-
       });
 
       // Navigate to the ScannedDataScreen and pass the scanned data
@@ -111,7 +110,8 @@ class _ScanQrState extends State<ScanQr> {
                     borderWidth: 10,
                     cutOutSize: 150,
                   ),
-                  onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+                  onPermissionSet: (ctrl, p) =>
+                      _onPermissionSet(context, ctrl, p),
                 ),
               ),
               SizedBox(

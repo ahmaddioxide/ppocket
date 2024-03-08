@@ -6,6 +6,9 @@ import 'package:ppocket/models/user_model.dart';
 class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
+  static final CollectionReference usersCollection =
+      fireStore.collection('users');
+
   static Future<void> addUserToFireStore({required UserOfApp userOfApp}) async {
     await fireStore
         .collection('users')
@@ -60,6 +63,27 @@ class FireStoreService {
         print('event.data() ${event.data()}');
       }
       return UserOfApp.fromDocumentSnapshot(documentSnapshot: event);
+    });
+  }
+
+  static Future<void> addTransactionToFireStore({
+    required String userId,
+    required Map<String, dynamic> transaction,
+  }) async {
+    await fireStore
+        .collection('users')
+        .doc(userId)
+        .collection('transactions')
+        .add(transaction)
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Storing Transaction to FireStore',
+      );
+      if (kDebugMode) {
+        print('Error Storing Data to FireStore ${error.toString()}');
+      }
+      return Future.error(error.toString());
     });
   }
 }

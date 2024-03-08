@@ -1,1 +1,1 @@
-const String ppocketLandscapeImage='assets/images/ppocket_land.png';
+const String ppocketLandscapeImage = 'assets/images/ppocket_land.png';

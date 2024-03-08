@@ -14,7 +14,13 @@ class BottomNav extends StatefulWidget {
 
 class _BottomState extends State<BottomNav> {
   int indexColor = 0;
-  List screens = [const BudgetHome(), const StatScreen(), const ScanQr(), const UserProfileScreen()];
+  List screens = [
+    const BudgetHome(),
+    const StatScreen(),
+    const ScanQr(),
+    const UserProfileScreen()
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +53,8 @@ class _BottomState extends State<BottomNav> {
                 child: Icon(
                   Icons.home_outlined,
                   size: 30,
-                  color: indexColor == 0 ? const Color(0xff368983) : Colors.grey,
+                  color:
+                      indexColor == 0 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
               GestureDetector(
@@ -59,7 +66,8 @@ class _BottomState extends State<BottomNav> {
                 child: Icon(
                   Icons.bar_chart_outlined,
                   size: 30,
-                  color: indexColor == 1 ? const Color(0xff368983) : Colors.grey,
+                  color:
+                      indexColor == 1 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
               const SizedBox(width: 10),
@@ -72,7 +80,8 @@ class _BottomState extends State<BottomNav> {
                 child: Icon(
                   Icons.qr_code_outlined,
                   size: 30,
-                  color: indexColor == 2 ? const Color(0xff368983) : Colors.grey,
+                  color:
+                      indexColor == 2 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
               GestureDetector(
@@ -84,7 +93,8 @@ class _BottomState extends State<BottomNav> {
                 child: Icon(
                   Icons.group_outlined,
                   size: 30,
-                  color: indexColor == 3 ? const Color(0xff368983) : Colors.grey,
+                  color:
+                      indexColor == 3 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
             ],
