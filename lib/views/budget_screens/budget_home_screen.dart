@@ -37,7 +37,7 @@ class BudgetHome extends StatelessWidget {
                   margin: const EdgeInsets.all(18),
                   padding: const EdgeInsets.all(19),
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.27,
+                  height: MediaQuery.of(context).size.height * 0.30,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     color: Colors.green[600],
@@ -78,7 +78,7 @@ class BudgetHome extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.12,
+                            height: MediaQuery.of(context).size.height * 0.11,
                             width: MediaQuery.of(context).size.width * 0.36,
                             child: Card(
                               elevation: 5,
@@ -121,7 +121,7 @@ class BudgetHome extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.12,
+                            height: MediaQuery.of(context).size.height * 0.11,
                             width: MediaQuery.of(context).size.width * 0.36,
                             child: Card(
                               elevation: 5,

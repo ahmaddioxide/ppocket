@@ -28,7 +28,7 @@ class _BottomState extends State<BottomNav> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => AddBudget()));
+              .push(MaterialPageRoute(builder: (context) => const AddBudget()));
         },
         backgroundColor: Colors.green[600],
         child: const Icon(
@@ -40,7 +40,7 @@ class _BottomState extends State<BottomNav> {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Padding(
-          padding: const EdgeInsets.only(top: 7.5, bottom: 7.5),
+          padding: const EdgeInsets.only(top: 0, bottom: 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
