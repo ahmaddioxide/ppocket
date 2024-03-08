@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ppocket/components/snackbars.dart';
+import 'package:ppocket/controllers/budget_controller.dart';
+import 'package:ppocket/models/transaction_model.dart';
 import 'package:ppocket/views/scanqr.dart';
 
 class AddBudget extends StatefulWidget {
@@ -13,18 +17,19 @@ class _AddBudgetState extends State<AddBudget> {
   DateTime date = DateTime.now();
   TextEditingController explainController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  String? selectedItem;
-  String? selectedItemIncomeExpense;
-  final List<String> items = [
+  String? selectedCategory;
+  String? selectedTransactionType;
+  final List<String> expenseCategory = [
     'Food',
     'Transfer',
     'Transportation',
     'Education',
   ];
-  final List<String> incomeExpense = ['Income', 'Expense'];
+  final List<String> transactionType = ['Income', 'Expense'];
 
   @override
   Widget build(BuildContext context) {
+    final budgetController = Get.put(BudgetController());
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -37,7 +42,7 @@ class _AddBudgetState extends State<AddBudget> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -45,117 +50,130 @@ class _AddBudgetState extends State<AddBudget> {
           },
           child: const Icon(
             Icons.arrow_back,
-            color: Colors.green,
+            color: Colors.white,
           ),
         ),
         title: const Text(
           'Add Budget',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 28,
             fontWeight: FontWeight.w600,
-            color: Colors.green,
+            color: Colors.white,
           ),
         ),
       ),
       backgroundColor: Colors.white,
-      body: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Positioned(
-            top: 80,
-            child: _buildMainContainer(),
-          ),
-        ],
-      ),
-    );
-  }
+      body: Center(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.7,
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Card(
+            elevation: 10,
+            child: Column(
+              children: [
+                const SizedBox(height: 50),
+                // BuildDropDown('Name', items, selectedItem),
+                BuildDropDown(
+                  hint: 'Transaction Type',
+                  items: expenseCategory,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCategory = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 30),
+                // _buildTextField('Amount', amountController),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: amountController,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 15,
+                      ),
+                      labelText: 'Amount',
+                      labelStyle:
+                          TextStyle(fontSize: 17, color: Colors.grey.shade500),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Color(0xffC5C5C5),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Color(0xff368983),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                // _buildDropdown('Type', incomeExpense, selectedItemIncomeExpense),
+                BuildDropDown(
+                  hint: 'Type',
+                  items: transactionType,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedTransactionType = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 30),
+                _buildDateTime(),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    if (selectedCategory == null ||
+                        selectedTransactionType == null ||
+                        amountController.text.isEmpty) {
+                      AppSnackBar.errorSnackbar(
+                        title: 'Error',
+                        message: 'Please fill all the fields',
+                      );
+                      return;
+                    }
+                    budgetController.addManualTransaction(
+                      TransactionModel(
+                        name: selectedCategory!,
+                        amount: amountController.text,
+                        category: selectedTransactionType!,
+                        date: Timestamp.fromDate(date),
+                        isIncome: false,
+                      ),
+                    );
 
-  Container _buildMainContainer() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.grey.shade100,
-      ),
-      height: 550,
-      width: 340,
-      child: Column(
-        children: [
-          const SizedBox(height: 50),
-          // BuildDropDown('Name', items, selectedItem),
-          BuildDropDown(
-            hint: 'Name',
-            items: items,
-            onChanged: (value) {
-              setState(() {
-                selectedItem = value;
-              });
-            },
-          ),
-          const SizedBox(height: 30),
-          // _buildTextField('Amount', amountController),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              controller: amountController,
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                labelText: 'Amount',
-                labelStyle:
-                    TextStyle(fontSize: 17, color: Colors.grey.shade500),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 2, color: Color(0xffC5C5C5)),
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color(0xff368983),
+                    ),
+                    width: 150,
+                    height: 50,
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 2, color: Color(0xff368983)),
-                ),
-              ),
+                const SizedBox(height: 25),
+              ],
             ),
           ),
-          const SizedBox(height: 30),
-          // _buildDropdown('Type', incomeExpense, selectedItemIncomeExpense),
-          BuildDropDown(
-            hint: 'Type',
-            items: items,
-            onChanged: (value) {
-              setState(() {
-                selectedItemIncomeExpense = value;
-              });
-            },
-          ),
-          const SizedBox(height: 30),
-          _buildDateTime(),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: const Color(0xff368983),
-              ),
-              width: 120,
-              height: 50,
-              child: const Text(
-                'Save',
-                style: TextStyle(
-                  fontFamily: 'f',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                  fontSize: 17,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 25),
-        ],
+        ),
       ),
     );
   }

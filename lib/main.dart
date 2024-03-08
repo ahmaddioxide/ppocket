@@ -42,7 +42,10 @@ class MyApp extends StatelessWidget {
       title: 'PPocket',
       theme: ThemeData(
         //theme data should be in theme folder
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.purpleAccent,
+          surfaceTint: Colors.white,
+        ),
         useMaterial3: true,
       ),
       home: FirebaseAuthService.currentUser == null

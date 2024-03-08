@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TransactionModel {
   final String name;
-  final String price;
-  final String date;
+  final String amount;
+  final Timestamp date;
   final String category;
   final bool isIncome;
 
   TransactionModel({
     required this.name,
-    required this.price,
+    required this.amount,
     required this.date,
     required this.category,
     required this.isIncome,
@@ -18,14 +18,14 @@ class TransactionModel {
   @override
   //ToString
   String toString() {
-    return 'TransactionMode{name: $name, price: $price, date: $date, category: $category, isIncome: $isIncome}';
+    return 'TransactionMode{name: $name, amount: $amount, date: $date, category: $category, isIncome: $isIncome}';
   }
 
   //to Map
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'price': price,
+      'amount': amount,
       'date': date,
       'category': category,
       'isIncome': isIncome,
@@ -35,14 +35,14 @@ class TransactionModel {
   // CopyWith
   TransactionModel copyWith({
     String? name,
-    String? price,
-    String? date,
+    String? amount,
+    Timestamp? date,
     String? category,
     bool? isIncome,
   }) {
     return TransactionModel(
       name: name ?? this.name,
-      price: price ?? this.price,
+      amount: amount ?? this.amount,
       date: date ?? this.date,
       category: category ?? this.category,
       isIncome: isIncome ?? this.isIncome,
@@ -55,7 +55,7 @@ class TransactionModel {
   }) {
     return TransactionModel(
       name: documentSnapshot['name'],
-      price: documentSnapshot['price'],
+      amount: documentSnapshot['amount'],
       date: documentSnapshot['date'],
       category: documentSnapshot['category'],
       isIncome: documentSnapshot['isIncome'],
