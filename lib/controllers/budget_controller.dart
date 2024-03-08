@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
@@ -76,5 +77,47 @@ class BudgetController extends GetxController {
     }
     debugPrint('total calculated $total');
     return total;
+  }
+
+  Future<void> addTransactionFromReceiptScan(
+    String receiptId,
+  ) async {
+    final String total = await FireStoreService.getTotalFromScannedReceipt(
+      receiptId: receiptId,
+    ).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error in Getting Total from Receipt Scan',
+        message: error.toString(),
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+    final TransactionModel transaction = TransactionModel(
+      name: 'Receipt Scan',
+      amount: total,
+      date: Timestamp.now(),
+      category: 'Receipt Scan',
+      isIncome: false,
+    );
+    debugPrint('transaction to place $transaction');
+  await  FireStoreService.addTransactionToFireStore(
+      userId: FirebaseAuthService.currentUserId,
+      transaction: transaction.toMap(),
+    ).then((value) {
+      AppSnackBar.successSnackbar(
+        title: 'Success',
+        message: 'Transaction Added Successfully',
+      ).then((value) {
+        // Get.back();
+      });
+    }).onError((error, stackTrace) {
+    debugPrintStack(stackTrace: stackTrace, label: error.toString());
+    AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: error.toString(),
+      );
+    });
+
+
   }
 }

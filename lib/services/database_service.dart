@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ppocket/components/snackbars.dart';
+import 'package:ppocket/models/receipt_model.dart';
 import 'package:ppocket/models/transaction_model.dart';
 import 'package:ppocket/models/user_model.dart';
 
@@ -8,7 +9,9 @@ class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   static final CollectionReference usersCollection =
-      fireStore.collection('users');
+  fireStore.collection('users');
+  static final CollectionReference receiptsCollection =
+  fireStore.collection('receipts');
 
   static Future<void> addUserToFireStore({required UserOfApp userOfApp}) async {
     await fireStore
@@ -42,7 +45,7 @@ class FireStoreService {
     required String userId,
   }) async {
     final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await fireStore.collection('users').doc(userId).get();
+    await fireStore.collection('users').doc(userId).get();
     if (kDebugMode) {
       print('documentSnapshot.exists ${documentSnapshot.exists}');
     }
@@ -69,10 +72,9 @@ class FireStoreService {
 
   static Future<void> addTransactionToFireStore({
     required String userId,
-    required Map<String, dynamic> transaction,
+    required transaction,
   }) async {
-    await fireStore
-        .collection('users')
+    await usersCollection
         .doc(userId)
         .collection('transactions')
         .add(transaction)
@@ -113,16 +115,34 @@ class FireStoreService {
     return fireStore
         .collection('users')
         .doc(userId)
-        .collection('transactions').orderBy('date',descending: true)
+        .collection('transactions').orderBy('date', descending: true)
         .snapshots()
         .map((event) {
-          // debugPrint('event.docs ${event.docs}');
+      // debugPrint('event.docs ${event.docs}');
       return event.docs
           .map(
             (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
-          )
+      )
           .toList();
-
     });
+  }
+
+
+  static Future<String> getTotalFromScannedReceipt({required String receiptId}) async {
+    final ReceiptModel receipt = await receiptsCollection
+        .doc(receiptId)
+        .get()
+        .then((value) =>
+        ReceiptModel.fromDocumentSnapshot(documentSnapshot: value),)
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Getting Receipt from FireStore',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+
+      return Future.error(error.toString());
+    });
+    return receipt.total.toString();
   }
 }

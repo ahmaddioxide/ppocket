@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ppocket/controllers/budget_controller.dart';
 
 class ScannedDataScreen extends StatelessWidget {
   final String data;
@@ -7,13 +9,22 @@ class ScannedDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BudgetController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scanned Data'),
       ),
-      body: Center(
-        child: Text(data),
-      ),
+      body: FutureBuilder(
+          future: controller.addTransactionFromReceiptScan(data),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            return const Center(child: Text('Transaction Added Successfully'));
+          }),
     );
   }
 }
