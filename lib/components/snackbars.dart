@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppSnackBar {
-  static void successSnackbar({
+  static Future<void> successSnackbar({
     required String title,
     required String message,
-  }) {
+  }) async{
     Get.snackbar(
       title,
       message,

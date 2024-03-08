@@ -120,10 +120,7 @@ class LoginScreen extends StatelessWidget {
                               .login(
                             email: emailController.text,
                             password: passwordController.text,
-                          )
-                              .then((value) {
-                            Get.offAll(() => const BottomNav());
-                          });
+                          );
                         }
                       },
                       isLoading: loginController.isLoginLoading.value,

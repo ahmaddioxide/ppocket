@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
 import 'package:ppocket/services/auth_service.dart';
 import 'package:ppocket/services/database_service.dart';
+import 'package:ppocket/views/bottom_navigation/bottom_nav.dart';
 
 class LoginController extends GetxController {
   RxBool isPasswordVisible = false.obs;
@@ -30,7 +31,12 @@ class LoginController extends GetxController {
       AppSnackBar.successSnackbar(
         title: 'Success',
         message: 'Logged in Successfully',
-      );
+      ).whenComplete(() {
+        Get.offAll(() => const BottomNav());
+
+      });
+
+
     }).onError((error, stackTrace) {
       isLoginLoading.value = false;
     });
