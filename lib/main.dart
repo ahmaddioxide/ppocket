@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/navigation.dart';
 import 'package:ppocket/services/auth_service.dart';
-import 'package:ppocket/views/budget_screens/bottom_nav.dart';
+import 'package:ppocket/views/bottom_navigation/bottom_nav.dart';
 import 'package:ppocket/views/budget_screens/budget_home_screen.dart';
-import 'package:ppocket/views/budget_screens/stats_screen.dart';
+import 'package:ppocket/views/stats_screens/stats_screen.dart';
 import 'package:ppocket/views/scanqr.dart';
 import 'package:ppocket/views/signup_screen.dart';
 

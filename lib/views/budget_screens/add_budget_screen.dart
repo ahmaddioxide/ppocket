@@ -58,16 +58,14 @@ class _AddBudgetState extends State<AddBudget> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Positioned(
-              top: 80,
-              child: _buildMainContainer(),
-            ),
-          ],
-        ),
+      body: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Positioned(
+            top: 80,
+            child: _buildMainContainer(),
+          ),
+        ],
       ),
     );
   }

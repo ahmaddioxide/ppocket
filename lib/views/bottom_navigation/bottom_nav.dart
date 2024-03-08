@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppocket/views/budget_screens/add_budget_screen.dart';
 import 'package:ppocket/views/budget_screens/budget_home_screen.dart';
-import 'package:ppocket/views/budget_screens/stats_screen.dart';
+import 'package:ppocket/views/stats_screens/stats_screen.dart';
 import 'package:ppocket/views/scanqr.dart';
 import 'package:ppocket/views/user_profile/user_profile_screen.dart';
 

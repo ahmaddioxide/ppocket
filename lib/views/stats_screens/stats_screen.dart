@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ppocket/views/budget_screens/stats/budget_chart.dart';
+import 'package:ppocket/views/stats_screens/stats/budget_chart.dart';
 
 class StatScreen extends StatefulWidget {
   const StatScreen({super.key});
