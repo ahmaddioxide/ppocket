@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ppocket/components/snackbars.dart';
+import 'package:ppocket/models/transaction_model.dart';
 import 'package:ppocket/models/user_model.dart';
 
 class FireStoreService {
@@ -84,6 +85,44 @@ class FireStoreService {
         print('Error Storing Data to FireStore ${error.toString()}');
       }
       return Future.error(error.toString());
+    });
+  }
+
+  static Future<List<TransactionModel>> getTransactionsOfUser({
+    required String userId,
+  }) async {
+    final transactions = await fireStore
+        .collection('users')
+        .doc(userId)
+        .collection('transactions')
+        .get()
+        .then((value) {
+      return value.docs
+          .map(
+              (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e))
+          .toList();
+      debugPrint('value.docs ${value.docs}');
+    }).onError((error, stackTrace) => Future.error(error.toString()));
+
+    return transactions;
+  }
+
+  static Stream<List<TransactionModel>> getTransactionsStreamOfUser({
+    required String userId,
+  }) {
+    return fireStore
+        .collection('users')
+        .doc(userId)
+        .collection('transactions').orderBy('date',descending: true)
+        .snapshots()
+        .map((event) {
+          // debugPrint('event.docs ${event.docs}');
+      return event.docs
+          .map(
+            (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
+          )
+          .toList();
+
     });
   }
 }

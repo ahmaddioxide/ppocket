@@ -145,7 +145,7 @@ class _AddBudgetState extends State<AddBudget> {
                         amount: amountController.text,
                         category: selectedTransactionType!,
                         date: Timestamp.fromDate(date),
-                        isIncome: false,
+                        isIncome: selectedTransactionType == 'Income' ? true : false,
                       ),
                     );
 
