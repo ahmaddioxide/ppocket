@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/models/transaction_model.dart';
+import 'package:ppocket/views/components/loading_widget.dart';
 
 class BudgetHome extends StatelessWidget {
   const BudgetHome({super.key});
@@ -263,7 +264,7 @@ class BudgetHome extends StatelessWidget {
             );
           }
           return const Center(
-            child: CircularProgressIndicator(),
+            child: LoadingWidget(),
           );
         },
       ),

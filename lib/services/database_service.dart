@@ -127,7 +127,6 @@ class FireStoreService {
     });
   }
 
-
   static Future<String> getTotalFromScannedReceipt({required String receiptId}) async {
     final ReceiptModel receipt = await receiptsCollection
         .doc(receiptId)
@@ -145,4 +144,5 @@ class FireStoreService {
     });
     return receipt.total.toString();
   }
+
 }

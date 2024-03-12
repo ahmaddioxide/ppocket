@@ -1,39 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ppocket/controllers/stats_controller.dart';
+import 'package:ppocket/models/budget_data_model.dart';
+import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BudgetChart extends StatelessWidget {
-  const BudgetChart({Key? key}) : super(key: key);
+  final int selectedIndex;
+
+  const BudgetChart({Key? key, required this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
-        series: <SplineSeries<BudgetData, String>>[
-          SplineSeries<BudgetData, String>(
-            dataSource: <BudgetData>[
-              BudgetData('Mon', 350),
-              BudgetData('Tue', 228),
-              BudgetData('Wen', 500),
-              BudgetData('Thu', 158),
-              BudgetData('Fri', 989),
-              BudgetData('Sat', 120),
-              BudgetData('Sun', 700),
-            ],
-            xValueMapper: (BudgetData budget, _) => budget.date,
-            yValueMapper: (BudgetData budget, _) => budget.expense,
-            // Enable data label
-            dataLabelSettings: DataLabelSettings(isVisible: true),
-          )
-        ],
-      ),
+    final controller = Get.find<StatsController>();
+    return FutureBuilder(
+      future: selectedIndex == 0
+          ? controller.getPaymentPerDays()
+          : selectedIndex == 1
+              ? controller.getPaymentPerWeek()
+              : selectedIndex == 2
+                  ? controller.getPaymentPerMonth()
+                  : controller.getPaymentPerYear(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: LoadingWidget(),
+          );
+        }
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        }
+        final List<BudgetDataModel> data =
+            snapshot.data as List<BudgetDataModel>;
+
+        return SfCartesianChart(
+          primaryXAxis: CategoryAxis(),
+          series: <SplineSeries<BudgetDataModel, String>>[
+            SplineSeries<BudgetDataModel, String>(
+              dataSource: data,
+              xValueMapper: (BudgetDataModel budget, _) => budget.date,
+              yValueMapper: (BudgetDataModel budget, _) => budget.expense,
+              // Enable data label
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
+            )
+          ],
+        );
+      },
     );
   }
-}
-
-class BudgetData {
-  BudgetData(this.date, this.expense);
-
-  final String date;
-  final double expense;
 }

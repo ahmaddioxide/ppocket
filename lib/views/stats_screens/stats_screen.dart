@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ppocket/controllers/stats_controller.dart';
 import 'package:ppocket/views/stats_screens/stats/budget_chart.dart';
 
 class StatScreen extends StatefulWidget {
@@ -9,6 +11,7 @@ class StatScreen extends StatefulWidget {
 }
 
 class _StatScreenState extends State<StatScreen> {
+  final controller = Get.put(StatsController());
   List day = ['Day', 'Week', 'Month', 'Year'];
   int index_color = 0;
 
@@ -123,7 +126,7 @@ class _StatScreenState extends State<StatScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const BudgetChart(),
+                 BudgetChart(selectedIndex: index_color,),
               ],
             ),
           ),
