@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ppocket/components/snackbars.dart';
+import 'package:ppocket/models/group_model.dart';
 import 'package:ppocket/models/receipt_model.dart';
 import 'package:ppocket/models/transaction_model.dart';
 import 'package:ppocket/models/user_model.dart';
@@ -9,9 +10,12 @@ class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   static final CollectionReference usersCollection =
-  fireStore.collection('users');
+      fireStore.collection('users');
   static final CollectionReference receiptsCollection =
-  fireStore.collection('receipts');
+      fireStore.collection('receipts');
+
+  static final CollectionReference groupsCollection =
+      fireStore.collection('groups');
 
   static Future<void> addUserToFireStore({required UserOfApp userOfApp}) async {
     await fireStore
@@ -45,7 +49,7 @@ class FireStoreService {
     required String userId,
   }) async {
     final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-    await fireStore.collection('users').doc(userId).get();
+        await fireStore.collection('users').doc(userId).get();
     if (kDebugMode) {
       print('documentSnapshot.exists ${documentSnapshot.exists}');
     }
@@ -115,24 +119,27 @@ class FireStoreService {
     return fireStore
         .collection('users')
         .doc(userId)
-        .collection('transactions').orderBy('date', descending: true)
+        .collection('transactions')
+        .orderBy('date', descending: true)
         .snapshots()
         .map((event) {
       // debugPrint('event.docs ${event.docs}');
       return event.docs
           .map(
             (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
-      )
+          )
           .toList();
     });
   }
 
-  static Future<String> getTotalFromScannedReceipt({required String receiptId}) async {
+  static Future<String> getTotalFromScannedReceipt(
+      {required String receiptId}) async {
     final ReceiptModel receipt = await receiptsCollection
         .doc(receiptId)
         .get()
-        .then((value) =>
-        ReceiptModel.fromDocumentSnapshot(documentSnapshot: value),)
+        .then(
+          (value) => ReceiptModel.fromDocumentSnapshot(documentSnapshot: value),
+        )
         .onError((error, stackTrace) {
       AppSnackBar.errorSnackbar(
         title: 'Error',
@@ -145,4 +152,64 @@ class FireStoreService {
     return receipt.total.toString();
   }
 
+  static Future<void> createGroup({required GroupModel groupModel}) async {
+    print('groupModel to add in database ${groupModel.toString()}');
+    await groupsCollection
+        .add(groupModel.toMap())
+        .then((value) {})
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Creating Group in FireStore',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+  }
+
+  static Stream<List<GroupModel>> getAllGroupsThatUserIsPartOf(
+    String userId,
+  ) {
+    try {
+      return groupsCollection
+          .where('members', arrayContains: userId)
+          .snapshots()
+          .map((event) {
+        return event.docs
+            .map(
+              (e) => GroupModel.fromDocumentSnapshot(e),
+            )
+            .toList();
+      });
+    } on Exception catch (e) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Getting Groups from FireStore',
+      );
+      debugPrintStack(stackTrace: StackTrace.current, label: e.toString());
+      return const Stream.empty();
+    }
+  }
+
+  static Future<Map<String, String>> findUserViaEmail(String email) async {
+    final Map<String, String> idAndName = {};
+
+    await usersCollection.where('email', isEqualTo: email).get().then((value) {
+      if (value.docs.isNotEmpty) {
+        idAndName['id'] = value.docs.first.id;
+        idAndName['name'] = value.docs.first['name'];
+        return value.docs.first;
+      } else {
+        return '';
+      }
+    }).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Finding User from FireStore',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+    return idAndName;
+  }
 }
