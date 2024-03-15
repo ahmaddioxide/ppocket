@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ppocket/controllers/group_controller.dart';
+import 'package:ppocket/models/group_model.dart';
+import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/group_spending_screen/create_group_screen.dart';
 
 class GroupSpending extends StatefulWidget {
@@ -9,18 +13,20 @@ class GroupSpending extends StatefulWidget {
 }
 
 class _GroupSpendingState extends State<GroupSpending> {
-  List<Group> groups = [
-    Group(
-      name: "Group 1",
-      image: "assets/group1.png",
-      type: "Trips"
-    ),
-    Group(
-      name: "Group 2",
-      image: "assets/group2.png",
-      type: "Trips",
-    ),
-  ];
+  final _controller = Get.put(GroupController());
+
+  // List<GroupModel> groups = [
+  //   GroupModel(
+  //     name: "Group 1",
+  //     type: "Trips",
+  //     members: ["John", "Doe", "Jane"],
+  //   ),
+  //   GroupModel(
+  //     name: "Group 2",
+  //     type: "Trips",
+  //     members: ["John", "Doe", "Jane"],
+  //   ),
+  // ];
 
   void _goToCreateGroupScreen(BuildContext context) async {
     final newGroup = await Navigator.push(
@@ -28,11 +34,11 @@ class _GroupSpendingState extends State<GroupSpending> {
       MaterialPageRoute(builder: (context) => const CreateGroup()),
     );
 
-    if (newGroup != null) {
-      setState(() {
-        groups.add(newGroup as Group);
-      });
-    }
+    // if (newGroup != null) {
+    //   setState(() {
+    //     groups.add(newGroup as GroupModel);
+    //   });
+    // }
   }
 
   @override
@@ -64,15 +70,26 @@ class _GroupSpendingState extends State<GroupSpending> {
           ],
         ),
       ),
-
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
-            child: ListView.builder(
-              itemCount: groups.length,
-              itemBuilder: (context, index) {
-                return GroupTile(group: groups[index]);
+            child: StreamBuilder(
+              stream: _controller.getAllGroupThatUserIsPartOf(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: LoadingWidget());
+                } else if (snapshot.hasError) {
+                  return const Center(child: Text('Error fetching groups'));
+                }
+                final List<GroupModel> groups =
+                    snapshot.data as List<GroupModel>;
+                return ListView.builder(
+                  itemCount: groups.length,
+                  itemBuilder: (context, index) {
+                    return GroupTile(group: groups[index]);
+                  },
+                );
               },
             ),
           );
@@ -82,32 +99,18 @@ class _GroupSpendingState extends State<GroupSpending> {
   }
 }
 
-class Group {
-  final String name;
-  final String image;
-  final String type;
-
-  Group({
-    required this.name,
-    required this.image,
-    required this.type,
-  });
-}
-
 class GroupTile extends StatelessWidget {
-  final Group group;
+  final GroupModel group;
 
   const GroupTile({Key? key, required this.group}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 4,
       margin: const EdgeInsets.only(bottom: 8.0),
       child: ListTile(
         contentPadding: const EdgeInsets.all(16.0),
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(group.image),
-        ),
         title: Text(
           group.name,
           style: const TextStyle(

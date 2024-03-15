@@ -42,7 +42,7 @@ class _BottomState extends State<BottomNav> {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Padding(
-          padding: const EdgeInsets.only(top: 0, bottom: 0),
+          padding: const EdgeInsets.only(top: 20, bottom: 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -72,7 +72,7 @@ class _BottomState extends State<BottomNav> {
                       indexColor == 1 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
-              const SizedBox(width: 10),
+              // const SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -86,19 +86,7 @@ class _BottomState extends State<BottomNav> {
                       indexColor == 2 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    indexColor = 3;
-                  });
-                },
-                child: Icon(
-                  Icons.group_outlined,
-                  size: 30,
-                  color:
-                      indexColor == 3 ? const Color(0xff368983) : Colors.grey,
-                ),
-              ),
+
 
               GestureDetector(
                 onTap: () {
@@ -113,14 +101,19 @@ class _BottomState extends State<BottomNav> {
                   indexColor == 4 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),
-
-
-
-
-
-
-
-
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    indexColor = 3;
+                  });
+                },
+                child: Icon(
+                  Icons.person,
+                  size: 30,
+                  color:
+                  indexColor == 3 ? const Color(0xff368983) : Colors.grey,
+                ),
+              ),/**/
 
 
             ],
