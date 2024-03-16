@@ -13,6 +13,8 @@ class FireStoreService {
   fireStore.collection('users');
   static final CollectionReference receiptsCollection =
   fireStore.collection('receipts');
+  static final CollectionReference groupsCollection =
+  fireStore.collection('groups');
 
   static Future<void> addUserToFireStore({required UserOfApp userOfApp}) async {
     await fireStore

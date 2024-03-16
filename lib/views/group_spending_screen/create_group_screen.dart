@@ -35,7 +35,7 @@ class _CreateGroupState extends State<CreateGroup> {
         backgroundColor: Colors.black,
         elevation: 0,
         title: const Text(
-          createGroup,
+          'createGroup',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
