@@ -1,16 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ppocket/components/snackbars.dart';
-<<<<<<< Updated upstream
-import 'package:ppocket/models/receipt_model.dart';
-import 'package:ppocket/models/transaction_model.dart';
-import 'package:ppocket/models/user_model.dart';
-=======
 import 'package:ppocket/controllers/models/group_model.dart';
 import 'package:ppocket/controllers/models/receipt_model.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/controllers/models/user_model.dart';
->>>>>>> Stashed changes
 
 class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
@@ -152,8 +146,6 @@ class FireStoreService {
     return receipt.total.toString();
   }
 
-<<<<<<< Updated upstream
-=======
   static Future<void> createGroup({required GroupModel groupModel}) async {
     print('groupModel to add in database ${groupModel.toString()}');
     await groupsCollection
@@ -254,6 +246,4 @@ static Future<void> addGoalToFirestore({
     });
   }
 
-
->>>>>>> Stashed changes
 }

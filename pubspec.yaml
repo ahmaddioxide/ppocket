@@ -46,13 +46,9 @@ dependencies:
   qr_code_scanner: ^1.0.1
   syncfusion_flutter_charts: ^20.2.44
   font_awesome_flutter: ^10.7.0
-<<<<<<< Updated upstream
-  intl: ^0.18.1
-=======
   intl: any
   uuid: ^3.0.4
 #  image_picker: ^1.0.7
->>>>>>> Stashed changes
 
 
 dev_dependencies:
