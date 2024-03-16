@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
-import 'package:ppocket/models/user_model.dart';
+import 'package:ppocket/controllers/models/user_model.dart';
 import 'package:ppocket/services/auth_service.dart';
 import 'package:ppocket/services/database_service.dart';
 

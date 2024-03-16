@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ppocket/models/budget_data_model.dart';
-import 'package:ppocket/models/transaction_model.dart';
+import 'package:ppocket/controllers/models/budget_data_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/services/auth_service.dart';
 import 'package:ppocket/services/database_service.dart';
 import 'package:ppocket/utils/helper_functions.dart';

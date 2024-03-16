@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ppocket/components/snackbars.dart';
-import 'package:ppocket/models/group_model.dart';
-import 'package:ppocket/models/receipt_model.dart';
-import 'package:ppocket/models/transaction_model.dart';
-import 'package:ppocket/models/user_model.dart';
+import 'package:ppocket/controllers/models/group_model.dart';
+import 'package:ppocket/controllers/models/receipt_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
+import 'package:ppocket/controllers/models/user_model.dart';
+
 
 class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
@@ -12,6 +13,7 @@ class FireStoreService {
   static final CollectionReference usersCollection =
       fireStore.collection('users');
   static final CollectionReference receiptsCollection =
+
       fireStore.collection('receipts');
 
   static final CollectionReference groupsCollection =
@@ -212,4 +214,45 @@ class FireStoreService {
     });
     return idAndName;
   }
+// Delete Transaction
+  static Future<void> deleteTransaction({
+    required String userId,
+    required String transactionId,
+  }) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('transactions')
+          .doc(transactionId)
+          .delete();
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+// Update Transaction
+
+// Set up Budget goal
+static Future<void> addGoalToFirestore({
+    required String userId,
+    required Map<String, dynamic> goal,
+  }) async {
+    await usersCollection
+        .doc(userId)
+        .collection('goals')
+        .add(goal)
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Storing Goal to Firestore',
+      );
+      if (kDebugMode) {
+        print('Error Storing Goal to Firestore: $error');
+      }
+      return Future.error(error.toString());
+    });
+  }
+
+
 }

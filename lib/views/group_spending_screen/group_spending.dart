@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/group_controller.dart';
-import 'package:ppocket/models/group_model.dart';
+import 'package:ppocket/controllers/models/group_model.dart';
+
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/group_spending_screen/create_group_screen.dart';
 

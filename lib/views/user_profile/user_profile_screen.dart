@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/button.dart';
 import 'package:ppocket/controllers/profile_screen_controller.dart';
-import 'package:ppocket/models/user_model.dart';
+import 'package:ppocket/controllers/models/user_model.dart';
 import 'package:ppocket/views/signup_screen.dart';
 
 class UserProfileScreen extends StatelessWidget {
