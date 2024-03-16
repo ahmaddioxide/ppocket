@@ -6,15 +6,18 @@ import 'package:ppocket/controllers/models/receipt_model.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/controllers/models/user_model.dart';
 
+
 class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   static final CollectionReference usersCollection =
-  fireStore.collection('users');
+      fireStore.collection('users');
   static final CollectionReference receiptsCollection =
-  fireStore.collection('receipts');
+
+      fireStore.collection('receipts');
+
   static final CollectionReference groupsCollection =
-  fireStore.collection('groups');
+      fireStore.collection('groups');
 
   static Future<void> addUserToFireStore({required UserOfApp userOfApp}) async {
     await fireStore
@@ -48,7 +51,7 @@ class FireStoreService {
     required String userId,
   }) async {
     final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-    await fireStore.collection('users').doc(userId).get();
+        await fireStore.collection('users').doc(userId).get();
     if (kDebugMode) {
       print('documentSnapshot.exists ${documentSnapshot.exists}');
     }
@@ -118,24 +121,27 @@ class FireStoreService {
     return fireStore
         .collection('users')
         .doc(userId)
-        .collection('transactions').orderBy('date', descending: true)
+        .collection('transactions')
+        .orderBy('date', descending: true)
         .snapshots()
         .map((event) {
       // debugPrint('event.docs ${event.docs}');
       return event.docs
           .map(
             (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
-      )
+          )
           .toList();
     });
   }
 
-  static Future<String> getTotalFromScannedReceipt({required String receiptId}) async {
+  static Future<String> getTotalFromScannedReceipt(
+      {required String receiptId}) async {
     final ReceiptModel receipt = await receiptsCollection
         .doc(receiptId)
         .get()
-        .then((value) =>
-        ReceiptModel.fromDocumentSnapshot(documentSnapshot: value),)
+        .then(
+          (value) => ReceiptModel.fromDocumentSnapshot(documentSnapshot: value),
+        )
         .onError((error, stackTrace) {
       AppSnackBar.errorSnackbar(
         title: 'Error',
@@ -247,5 +253,6 @@ static Future<void> addGoalToFirestore({
       return Future.error(error.toString());
     });
   }
+
 
 }

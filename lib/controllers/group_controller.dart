@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
 import 'package:ppocket/controllers/models/group_model.dart';
+
 import 'package:ppocket/services/database_service.dart';
 
 class GroupController extends GetxController {

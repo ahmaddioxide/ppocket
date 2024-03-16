@@ -8,6 +8,7 @@ import 'package:ppocket/constants/strings.dart';
 import 'package:ppocket/controllers/group_controller.dart';
 import 'package:ppocket/controllers/models/group_model.dart';
 
+
 class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
 
@@ -36,6 +37,7 @@ class _CreateGroupState extends State<CreateGroup> {
         elevation: 0,
         title: const Text(
           'createGroup',
+
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
