@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/stats_controller.dart';
-import 'package:ppocket/models/budget_data_model.dart';
+import 'package:ppocket/controllers/models/budget_data_model.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

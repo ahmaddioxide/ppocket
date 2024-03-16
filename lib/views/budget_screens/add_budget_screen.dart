@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
-import 'package:ppocket/models/transaction_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/scanqr.dart';
+import 'package:uuid/uuid.dart';
 
 class AddBudget extends StatefulWidget {
   const AddBudget({super.key});
@@ -14,6 +15,7 @@ class AddBudget extends StatefulWidget {
 }
 
 class _AddBudgetState extends State<AddBudget> {
+  final uuid = Uuid();
   DateTime date = DateTime.now();
   TextEditingController explainController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -139,8 +141,10 @@ class _AddBudgetState extends State<AddBudget> {
                       );
                       return;
                     }
+                    String id = uuid.v4();
                     budgetController.addManualTransaction(
                       TransactionModel(
+                        id: id,
                         name: selectedCategory!,
                         amount: amountController.text,
                         category: selectedTransactionType!,

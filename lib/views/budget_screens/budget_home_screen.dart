@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
-import 'package:ppocket/models/transaction_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
+import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 
 class BudgetHome extends StatelessWidget {
@@ -15,22 +16,36 @@ class BudgetHome extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 4,
-        title: const Text(
-          'Budget',
-          style: TextStyle(
+          elevation: 4,
+          title: const Text(
+            'Budget',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.black,
+          titleTextStyle: const TextStyle(
             color: Colors.white,
-            fontSize: 20.0,
+            fontSize: 30.0,
             fontWeight: FontWeight.bold,
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.monetization_on, color: Colors.white),
+              onPressed: () {
+                // Navigate to the set budget goal screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SetBudgetGoalScreen(budgetController: BudgetController(),),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-        backgroundColor: Colors.black,
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
       body: StreamBuilder(
         stream: budgetController.getTransactionsStreamOfCurrentUser(),
         builder: (context, snapshot) {
@@ -245,15 +260,39 @@ class BudgetHome extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          trailing: Text(
-                            transactionsList[index].amount,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: transactionsList[index].isIncome
-                                  ? Colors.green
-                                  : Colors.redAccent,
-                            ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                transactionsList[index].amount,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: transactionsList[index].isIncome
+                                      ? Colors.green
+                                      : Colors.redAccent,
+                                ),
+                              ),
+                              IconButton(
+                                icon:
+                                    Icon(Icons.delete, color: Colors.redAccent),
+                                onPressed: () {
+                                  // Call the delete function
+                                  budgetController.deleteTransaction(
+                                      transactionsList[index].id
+                                      );
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.edit, color: Colors.green),
+                                onPressed: () {
+                                  // Call the edit function
+                                  // budgetController.editTransaction(
+                                  //     transactionsList[index].id
+                                  //     );
+                                },
+                              )
+                            ],
                           ),
                         ),
                       );

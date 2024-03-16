@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ppocket/components/snackbars.dart';
+<<<<<<< Updated upstream
 import 'package:ppocket/models/receipt_model.dart';
 import 'package:ppocket/models/transaction_model.dart';
 import 'package:ppocket/models/user_model.dart';
+=======
+import 'package:ppocket/controllers/models/group_model.dart';
+import 'package:ppocket/controllers/models/receipt_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
+import 'package:ppocket/controllers/models/user_model.dart';
+>>>>>>> Stashed changes
 
 class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
@@ -145,4 +152,108 @@ class FireStoreService {
     return receipt.total.toString();
   }
 
+<<<<<<< Updated upstream
+=======
+  static Future<void> createGroup({required GroupModel groupModel}) async {
+    print('groupModel to add in database ${groupModel.toString()}');
+    await groupsCollection
+        .add(groupModel.toMap())
+        .then((value) {})
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Creating Group in FireStore',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+  }
+
+  static Stream<List<GroupModel>> getAllGroupsThatUserIsPartOf(
+    String userId,
+  ) {
+    try {
+      return groupsCollection
+          .where('members', arrayContains: userId)
+          .snapshots()
+          .map((event) {
+        return event.docs
+            .map(
+              (e) => GroupModel.fromDocumentSnapshot(e),
+            )
+            .toList();
+      });
+    } on Exception catch (e) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Getting Groups from FireStore',
+      );
+      debugPrintStack(stackTrace: StackTrace.current, label: e.toString());
+      return const Stream.empty();
+    }
+  }
+
+  static Future<Map<String, String>> findUserViaEmail(String email) async {
+    final Map<String, String> idAndName = {};
+
+    await usersCollection.where('email', isEqualTo: email).get().then((value) {
+      if (value.docs.isNotEmpty) {
+        idAndName['id'] = value.docs.first.id;
+        idAndName['name'] = value.docs.first['name'];
+        return value.docs.first;
+      } else {
+        return '';
+      }
+    }).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Finding User from FireStore',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+    return idAndName;
+  }
+// Delete Transaction
+  static Future<void> deleteTransaction({
+    required String userId,
+    required String transactionId,
+  }) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('transactions')
+          .doc(transactionId)
+          .delete();
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+// Update Transaction
+
+// Set up Budget goal
+static Future<void> addGoalToFirestore({
+    required String userId,
+    required Map<String, dynamic> goal,
+  }) async {
+    await usersCollection
+        .doc(userId)
+        .collection('goals')
+        .add(goal)
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Storing Goal to Firestore',
+      );
+      if (kDebugMode) {
+        print('Error Storing Goal to Firestore: $error');
+      }
+      return Future.error(error.toString());
+    });
+  }
+
+
+>>>>>>> Stashed changes
 }

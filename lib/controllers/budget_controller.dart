@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
-import 'package:ppocket/models/transaction_model.dart';
+import 'package:ppocket/controllers/models/budget_goal_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/services/auth_service.dart';
 import 'package:ppocket/services/database_service.dart';
 
@@ -51,11 +52,12 @@ class BudgetController extends GetxController {
     return transactionsStream;
   }
 
-   int calculateTotalBalance(List<TransactionModel> transactions) {
-     int total = 0;
-     total=calculateTotalIncome(transactions)-calculateTotalExpense(transactions);
-     return total;
-   }
+  int calculateTotalBalance(List<TransactionModel> transactions) {
+    int total = 0;
+    total = calculateTotalIncome(transactions) -
+        calculateTotalExpense(transactions);
+    return total;
+  }
 
   int calculateTotalIncome(List<TransactionModel> transactions) {
     int total = 0;
@@ -68,7 +70,7 @@ class BudgetController extends GetxController {
     return total;
   }
 
-   int calculateTotalExpense(List<TransactionModel> transactions) {
+  int calculateTotalExpense(List<TransactionModel> transactions) {
     int total = 0;
     for (var element in transactions) {
       if (!element.isIncome) {
@@ -98,9 +100,10 @@ class BudgetController extends GetxController {
       date: Timestamp.now(),
       category: 'Receipt Scan',
       isIncome: false,
+      id: '',
     );
     debugPrint('transaction to place $transaction');
-  await  FireStoreService.addTransactionToFireStore(
+    await FireStoreService.addTransactionToFireStore(
       userId: FirebaseAuthService.currentUserId,
       transaction: transaction.toMap(),
     ).then((value) {
@@ -111,13 +114,51 @@ class BudgetController extends GetxController {
         // Get.back();
       });
     }).onError((error, stackTrace) {
-    debugPrintStack(stackTrace: stackTrace, label: error.toString());
-    AppSnackBar.errorSnackbar(
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      AppSnackBar.errorSnackbar(
         title: 'Error',
         message: error.toString(),
       );
     });
+  }
 
+// Delete transaction
+  Future<void> deleteTransaction(String transactionId) async {
+    try {
+      await FireStoreService.deleteTransaction(
+        userId: FirebaseAuthService.currentUserId,
+        transactionId: transactionId,
+      );
+      AppSnackBar.successSnackbar(
+        title: 'Success',
+        message: 'Transaction Deleted Successfully',
+      );
+    } catch (error) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error Deleting Transaction',
+        message: error.toString(),
+      );
+    }
+  }
 
+// Update transaction
+
+// Set up Budget Goal
+  Future<void> saveGoalToFirestore(Goal goal) async {
+    try {
+      await FireStoreService.addGoalToFirestore(
+        userId: FirebaseAuthService.currentUserId,
+        goal: goal.toMap(),
+      );
+      AppSnackBar.successSnackbar(
+        title: 'Success',
+        message: 'Goal Added Successfully',
+      );
+    } catch (error) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: error.toString(),
+      );
+    }
   }
 }

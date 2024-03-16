@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppocket/models/user_model.dart';
+import 'package:ppocket/controllers/models/user_model.dart';
 import 'package:ppocket/views/login.dart';
 
 import '../components/button.dart';
