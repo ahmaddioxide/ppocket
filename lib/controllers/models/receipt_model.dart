@@ -1,21 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReceiptModel {
-  // final String imageUrl;
-  // final String textUrl;
+  final String imageUrl;
+  final String txtUrl;
   final int total;
+  final Timestamp createdAt;
 
   ReceiptModel({
-    // required this.imageUrl,
-    // required this.textUrl,
+    required this.imageUrl,
+    required this.txtUrl,
     required this.total,
+    required this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      // 'imageUrl': imageUrl,
-      // 'txtUrl': textUrl,
+      'imageUrl': imageUrl,
+      'txtUrl': txtUrl,
       'total': total,
+      'date': createdAt,
     };
   }
 
@@ -25,15 +28,16 @@ class ReceiptModel {
   }) {
     final data = documentSnapshot.data() as Map<String, dynamic>;
     return ReceiptModel(
-      // imageUrl: data['imageUrl'],
-      // textUrl: data['textUrl'],
+      imageUrl: data['imageUrl'],
+      txtUrl: data['txtUrl'],
       total: data['total'],
+      createdAt: data['createdAt'],
     );
   }
 
 //toString
   @override
   String toString() {
-    return 'ReceiptModel {imageUrl: , textUrl: , total: $total}';
+    return 'ReceiptModel {imageUrl: , txtUrl $txtUrl, total: $total}, date: $createdAt';
   }
 }

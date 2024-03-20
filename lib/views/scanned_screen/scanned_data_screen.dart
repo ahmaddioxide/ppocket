@@ -25,7 +25,7 @@ class ScannedDataScreen extends StatelessWidget {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
             return const Center(child: Text('Transaction Added Successfully'));
-          }),
+          },),
     );
   }
 }

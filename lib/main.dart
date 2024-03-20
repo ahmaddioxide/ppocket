@@ -37,9 +37,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //theme data should be in theme folder
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purpleAccent,
+          seedColor: Colors.green,
           surfaceTint: Colors.white,
+          background: Colors.white,
         ),
+        cardColor: Colors.white,
+        cardTheme: const CardTheme(
+          elevation: 5,
+          shadowColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+        ),
+
         useMaterial3: true,
       ),
       home: FirebaseAuthService.currentUser == null

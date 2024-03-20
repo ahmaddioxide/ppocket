@@ -15,7 +15,7 @@ class AddBudget extends StatefulWidget {
 }
 
 class _AddBudgetState extends State<AddBudget> {
-  final uuid = Uuid();
+  final uuid = const Uuid();
   DateTime date = DateTime.now();
   TextEditingController explainController = TextEditingController();
   TextEditingController amountController = TextEditingController();

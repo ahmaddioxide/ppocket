@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/constants/assets.dart';
 import 'package:ppocket/controllers/login_controller.dart';
-import 'package:ppocket/views/bottom_navigation/bottom_nav.dart';
 
 import '../components/button.dart';
 
@@ -107,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 15,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(height: Get.height * .03),

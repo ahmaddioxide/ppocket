@@ -83,7 +83,11 @@ class FireStoreService {
     await usersCollection
         .doc(userId)
         .collection('transactions')
-        .add(transaction)
+        .add(transaction).then((value) {
+
+          //update id of transaction
+          value.update({'id': value.id});
+    })
         .onError((error, stackTrace) {
       AppSnackBar.errorSnackbar(
         title: 'Error',
@@ -107,9 +111,8 @@ class FireStoreService {
         .then((value) {
       return value.docs
           .map(
-              (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e))
+              (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),)
           .toList();
-      debugPrint('value.docs ${value.docs}');
     }).onError((error, stackTrace) => Future.error(error.toString()));
 
     return transactions;
@@ -135,7 +138,7 @@ class FireStoreService {
   }
 
   static Future<String> getTotalFromScannedReceipt(
-      {required String receiptId}) async {
+      {required String receiptId,}) async {
     final ReceiptModel receipt = await receiptsCollection
         .doc(receiptId)
         .get()
@@ -155,7 +158,7 @@ class FireStoreService {
   }
 
   static Future<void> createGroup({required GroupModel groupModel}) async {
-    print('groupModel to add in database ${groupModel.toString()}');
+    debugPrint('groupModel to add in database ${groupModel.toString()}');
     await groupsCollection
         .add(groupModel.toMap())
         .then((value) {})
@@ -254,5 +257,55 @@ static Future<void> addGoalToFirestore({
     });
   }
 
+// Store Reciepts
+  static Future<void> addReceiptToFirestore({
+    required String userId,
+    required Map<String, dynamic> receipt,
+  }) async {
+    await usersCollection
+        .doc(userId)
+        .collection('receipts')
+        .add(receipt)
+        .onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Storing Receipt to Firestore',
+      );
+      if (kDebugMode) {
+        print('Error Storing Receipt to Firestore: $error');
+      }
+      return Future.error(error.toString());
+    });
+  }
+
+// Search Reciept
+  static Future<List<ReceiptModel>> searchReceipts({
+    required String userId,
+    required String searchText,
+  }) async {
+    final List<ReceiptModel> receipts = [];
+    await usersCollection
+        .doc(userId)
+        .collection('receipts')
+        .where('searchIndex', arrayContains: searchText)
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        receipts.add(ReceiptModel.fromDocumentSnapshot(
+          documentSnapshot: element,
+        ),);
+      }
+    }).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Searching Receipts in FireStore',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+    return receipts;
+  }
+
+  static searchReceiptsByDate({required String userId, required DateTime startDate, required DateTime endDate, required Timestamp endTimestamp, required Timestamp startTimestamp}) {}
 
 }

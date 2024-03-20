@@ -101,12 +101,16 @@ class BudgetController extends GetxController {
       category: 'Receipt Scan',
       isIncome: false,
       id: '',
+      receiptId: receiptId,
     );
     debugPrint('transaction to place $transaction');
     await FireStoreService.addTransactionToFireStore(
       userId: FirebaseAuthService.currentUserId,
       transaction: transaction.toMap(),
     ).then((value) {
+
+
+
       AppSnackBar.successSnackbar(
         title: 'Success',
         message: 'Transaction Added Successfully',
