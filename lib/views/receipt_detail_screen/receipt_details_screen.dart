@@ -42,8 +42,8 @@ class ReceiptDetailsScreen extends StatelessWidget {
                 return const Text('Error');
               }
               return SizedBox(
-                height: 300,
-                width: 200,
+                height: 500,
+                width: 300,
                 child: CachedNetworkImage(
                   imageUrl: snapshot.data!,
                   placeholder: (context, url) => const LoadingWidget(),
