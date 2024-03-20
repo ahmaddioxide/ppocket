@@ -62,7 +62,7 @@ class _CreateGroupState extends State<CreateGroup> {
               const SizedBox(height: 8),
               SizedBox(
                 height: 55,
-                width: 320,
+                width: 300,
                 child: TextFormField(
                   controller: _groupNameController,
                   decoration: const InputDecoration(
@@ -93,7 +93,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 children: [
                   SizedBox(
                     height: 55,
-                    width: 320,
+                    width: 300,
                     child: TextFormField(
                       controller: _memberEmailController,
                       decoration: const InputDecoration(
