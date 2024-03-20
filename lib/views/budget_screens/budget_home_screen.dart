@@ -1,11 +1,15 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ppocket/components/button.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
+import 'package:ppocket/views/reciepts/search_reciepts.dart';
 
 class BudgetHome extends StatelessWidget {
   const BudgetHome({super.key});
@@ -16,36 +20,50 @@ class BudgetHome extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          elevation: 4,
-          title: const Text(
-            'Budget',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.black,
-          titleTextStyle: const TextStyle(
+        elevation: 4,
+        title: const Text(
+          'Budget',
+          style: TextStyle(
             color: Colors.white,
-            fontSize: 30.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.monetization_on, color: Colors.white),
-              onPressed: () {
-                // Navigate to the set budget goal screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SetBudgetGoalScreen(budgetController: BudgetController(),),
-                  ),
-                );
-              },
-            ),
-          ],
         ),
+        backgroundColor: Colors.black,
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.monetization_on, color: Colors.white),
+            onPressed: () {
+              // Navigate to the set budget goal screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SetBudgetGoalScreen(
+                    budgetController: BudgetController(),
+                  ),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.add, color: Colors.white),
+            onPressed: () {
+              // Navigate to the add transaction screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchReceipts(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: StreamBuilder(
         stream: budgetController.getTransactionsStreamOfCurrentUser(),
         builder: (context, snapshot) {
@@ -84,23 +102,52 @@ class BudgetHome extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Text(
-                            'Total balance',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            budgetController
-                                .calculateTotalBalance(transactionsList)
-                                .toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  const Text(
+                                    'Total balance',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    budgetController
+                                        .calculateTotalBalance(transactionsList)
+                                        .toString(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 26.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text(
+                                    'Goal',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    // budgetController.goal!.amount.toString(),
+                                    '1000',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 26.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.01,
@@ -215,14 +262,33 @@ class BudgetHome extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
+                    const Text(
                       'Transactions',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SetBudgetGoalScreen(
+                              budgetController: BudgetController(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Budget Goal',
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
@@ -234,66 +300,82 @@ class BudgetHome extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {},
-                        child: ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset(
-                              'assets/images/ppocket_logo.png',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          title: Text(
-                            transactionsList[index].name!,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          subtitle: Text(
-                            DateFormat('kk:mm | yyyy-MM-dd').format(
-                              transactionsList[index].date.toDate(),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                transactionsList[index].amount,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: transactionsList[index].isIncome
-                                      ? Colors.green
-                                      : Colors.redAccent,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.asset(
+                                  'assets/images/ppocket_logo.png',
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              IconButton(
-                                icon:
-                                    Icon(Icons.delete, color: Colors.redAccent),
-                                onPressed: () {
-                                  // Call the delete function
-                                  budgetController.deleteTransaction(
-                                      transactionsList[index].id
-                                      );
-                                },
+                              title: Text(
+                                transactionsList[index].name!,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                              IconButton(
-                                icon: Icon(Icons.edit, color: Colors.green),
-                                onPressed: () {
-                                  // Call the edit function
-                                  // budgetController.editTransaction(
-                                  //     transactionsList[index].id
-                                  //     );
-                                },
-                              )
-                            ],
-                          ),
+                              subtitle: Text(
+                                DateFormat('kk:mm | yyyy-MM-dd').format(
+                                  transactionsList[index].date.toDate(),
+                                ),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    transactionsList[index].amount,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: transactionsList[index].isIncome
+                                          ? Colors.green
+                                          : Colors.redAccent,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right:
+                                                0), // Adjust the right padding as needed
+                                        child: IconButton(
+                                          icon: const Icon(Icons.delete,
+                                              color: Colors.redAccent),
+                                          onPressed: () {
+                                            // Call the delete function
+                                            budgetController.deleteTransaction(
+                                                transactionsList[index].id);
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left:
+                                                0), // Adjust the left padding as needed
+                                        child: IconButton(
+                                          icon: const Icon(Icons.edit,
+                                              color: Colors.green),
+                                          onPressed: () {
+                                            // Call the edit function
+                                            // budgetController.editTransaction(transactionsList[index].id);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     },
