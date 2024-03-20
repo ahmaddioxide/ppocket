@@ -87,9 +87,9 @@ class Reciept extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
             SizedBox(
@@ -142,9 +142,9 @@ class Reciept extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
             SizedBox(
@@ -197,9 +197,9 @@ class Reciept extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
             SizedBox(
@@ -252,9 +252,9 @@ class Reciept extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
             SizedBox(
@@ -318,7 +318,7 @@ class Reciept extends StatelessWidget {
             SizedBox(
               height: Get.height * .04,
             ),
-            ButtonGreen(text: 'Create PDF', onPressed: () {})
+            ButtonGreen(text: 'Create PDF', onPressed: () {}),
           ],
         ),
       ),

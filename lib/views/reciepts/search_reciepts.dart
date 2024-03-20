@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ppocket/controllers/reciept_controller.dart';
 import 'package:ppocket/controllers/models/receipt_model.dart';
+import 'package:ppocket/controllers/reciept_controller.dart';
 
 class SearchReceipts extends StatelessWidget {
   final SearchReceiptController _searchController =
-      Get.put(SearchReceiptController());
+  Get.put(SearchReceiptController());
+   SearchReceipts({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _dateController = TextEditingController();
 
-    Future<void> _selectDate(BuildContext context) async {
+    final TextEditingController dateController = TextEditingController();
+
+    Future<void> selectDate(BuildContext context) async {
       final DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -20,7 +22,7 @@ class SearchReceipts extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Colors.blue, // Adjust primary color as needed
               ),
             ),
@@ -29,13 +31,13 @@ class SearchReceipts extends StatelessWidget {
         },
       );
       if (pickedDate != null) {
-        _dateController.text = pickedDate.toString().substring(0, 10);
+        dateController.text = pickedDate.toString().substring(0, 10);
       }
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Receipts'),
+        title: const Text('Search Receipts'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,18 +45,18 @@ class SearchReceipts extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () => _selectDate(context),
+              onTap: () => selectDate(context),
               child: AbsorbPointer(
                 child: TextField(
-                  controller: _dateController,
-                  decoration: InputDecoration(
+                  controller: dateController,
+                  decoration: const InputDecoration(
                     labelText: 'Select Date',
                     suffixIcon: Icon(Icons.calendar_today),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -62,19 +64,19 @@ class SearchReceipts extends StatelessWidget {
               onPressed: () {
                 _searchController.searchReceiptsByDate(
                   userId: 'user_id_here', // Replace with actual user ID
-                  searchText: _dateController.text,
+                  searchText: dateController.text,
                 );
               },
-              child: Text(
+              child: const Text(
                 'Search',
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Expanded(
               child: Obx(() {
                 if (_searchController.loading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (_searchController.error.isNotEmpty) {
                   return Center(child: Text(_searchController.error));
                 } else {
@@ -91,7 +93,7 @@ class SearchReceipts extends StatelessWidget {
   Widget _buildSearchResults() {
     List<ReceiptModel> searchResults = _searchController.searchResults;
     if (searchResults.isEmpty) {
-      return Center(child: Text('No results found.'));
+      return const Center(child: Text('No results found.'));
     } else {
       return ListView.builder(
         itemCount: searchResults.length,

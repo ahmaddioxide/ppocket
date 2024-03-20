@@ -17,7 +17,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   final screens = [
     const Dashboard(),
     const ScanQr(),
-    const UserProfileScreen()
+    const UserProfileScreen(),
   ];
 
   @override
@@ -45,7 +45,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
             Icons.person_2_rounded,
             size: 24,
             color: Colors.white,
-          )
+          ),
         ],
       ),
       body: screens[currentIndex],

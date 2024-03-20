@@ -13,7 +13,7 @@ class StatScreen extends StatefulWidget {
 class _StatScreenState extends State<StatScreen> {
   final controller = Get.put(StatsController());
   List day = ['Day', 'Week', 'Month', 'Year'];
-  int index_color = 0;
+  int indexColor = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +58,14 @@ class _StatScreenState extends State<StatScreen> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              index_color = index;
+                              indexColor = index;
                             });
                           },
                           child: Container(
                             height: 40,
                             width: 80,
                             decoration: BoxDecoration(
-                              color: index_color == index
+                              color: indexColor == index
                                   ? Colors.green[600]
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(10),
@@ -76,7 +76,7 @@ class _StatScreenState extends State<StatScreen> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: index_color == index
+                                color: indexColor == index
                                     ? Colors.white
                                     : Colors.black87,
                               ),
@@ -126,7 +126,7 @@ class _StatScreenState extends State<StatScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                 BudgetChart(selectedIndex: index_color,),
+                 BudgetChart(selectedIndex: indexColor,),
               ],
             ),
           ),

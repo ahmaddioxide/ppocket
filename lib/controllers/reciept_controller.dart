@@ -5,11 +5,11 @@ import 'package:ppocket/controllers/models/receipt_model.dart';
 import 'package:ppocket/services/database_service.dart';
 
 class SearchReceiptController extends GetxController {
-  RxBool _isLoading = false.obs; // Reactive boolean for loading state
-  RxString _error = ''.obs; // Reactive string for error message
-  RxList<ReceiptModel> _searchResults =
+  final RxBool _isLoading = false.obs; // Reactive boolean for loading state
+  final RxString _error = ''.obs; // Reactive string for error message
+  final RxList<ReceiptModel> _searchResults =
       <ReceiptModel>[].obs; // Reactive list for search results
-  TextEditingController _dateController =
+  final TextEditingController _dateController =
       TextEditingController(); // Date controller
 
   bool get loading => _isLoading.value; // Getter for loading state
@@ -32,7 +32,7 @@ class SearchReceiptController extends GetxController {
       // Get the start and end timestamps for the selected date
       DateTime startOfDay =
           DateTime(searchDate.year, searchDate.month, searchDate.day);
-      DateTime endOfDay = startOfDay.add(Duration(days: 1));
+      DateTime endOfDay = startOfDay.add(const Duration(days: 1));
 
       // Call the Firestore service method to search receipts within the date range
       List<ReceiptModel>? receipts =
@@ -41,7 +41,7 @@ class SearchReceiptController extends GetxController {
               startDate: startOfDay,
               endDate: endOfDay,
               endTimestamp: Timestamp.fromDate(endOfDay),
-              startTimestamp: Timestamp.fromDate(startOfDay));
+              startTimestamp: Timestamp.fromDate(startOfDay),);
 
       if (receipts != null) {
         _searchResults

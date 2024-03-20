@@ -7,6 +7,7 @@ class TransactionModel {
   final Timestamp date;
   final String category;
   final bool isIncome;
+  final String? receiptId;
 
   TransactionModel({
     required this.id,
@@ -15,12 +16,14 @@ class TransactionModel {
     required this.date,
     required this.category,
     required this.isIncome,
+    this.receiptId='',
+
   });
 
   @override
   //ToString
   String toString() {
-    return 'TransactionMode{id: $id, name: $name, amount: $amount, date: $date, category: $category, isIncome: $isIncome}';
+    return 'TransactionMode{id: $id, name: $name, amount: $amount, date: $date, category: $category, isIncome: $isIncome, receiptId: $receiptId}';
   }
 
   //to Map
@@ -32,16 +35,19 @@ class TransactionModel {
       'date': date,
       'category': category,
       'isIncome': isIncome,
+      'receiptId': receiptId,
     };
   }
 
   // CopyWith
   TransactionModel copyWith({
+    String? id,
     String? name,
     String? amount,
     Timestamp? date,
     String? category,
     bool? isIncome,
+    String? receiptId,
   }) {
     return TransactionModel(
       id: id ?? this.id,
@@ -50,6 +56,7 @@ class TransactionModel {
       date: date ?? this.date,
       category: category ?? this.category,
       isIncome: isIncome ?? this.isIncome,
+      receiptId: receiptId ?? this.receiptId,
     );
   }
 
@@ -58,12 +65,13 @@ class TransactionModel {
     required DocumentSnapshot documentSnapshot,
   }) {
     return TransactionModel(
-      id: documentSnapshot.id,
+      id: documentSnapshot['id'],
       name: documentSnapshot['name'],
       amount: documentSnapshot['amount'],
       date: documentSnapshot['date'],
       category: documentSnapshot['category'],
       isIncome: documentSnapshot['isIncome'],
+      receiptId: documentSnapshot['receiptId'],
     );
   }
 }

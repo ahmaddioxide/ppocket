@@ -1,10 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:ppocket/components/button.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
@@ -103,11 +99,12 @@ class BudgetHome extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
                                 children: [
                                   const Text(
-                                    'Total balance',
+                                    'Balance',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 30.0,
@@ -120,15 +117,21 @@ class BudgetHome extends StatelessWidget {
                                         .toString(),
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 26.0,
+                                      fontSize: 20.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
                               ),
-                              Column(
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                width: 2,
+                                color: Colors.white,
+                              ),
+                              const Column(
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Goal',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -139,9 +142,9 @@ class BudgetHome extends StatelessWidget {
                                   Text(
                                     // budgetController.goal!.amount.toString(),
                                     '1000',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 26.0,
+                                      fontSize: 20.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -286,7 +289,7 @@ class BudgetHome extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Budget Goal',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -313,7 +316,7 @@ class BudgetHome extends StatelessWidget {
                                 ),
                               ),
                               title: Text(
-                                transactionsList[index].name!,
+                                transactionsList[index].name,
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
@@ -345,25 +348,32 @@ class BudgetHome extends StatelessWidget {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            right:
-                                                0), // Adjust the right padding as needed
+                                          right: 0,
+                                        ),
+                                        // Adjust the right padding as needed
                                         child: IconButton(
-                                          icon: const Icon(Icons.delete,
-                                              color: Colors.redAccent),
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.redAccent,
+                                          ),
                                           onPressed: () {
                                             // Call the delete function
                                             budgetController.deleteTransaction(
-                                                transactionsList[index].id);
+                                              transactionsList[index].id,
+                                            );
                                           },
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            left:
-                                                0), // Adjust the left padding as needed
+                                          left: 0,
+                                        ),
+                                        // Adjust the left padding as needed
                                         child: IconButton(
-                                          icon: const Icon(Icons.edit,
-                                              color: Colors.green),
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Colors.green,
+                                          ),
                                           onPressed: () {
                                             // Call the edit function
                                             // budgetController.editTransaction(transactionsList[index].id);
@@ -371,7 +381,7 @@ class BudgetHome extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

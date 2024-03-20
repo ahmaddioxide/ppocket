@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/views/scanned_screen/scanned_data_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 import '../components/button.dart';
 
 class ScanQr extends StatefulWidget {
@@ -74,7 +75,7 @@ class _ScanQrState extends State<ScanQr> {
               Icons.line_weight_outlined,
               color: Colors.white,
             ),
-          )
+          ),
         ],
         foregroundColor: Colors.black,
       ),
@@ -122,7 +123,7 @@ class _ScanQrState extends State<ScanQr> {
                 onPressed: () {
                   // debugPrint("Scan the QR Please");
                 },
-              )
+              ),
             ],
           ),
         ),

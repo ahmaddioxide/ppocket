@@ -12,22 +12,22 @@ class SetBudgetGoalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set Budget Goal'),
+        title: const Text('Set Budget Goal'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Enter your monthly saving goal:',
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: goalController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(
                 labelText: 'Goal Amount',
                 hintText: 'Enter your goal amount',
                 border: OutlineInputBorder(),
@@ -39,7 +39,7 @@ class SetBudgetGoalScreen extends StatelessWidget {
                 return null;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -52,7 +52,7 @@ class SetBudgetGoalScreen extends StatelessWidget {
 
                 Navigator.pop(context);
               },
-              child: Text(
+              child: const Text(
                 'Save Goal',
                 style: TextStyle(color: Colors.white),
               ),

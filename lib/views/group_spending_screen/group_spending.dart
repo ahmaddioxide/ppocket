@@ -2,35 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/group_controller.dart';
 import 'package:ppocket/controllers/models/group_model.dart';
-
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/group_spending_screen/create_group_screen.dart';
 
-class GroupSpending extends StatefulWidget {
+class GroupSpending extends StatelessWidget {
   const GroupSpending({Key? key}) : super(key: key);
 
-  @override
-  _GroupSpendingState createState() => _GroupSpendingState();
-}
-
-class _GroupSpendingState extends State<GroupSpending> {
-  final _controller = Get.put(GroupController());
-
-  // List<GroupModel> groups = [
-  //   GroupModel(
-  //     name: "Group 1",
-  //     type: "Trips",
-  //     members: ["John", "Doe", "Jane"],
-  //   ),
-  //   GroupModel(
-  //     name: "Group 2",
-  //     type: "Trips",
-  //     members: ["John", "Doe", "Jane"],
-  //   ),
-  // ];
-
   void _goToCreateGroupScreen(BuildContext context) async {
-    final newGroup = await Navigator.push(
+   await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CreateGroup()),
     );
@@ -44,6 +23,8 @@ class _GroupSpendingState extends State<GroupSpending> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(GroupController());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -76,7 +57,7 @@ class _GroupSpendingState extends State<GroupSpending> {
           return Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
             child: StreamBuilder(
-              stream: _controller.getAllGroupThatUserIsPartOf(),
+              stream: controller.getAllGroupThatUserIsPartOf(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: LoadingWidget());
@@ -88,7 +69,9 @@ class _GroupSpendingState extends State<GroupSpending> {
                 return ListView.builder(
                   itemCount: groups.length,
                   itemBuilder: (context, index) {
-                    return GroupTile(group: groups[index]);
+                    return GroupTile(
+                      group: groups[index],
+                    );
                   },
                 );
               },
@@ -120,7 +103,8 @@ class GroupTile extends StatelessWidget {
           ),
         ),
         onTap: () {
-          // Handle group tap
+           // Get.to(() => const GroupDetailsScreen());
+
         },
       ),
     );
