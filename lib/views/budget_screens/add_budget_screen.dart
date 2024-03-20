@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
@@ -65,116 +68,119 @@ class _AddBudgetState extends State<AddBudget> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Center(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.7,
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: Card(
-            elevation: 10,
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                // BuildDropDown('Name', items, selectedItem),
-                BuildDropDown(
-                  hint: 'Transaction Type',
-                  items: expenseCategory,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 30),
-                // _buildTextField('Amount', amountController),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: amountController,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 15,
-                      ),
-                      labelText: 'Amount',
-                      labelStyle:
-                          TextStyle(fontSize: 17, color: Colors.grey.shade500),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Color(0xffC5C5C5),
+      body: SingleChildScrollView(
+        child: Center(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.7,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Card(
+              elevation: 10,
+              child: Column(
+                children: [
+                  const SizedBox(height: 50),
+                  // BuildDropDown('Name', items, selectedItem),
+                  BuildDropDown(
+                    hint: 'Transaction Type',
+                    items: expenseCategory,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCategory = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  // _buildTextField('Amount', amountController),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: amountController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 15,
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Color(0xff368983),
+                        labelText: 'Amount',
+                        labelStyle: TextStyle(
+                            fontSize: 17, color: Colors.grey.shade500),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            width: 2,
+                            color: Color(0xffC5C5C5),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            width: 2,
+                            color: Color(0xff368983),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                // _buildDropdown('Type', incomeExpense, selectedItemIncomeExpense),
-                BuildDropDown(
-                  hint: 'Type',
-                  items: transactionType,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedTransactionType = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 30),
-                _buildDateTime(),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    if (selectedCategory == null ||
-                        selectedTransactionType == null ||
-                        amountController.text.isEmpty) {
-                      AppSnackBar.errorSnackbar(
-                        title: 'Error',
-                        message: 'Please fill all the fields',
+                  const SizedBox(height: 30),
+                  BuildDropDown(
+                    hint: 'Type',
+                    items: transactionType,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTransactionType = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  _buildDateTime(),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      if (selectedCategory == null ||
+                          selectedTransactionType == null ||
+                          amountController.text.isEmpty) {
+                        AppSnackBar.errorSnackbar(
+                          title: 'Error',
+                          message: 'Please fill all the fields',
+                        );
+                        return;
+                      }
+                      String id = uuid.v4();
+                      budgetController.addManualTransaction(
+                        TransactionModel(
+                          id: id,
+                          name: selectedCategory!,
+                          amount: amountController.text,
+                          category: selectedTransactionType!,
+                          date: Timestamp.fromDate(date),
+                          isIncome: selectedTransactionType == 'Income'
+                              ? true
+                              : false,
+                        ),
                       );
-                      return;
-                    }
-                    String id = uuid.v4();
-                    budgetController.addManualTransaction(
-                      TransactionModel(
-                        id: id,
-                        name: selectedCategory!,
-                        amount: amountController.text,
-                        category: selectedTransactionType!,
-                        date: Timestamp.fromDate(date),
-                        isIncome: selectedTransactionType == 'Income' ? true : false,
-                      ),
-                    );
 
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color(0xff368983),
-                    ),
-                    width: 150,
-                    height: 50,
-                    child: const Text(
-                      'Save',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 17,
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color(0xff368983),
+                      ),
+                      width: 150,
+                      height: 50,
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 25),
-              ],
+                  const SizedBox(height: 25),
+                ],
+              ),
             ),
           ),
         ),
@@ -192,15 +198,39 @@ class _AddBudgetState extends State<AddBudget> {
       width: 300,
       child: TextButton(
         onPressed: () async {
-          DateTime? newDate = await showDatePicker(
-            context: context,
-            initialDate: date,
-            firstDate: DateTime(2020),
-            lastDate: DateTime(2100),
-          );
+          DateTime? newDate;
+
+          if (Platform.isIOS) {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (context) {
+                return Container(
+                  height: 300,
+                  color: Colors.white,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: date,
+                    onDateTimeChanged: (DateTime newDate) {
+                      setState(() {
+                        date = newDate;
+                      });
+                    },
+                  ),
+                );
+              },
+            );
+          } else {
+            newDate = await showDatePicker(
+              context: context,
+              initialDate: date,
+              firstDate: DateTime(2020),
+              lastDate: DateTime(2100),
+            );
+          }
+
           if (newDate != null) {
             setState(() {
-              date = newDate;
+              date = newDate!;
             });
           }
         },
