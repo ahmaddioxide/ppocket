@@ -1,26 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/models/receipt_model.dart';
+import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/services/database_service.dart';
 
 class SearchReceiptController extends GetxController {
   final RxBool _isLoading = false.obs; // Reactive boolean for loading state
   final RxString _error = ''.obs; // Reactive string for error message
-  final RxList<ReceiptModel> _searchResults =
-      <ReceiptModel>[].obs; // Reactive list for search results
+  final RxList<TransactionModel> _searchResults =
+      <TransactionModel>[].obs; // Reactive list for search results
   final TextEditingController _dateController =
       TextEditingController(); // Date controller
 
   bool get loading => _isLoading.value; // Getter for loading state
   String get error => _error.value; // Getter for error message
-  List<ReceiptModel> get searchResults =>
+  List<TransactionModel> get searchResults =>
       _searchResults; // Getter for search results
   TextEditingController get dateController =>
       _dateController; // Getter for date controller
 
   Future<void> searchReceiptsByDate({
-    required String userId,
     required String searchText,
   }) async {
     try {
@@ -29,19 +30,20 @@ class SearchReceiptController extends GetxController {
       // Convert the search text (date string) to a DateTime object
       DateTime searchDate = DateTime.parse(searchText);
 
+      print('Search Date  = $searchDate');
+
       // Get the start and end timestamps for the selected date
       DateTime startOfDay =
           DateTime(searchDate.year, searchDate.month, searchDate.day);
       DateTime endOfDay = startOfDay.add(const Duration(days: 1));
 
       // Call the Firestore service method to search receipts within the date range
-      List<ReceiptModel>? receipts =
+      List<TransactionModel>? receipts =
           await FireStoreService.searchReceiptsByDate(
-              userId: userId,
-              startDate: startOfDay,
-              endDate: endOfDay,
-              endTimestamp: Timestamp.fromDate(endOfDay),
-              startTimestamp: Timestamp.fromDate(startOfDay),);
+        userId: FirebaseAuth.instance.currentUser!.uid,
+        endTimestamp: Timestamp.fromDate(endOfDay),
+        startTimestamp: Timestamp.fromDate(startOfDay),
+      );
 
       if (receipts != null) {
         _searchResults

@@ -5,7 +5,7 @@ import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
-import 'package:ppocket/views/reciepts/search_reciepts.dart';
+import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
 
 class BudgetHome extends StatelessWidget {
   const BudgetHome({super.key});
@@ -47,7 +47,7 @@ class BudgetHome extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.add, color: Colors.white),
+            icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {
               // Navigate to the add transaction screen
               Navigator.push(

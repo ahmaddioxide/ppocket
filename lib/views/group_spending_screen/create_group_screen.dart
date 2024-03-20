@@ -34,11 +34,12 @@ class _CreateGroupState extends State<CreateGroup> {
         backgroundColor: Colors.black,
         elevation: 0,
         title: const Text(
-          'createGroup',
+          'Create Group ',
 
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
+
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context); // Navigate back when back button is pressed
@@ -60,15 +61,11 @@ class _CreateGroupState extends State<CreateGroup> {
                 ),
               ),
               const SizedBox(height: 8),
-              SizedBox(
-                height: 55,
-                width: 300,
-                child: TextFormField(
-                  controller: _groupNameController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter group name',
-                    border: OutlineInputBorder(),
-                  ),
+              TextFormField(
+                controller: _groupNameController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter group name',
+                  border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 16),
@@ -91,9 +88,8 @@ class _CreateGroupState extends State<CreateGroup> {
 
               Row(
                 children: [
-                  SizedBox(
-                    height: 55,
-                    width: 300,
+                  Expanded(
+                    flex: 5,
                     child: TextFormField(
                       controller: _memberEmailController,
                       decoration: const InputDecoration(
@@ -103,33 +99,36 @@ class _CreateGroupState extends State<CreateGroup> {
                       onChanged: (value) {},
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      // Add the member to the list
-                      if (_memberEmailController.text.isNotEmpty) {
-                        _groupController
-                            .findUserIdViaEmail(_memberEmailController.text)
-                            .then((value) {
-                          if (value.isNotEmpty) {
-                            membersToAdd.add(value);
-                            AppSnackBar.successSnackbar(
-                              title: 'Member Added',
-                              message: 'Member Added To group Successfully',
-                            ).then((value) {
-                              setState(() {
-                                _memberEmailController.clear();
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      onPressed: () {
+                        // Add the member to the list
+                        if (_memberEmailController.text.isNotEmpty) {
+                          _groupController
+                              .findUserIdViaEmail(_memberEmailController.text)
+                              .then((value) {
+                            if (value.isNotEmpty) {
+                              membersToAdd.add(value);
+                              AppSnackBar.successSnackbar(
+                                title: 'Member Added',
+                                message: 'Member Added To group Successfully',
+                              ).then((value) {
+                                setState(() {
+                                  _memberEmailController.clear();
+                                });
                               });
-                            });
-                          }
-                        }).onError((error, stackTrace) {
-                          // AppSnackBar.errorSnackbar(
-                          //   title: 'Error',
-                          //   message: 'Error Adding Member',
-                          // );
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.add),
+                            }
+                          }).onError((error, stackTrace) {
+                            // AppSnackBar.errorSnackbar(
+                            //   title: 'Error',
+                            //   message: 'Error Adding Member',
+                            // );
+                          });
+                        }
+                      },
+                      icon: const Icon(Icons.add),
+                    ),
                   ),
                 ],
               ),
@@ -218,8 +217,7 @@ class _BuildDropDownState extends State<BuildDropDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      width: 300,
+      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
