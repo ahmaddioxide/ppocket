@@ -178,41 +178,6 @@ class BudgetController extends GetxController {
   }
 
 
-//
-//   Future<void> updateGoalToFirestore(Goal goal) async {
-//     try {
-//       await FireStoreService.updateGoalToFirestore(
-//         userId: FirebaseAuthService.currentUserId,
-//         goal: goal.toMap(),
-//       );
-//       setGoal(goal); // Set the goal in the controller
-//       AppSnackBar.successSnackbar(
-//         title: 'Success',
-//         message: 'Goal Updated Successfully',
-//       );
-//     } catch (error) {
-//       AppSnackBar.errorSnackbar(
-//         title: 'Error',
-//         message: error.toString(),
-//       );
-//     }
-//   }
-//
-//
-//   Future<Goal> getGoalFromFirestore() async {
-//     final Goal goal = await FireStoreService.getGoalFromFirestore(
-//       userId: FirebaseAuthService.currentUserId,
-//     ).onError((error, stackTrace) {
-//       AppSnackBar.errorSnackbar(
-//         title: 'Error Getting Goal',
-//         message: error.toString(),
-//       );
-//       return Future.error(error.toString());
-//     });
-//     setGoal(goal); // Set the goal in the controller
-//     return goal;
-//   }
-
     // Search budget
   final TextEditingController searchDateController = TextEditingController();
   RxList<TransactionModel> searchedTransactions = <TransactionModel>[].obs;
