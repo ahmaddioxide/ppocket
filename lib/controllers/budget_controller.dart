@@ -148,12 +148,23 @@ class BudgetController extends GetxController {
 // Update transaction
 
 // Set up Budget Goal
+  Goal? _goal;
+
+  Goal? getGoal() {
+    return _goal;
+  }
+
+  void setGoal(Goal goal) {
+    _goal = goal;
+  }
+
   Future<void> saveGoalToFirestore(Goal goal) async {
     try {
       await FireStoreService.addGoalToFirestore(
         userId: FirebaseAuthService.currentUserId,
         goal: goal.toMap(),
       );
+      setGoal(goal); // Set the goal in the controller
       AppSnackBar.successSnackbar(
         title: 'Success',
         message: 'Goal Added Successfully',
@@ -165,4 +176,76 @@ class BudgetController extends GetxController {
       );
     }
   }
-}
+
+
+//
+//   Future<void> updateGoalToFirestore(Goal goal) async {
+//     try {
+//       await FireStoreService.updateGoalToFirestore(
+//         userId: FirebaseAuthService.currentUserId,
+//         goal: goal.toMap(),
+//       );
+//       setGoal(goal); // Set the goal in the controller
+//       AppSnackBar.successSnackbar(
+//         title: 'Success',
+//         message: 'Goal Updated Successfully',
+//       );
+//     } catch (error) {
+//       AppSnackBar.errorSnackbar(
+//         title: 'Error',
+//         message: error.toString(),
+//       );
+//     }
+//   }
+//
+//
+//   Future<Goal> getGoalFromFirestore() async {
+//     final Goal goal = await FireStoreService.getGoalFromFirestore(
+//       userId: FirebaseAuthService.currentUserId,
+//     ).onError((error, stackTrace) {
+//       AppSnackBar.errorSnackbar(
+//         title: 'Error Getting Goal',
+//         message: error.toString(),
+//       );
+//       return Future.error(error.toString());
+//     });
+//     setGoal(goal); // Set the goal in the controller
+//     return goal;
+//   }
+
+    // Search budget
+  final TextEditingController searchDateController = TextEditingController();
+  RxList<TransactionModel> searchedTransactions = <TransactionModel>[].obs;
+
+  Future<void> searchTransactionsByDate() async {
+    final String searchDate = searchDateController.text.trim();
+
+    if (searchDate.isEmpty) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Please enter a date to search',
+      );
+      return;
+    }
+
+    final List<TransactionModel> transactions =
+    await FireStoreService.getTransactionsOfUser(
+      userId: FirebaseAuthService.currentUserId,
+    ).then((List<TransactionModel> transactions) {
+      return transactions
+          .where((TransactionModel transaction) =>
+      transaction.date.toDate().toString().substring(0, 10) ==
+          searchDate)
+          .toList();
+    }).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: error.toString(),
+      );
+      return [];
+    });
+
+    searchedTransactions.assignAll(transactions);
+  }
+
+ }

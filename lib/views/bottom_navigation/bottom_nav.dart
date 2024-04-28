@@ -114,8 +114,6 @@ class _BottomState extends State<BottomNav> {
                   indexColor == 3 ? const Color(0xff368983) : Colors.grey,
                 ),
               ),/**/
-
-
             ],
           ),
         ),

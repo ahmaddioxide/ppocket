@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
+import 'package:ppocket/controllers/models/budget_search_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
+
+import 'budget_search.dart';
 
 class BudgetHome extends StatelessWidget {
   const BudgetHome({super.key});
@@ -129,7 +132,7 @@ class BudgetHome extends StatelessWidget {
                                 width: 2,
                                 color: Colors.white,
                               ),
-                              const Column(
+                              Column(
                                 children: [
                                   Text(
                                     'Goal',
@@ -140,8 +143,10 @@ class BudgetHome extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    // budgetController.goal!.amount.toString(),
-                                    '1000',
+                                    budgetController.getGoal() != null
+                                        ? '${budgetController.getGoal()!.amount ?? 'No goal amount'}'
+                                        : 'No goal set',
+
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
@@ -280,17 +285,16 @@ class BudgetHome extends StatelessWidget {
                         backgroundColor: Colors.green,
                       ),
                       onPressed: () {
+                        // Navigate to the search screen
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SetBudgetGoalScreen(
-                              budgetController: BudgetController(),
-                            ),
+                            builder: (context) => BudgetSearchScreen(),
                           ),
                         );
                       },
                       child: const Text(
-                        'Budget Goal',
+                        'Search Budget',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
