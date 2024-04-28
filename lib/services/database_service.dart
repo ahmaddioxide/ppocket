@@ -241,11 +241,12 @@ class FireStoreService {
     required String userId,
     required Map<String, dynamic> goal,
   }) async {
+    goal['date'] = Timestamp.now();
     await usersCollection
         .doc(userId)
         .collection('goals')
         .add(goal)
-        .onError((error, stackTrace) {
+        .catchError((error) {
       AppSnackBar.errorSnackbar(
         title: 'Error',
         message: 'Error Storing Goal to Firestore',
@@ -253,7 +254,7 @@ class FireStoreService {
       if (kDebugMode) {
         print('Error Storing Goal to Firestore: $error');
       }
-      return Future.error(error.toString());
+      throw error.toString();
     });
   }
 
@@ -355,5 +356,37 @@ class FireStoreService {
       debugPrintStack(stackTrace: stackTrace, label: error.toString());
       return Future.error(error.toString());
     });
+  }
+
+  // Get budget goal for current month
+  static Future<Map> getBudgetGoalForCurrentMonth({
+    required String userId,
+  }) async {
+    final DateTime now = DateTime.now();
+    final DateTime startOfMonth = DateTime(now.year, now.month, 1);
+    final DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
+
+    final Map goal = await usersCollection
+        .doc(userId)
+        .collection('goals')
+        .where('date', isGreaterThanOrEqualTo: startOfMonth)
+        .where('date', isLessThan: endOfMonth)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        return value.docs.first.data();
+      } else {
+        return {};
+      }
+    }).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Getting Budget Goal for Current Month',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+
+    return goal;
   }
 }

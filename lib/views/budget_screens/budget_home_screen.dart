@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/budget_search_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
+import 'package:ppocket/views/budget_screens/budget_goal.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
@@ -11,7 +12,7 @@ import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
 import 'budget_search.dart';
 
 class BudgetHome extends StatelessWidget {
-  const BudgetHome({super.key});
+  const BudgetHome({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +74,7 @@ class BudgetHome extends StatelessWidget {
           }
           if (snapshot.hasData) {
             final transactionsList = snapshot.data as List<TransactionModel>;
+            final goal = budgetController.getCurrentMonthGoal();
 
             return Column(
               children: [
@@ -132,27 +134,11 @@ class BudgetHome extends StatelessWidget {
                                 width: 2,
                                 color: Colors.white,
                               ),
+
                               Column(
                                 children: [
-                                  Text(
-                                    'Goal',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    budgetController.getGoal() != null
-                                        ? '${budgetController.getGoal()!.amount ?? 'No goal amount'}'
-                                        : 'No goal set',
-
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  Text("Goal"),
+                                  Text(goal != null ? goal.amount.toString() : "No goal set")
                                 ],
                               ),
                             ],

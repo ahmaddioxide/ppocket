@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
-import 'package:ppocket/controllers/models/budget_goal_model.dart';
+import 'package:ppocket/controllers/models/budget_goal_model.dart'; 
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/services/auth_service.dart';
 import 'package:ppocket/services/database_service.dart';
@@ -160,11 +160,26 @@ class BudgetController extends GetxController {
 
   Future<void> saveGoalToFirestore(Goal goal) async {
     try {
+      // Check if a budget goal already exists for the current month
+      final existingGoal = await FireStoreService.getBudgetGoalForCurrentMonth(
+        userId: FirebaseAuthService.currentUserId,
+      );
+
+      if (existingGoal.isNotEmpty) {
+        // Display a message if a goal already exists for the current month
+        AppSnackBar.errorSnackbar(
+          title: 'Info',
+          message: 'Budget goal for the current month already exists!',
+        );
+        return;
+      }
+
+      // If no goal exists, save the new goal
       await FireStoreService.addGoalToFirestore(
         userId: FirebaseAuthService.currentUserId,
         goal: goal.toMap(),
       );
-      setGoal(goal); // Set the goal in the controller
+      setGoal(goal);
       AppSnackBar.successSnackbar(
         title: 'Success',
         message: 'Goal Added Successfully',
@@ -176,6 +191,29 @@ class BudgetController extends GetxController {
       );
     }
   }
+
+  // Get budget goal for current month
+  Future<Map> getBudgetGoalForCurrentMonth() async {
+    final DateTime now = DateTime.now();
+    final DateTime startOfMonth = DateTime(now.year, now.month, 1);
+    final DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
+
+    final Map goal = await FireStoreService.getBudgetGoalForCurrentMonth(
+      userId: FirebaseAuthService.currentUserId,
+    ).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Getting Budget Goal for Current Month',
+      );
+      debugPrintStack(stackTrace: stackTrace, label: error.toString());
+      return Future.error(error.toString());
+    });
+
+    return goal;
+  }
+
+
+
 
 
     // Search budget
