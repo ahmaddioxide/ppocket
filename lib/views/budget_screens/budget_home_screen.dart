@@ -74,7 +74,7 @@ class BudgetHome extends StatelessWidget {
           }
           if (snapshot.hasData) {
             final transactionsList = snapshot.data as List<TransactionModel>;
-            final goal = budgetController.getCurrentMonthGoal();
+            // final goal = budgetController.getCurrentMonthGoal();
 
             return Column(
               children: [
@@ -137,8 +137,15 @@ class BudgetHome extends StatelessWidget {
 
                               Column(
                                 children: [
-                                  Text("Goal"),
-                                  Text(goal != null ? goal.amount.toString() : "No goal set")
+
+                                  ElevatedButton(onPressed: (
+                                  ){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => BudgetGoalScreen()));
+                                  }, child: Text("Goal")),
+
+                        
+                                  // Text("Goal"),
+                                  // Text(goal != null ? goal.amount.toString() : "No goal set")
                                 ],
                               ),
                             ],
@@ -380,6 +387,7 @@ class BudgetHome extends StatelessWidget {
                       );
                     },
                   ),
+                
                 ),
               ],
             );

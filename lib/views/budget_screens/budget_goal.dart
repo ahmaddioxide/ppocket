@@ -1,70 +1,104 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
+import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 
-class CurrentMonthGoalWidget extends StatelessWidget {
-  final BudgetController budgetController = Get.find<BudgetController>();
+class BudgetGoalScreen extends StatelessWidget {
+  const BudgetGoalScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final BudgetController budgetController = Get.find();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Screen'),
+        title: const Text('Budget Goal'),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 16.0),
-            Text(
-              'Current Month Budget Goal',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              ),
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(10),
             ),
-            SizedBox(height: 16.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Budget Goal for the Month:',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                GetBuilder<BudgetController>(
-                  builder: (controller) {
-                    final goal = controller.getGoal();
-                    if (goal == null) {
-                      return Text(
-                        'No budget goal set for this month',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      );
-                    } else {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Amount: \$${goal.amount}',
-                            style: TextStyle(fontSize: 14.0),
+            child: FutureBuilder(
+              future: budgetController.getBudgetGoalForCurrentMonth(),
+              builder: (context, AsyncSnapshot<Map> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  final goalData = snapshot.data!;
+                  final goalAmount = goalData['amount'];
+                  return Center(
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10, top: 50),
+                          child: Text(
+                            'Your Budget Goal for ${DateTime.now().month}/${DateTime.now().year}:',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
-                          SizedBox(height: 4.0),
-                        ],
-                      );
-                    }
-                  },
-                ),
-              ],
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          '\$$goalAmount',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  // return Text('No Budget Goal Set for the Current Month');
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Center(
+                          child: Text(
+                            'No Budget Goal Set for the Current Month',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SetBudgetGoalScreen(
+                                  budgetController: BudgetController(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text('Set Budget Goal'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
             ),
-            // Other widgets...
-          ],
+          ),
         ),
       ),
     );
