@@ -196,7 +196,6 @@ class BudgetController extends GetxController {
   Future<Map> getBudgetGoalForCurrentMonth() async {
     final DateTime now = DateTime.now();
     final DateTime startOfMonth = DateTime(now.year, now.month, 1);
-    final DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
 
     final Map goal = await FireStoreService.getBudgetGoalForCurrentMonth(
       userId: FirebaseAuthService.currentUserId,

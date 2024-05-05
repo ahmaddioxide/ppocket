@@ -39,7 +39,7 @@ class SignUpPage extends StatelessWidget {
                     'assets/images/ppocket_land.png',
                   ),
                 ),
-                SizedBox(height: Get.height * .02),
+                SizedBox(height: Get.height * .1),
                 TextFormField(
                   controller: nameController,
                   decoration: InputDecoration(
