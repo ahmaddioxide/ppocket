@@ -7,8 +7,6 @@ import 'package:ppocket/services/auth_service.dart';
 class BugReportController extends GetxController {
   final TextEditingController bugDescriptionController =
       TextEditingController();
-
-  // Variable to store bug reports
   RxList bugReports = [].obs;
 
   // Report a bug
@@ -39,19 +37,6 @@ class BugReportController extends GetxController {
       AppSnackBar.errorSnackbar(
         title: 'Error',
         message: 'Failed to report bug: $error',
-      );
-    }
-  }
-
-  // Get all bug reports
-  Future<void> getAllBugReports() async {
-    try {
-      final bugReportsData = await FireStoreService.getBugReports();
-      bugReports.value = bugReportsData as List;
-    } catch (error) {
-      AppSnackBar.errorSnackbar(
-        title: 'Error',
-        message: 'Failed to get bug reports: $error',
       );
     }
   }
