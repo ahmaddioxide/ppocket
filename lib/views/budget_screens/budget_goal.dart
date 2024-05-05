@@ -14,90 +14,88 @@ class BudgetGoalScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Budget Goal'),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: FutureBuilder(
-              future: budgetController.getBudgetGoalForCurrentMonth(),
-              builder: (context, AsyncSnapshot<Map> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                  final goalData = snapshot.data!;
-                  final goalAmount = goalData['amount'];
-                  return Center(
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10, top: 50),
-                          child: Text(
-                            'Your Budget Goal for ${DateTime.now().month}/${DateTime.now().year}:',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          '\$$goalAmount',
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.3,
+          width: MediaQuery.of(context).size.width * 0.8,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: FutureBuilder(
+            future: budgetController.getBudgetGoalForCurrentMonth(),
+            builder: (context, AsyncSnapshot<Map> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                final goalData = snapshot.data!;
+                final goalAmount = goalData['amount'];
+                return Center(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10, top: 50),
+                        child: Text(
+                          'Your Budget Goal for ${DateTime.now().month}/${DateTime.now().year}:',
                           style: const TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                } else {
-                  // return Text('No Budget Goal Set for the Current Month');
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Center(
-                          child: Text(
-                            'No Budget Goal Set for the Current Month',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '$goalAmount',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                // return Text('No Budget Goal Set for the Current Month');
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Center(
+                        child: Text(
+                          'No Budget Goal Set for the Current Month',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SetBudgetGoalScreen(
-                                  budgetController: BudgetController(),
-                                ),
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SetBudgetGoalScreen(
+                                budgetController: BudgetController(),
                               ),
-                            );
-                          },
-                          child: const Text('Set Budget Goal'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
+                            ),
+                          );
+                        },
+                        child: const Text('Set Budget Goal'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),

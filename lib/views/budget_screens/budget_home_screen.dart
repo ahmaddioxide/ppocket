@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
-import 'package:ppocket/controllers/models/budget_search_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/budget_goal.dart';
-import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
+import 'package:ppocket/views/report_bug/report_bug_screen.dart';
 import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
 
-import 'budget_search.dart';
+import 'package:ppocket/views/budget_screens/budget_search.dart';
 
 class BudgetHome extends StatelessWidget {
   const BudgetHome({Key? key});
@@ -39,15 +38,14 @@ class BudgetHome extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.monetization_on, color: Colors.white),
             onPressed: () {
-              // Navigate to the set budget goal screen
+              // Navigate to the report bug screen
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SetBudgetGoalScreen(
-                    budgetController: BudgetController(),
-                  ),
+                  builder: (context) => BugReportScreen(),
                 ),
               );
+              
             },
           ),
           IconButton(

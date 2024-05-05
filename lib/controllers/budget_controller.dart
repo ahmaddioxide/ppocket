@@ -251,4 +251,6 @@ class BudgetController extends GetxController {
     searchedTransactions.assignAll(transactions);
   }
 
+
+
  }

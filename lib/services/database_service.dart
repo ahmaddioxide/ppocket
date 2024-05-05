@@ -389,4 +389,31 @@ class FireStoreService {
 
     return goal;
   }
+
+  static Future<void> reportBug({
+    required String userId,
+    required String bug,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection('bugreports')
+        .add({'userId': userId, 'bug': bug}).then((_) {
+      print('Bug reported successfully!');
+    }).catchError((error) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Reporting Bug to FireStore',
+      );
+      debugPrint('Error: $error');
+    });
+  }
+
+// Get all bug reports
+  static Stream<List> getBugReports() {
+    return FirebaseFirestore.instance
+        .collection('bugreports')
+        .snapshots()
+        .map((event) {
+      return event.docs.map((e) => e.data()).toList();
+    });
+  }
 }
