@@ -63,35 +63,22 @@ class BudgetGoalScreen extends StatelessWidget {
                 );
               } else {
                 // return Text('No Budget Goal Set for the Current Month');
-                return Center(
+                return const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Center(
+                      Center(
                         child: Text(
                           'No Budget Goal Set for the Current Month',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SetBudgetGoalScreen(
-                                budgetController: BudgetController(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: const Text('Set Budget Goal'),
-                      ),
-                    ],
+                      SizedBox(height: 10),
+                       ],
                   ),
                 );
               }

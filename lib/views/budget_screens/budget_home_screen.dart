@@ -6,6 +6,7 @@ import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/budget_goal.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/report_bug/report_bug_screen.dart';
+import 'package:ppocket/views/search_navigation_screens/navigation_screen.dart';
 import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
 
 import 'package:ppocket/views/budget_screens/budget_search.dart';
@@ -55,7 +56,7 @@ class BudgetHome extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SearchReceipts(),
+                  builder: (context) => NavigationScreen(),
                 ),
               );
             },
