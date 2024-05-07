@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/components/snackbars.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
@@ -78,7 +79,6 @@ class _AddBudgetState extends State<AddBudget> {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
-                  // BuildDropDown('Name', items, selectedItem),
                   BuildDropDown(
                     hint: 'Transaction Type',
                     items: expenseCategory,
@@ -89,11 +89,11 @@ class _AddBudgetState extends State<AddBudget> {
                     },
                   ),
                   const SizedBox(height: 30),
-                  // _buildTextField('Amount', amountController),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number, // Allows only numbers
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly], // Allows only digits
                       controller: amountController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -144,6 +144,16 @@ class _AddBudgetState extends State<AddBudget> {
                         );
                         return;
                       }
+                      
+                      // Check if the amount is a valid integer
+                      if(int.tryParse(amountController.text) == null) {
+                        AppSnackBar.errorSnackbar(
+                          title: 'Error',
+                          message: 'Amount should be an integer',
+                        );
+                        return;
+                      }
+
                       String id = uuid.v4();
                       budgetController.addManualTransaction(
                         TransactionModel(
@@ -164,7 +174,7 @@ class _AddBudgetState extends State<AddBudget> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: const Color(0xff368983),
+                        color: Colors.green,
                       ),
                       width: 150,
                       height: 50,
