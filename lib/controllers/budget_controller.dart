@@ -146,6 +146,32 @@ class BudgetController extends GetxController {
   }
 
 // Update transaction
+// Update transaction
+Future<void> updateTransaction(
+  String transactionId,
+  TransactionModel updatedTransaction,
+) async {
+  try {
+    await FireStoreService.updateTransaction(
+      userId: FirebaseAuthService.currentUserId,
+      transactionId: transactionId,
+      updatedTransaction: updatedTransaction.toMap(),
+    );
+    AppSnackBar.successSnackbar(
+      title: 'Success',
+      message: 'Transaction Updated Successfully',
+    );
+  } catch (error) {
+    AppSnackBar.errorSnackbar(
+      title: 'Error Updating Transaction',
+      message: error.toString(),
+    );
+  }
+}
+
+
+
+
 
 // Set up Budget Goal
   Goal? _goal;

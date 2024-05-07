@@ -9,6 +9,9 @@ class BugReportController extends GetxController {
       TextEditingController();
   RxList bugReports = [].obs;
 
+  // Get current user's email
+  String get currentUserEmail => FirebaseAuthService.currentUser!.email!;
+
   // Report a bug
   Future<void> reportBug() async {
     final String bugDescription = bugDescriptionController.text.trim();
@@ -24,7 +27,7 @@ class BugReportController extends GetxController {
     try {
       // Save bug report to Firestore
       await FireStoreService.reportBug(
-        userId: FirebaseAuthService.currentUserId,
+        userId: currentUserEmail, // Use user's email as userId
         bug: bugDescription,
       );
       AppSnackBar.successSnackbar(
@@ -37,6 +40,20 @@ class BugReportController extends GetxController {
       AppSnackBar.errorSnackbar(
         title: 'Error',
         message: 'Failed to report bug: $error',
+      );
+    }
+  }
+
+  // Get all bug reports
+  Future<void> getBugReports() async {
+    try {
+      final List<Map<String, dynamic>> reports =
+          await FireStoreService.getAllBugReports();
+      bugReports.assignAll(reports);
+    } catch (error) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Failed to get bug reports: $error',
       );
     }
   }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/views/budget_screens/budget_goal.dart';
+import 'package:ppocket/views/budget_screens/update_bidget_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/report_bug/report_bug_screen.dart';
 import 'package:ppocket/views/search_navigation_screens/navigation_screen.dart';
@@ -371,8 +372,15 @@ class BudgetHome extends StatelessWidget {
                                             color: Colors.green,
                                           ),
                                           onPressed: () {
-                                            // Call the edit function
-                                            // budgetController.editTransaction(transactionsList[index].id);
+                                              // Navigate to the update transaction screen
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => UpdateTransactionScreen(
+                                                    transaction: transactionsList[index],
+                                                  ),
+                                                ),
+                                              );
                                           },
                                         ),
                                       ),
