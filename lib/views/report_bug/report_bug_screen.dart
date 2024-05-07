@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 // import 'package:ppocket/controllers/bug_report_controller.dart';
 import 'package:ppocket/controllers/models/report_bug_model.dart';
 import 'package:ppocket/controllers/report_bug_controller.dart';
-import 'package:ppocket/views/report_bug/get_bugs_screen.dart';
+// import 'package:ppocket/views/report_bug/get_bugs_screen.dart';
 
 class BugReportScreen extends StatelessWidget {
   final BugReportController bugReportController = Get.put(BugReportController());
@@ -18,13 +18,13 @@ class BugReportScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.bug_report),
             onPressed: () {
-                            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AllBugReportScreen(),
-                ),
-              );
-            },
+            //                 Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => AllBugReportScreen(),
+            //     ),
+            //   );
+             },
           ),
         ],
       ),
