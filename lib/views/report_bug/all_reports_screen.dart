@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:ppocket/controllers/report_bug_controller.dart';
 
 class AllBugReportsScreen extends StatelessWidget {
-   final BugReportController bugReportController = Get.put(BugReportController());
+  final BugReportController bugReportController =
+      Get.put(BugReportController());
 
   @override
   Widget build(BuildContext context) {
@@ -12,23 +13,38 @@ class AllBugReportsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bug Reports'),
+        title: const Text('Bug Reports'),
       ),
       body: Obx(
         () => bugReportController.bugReports.isEmpty
-            ? Center(
-                child: Text('No bug reports found'),
+            ? const Center(
+                child: Text(
+                  'No bug reports found',
+                  style: TextStyle(fontSize: 18.0, color: Colors.grey),
+                ),
               )
             : ListView.builder(
                 itemCount: bugReportController.bugReports.length,
                 itemBuilder: (context, index) {
                   final bugReport = bugReportController.bugReports[index];
-                  return ListTile(
-                    title: Text(bugReport['bug']),
-                    subtitle: Text('Reported by: ${bugReport['userId']}'),
+                  return Card(
+                    elevation: 3.0,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 10.0,
+                      vertical: 5.0,
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        bugReport['bug'],
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text('Reported by: ${bugReport['userId']}'),
+                      
+                    ),
                   );
                 },
               ),
       ),
     );
-  }}
+  }
+}
