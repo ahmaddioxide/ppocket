@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/expense_predictions/expense_prediction_screen.dart';
-import 'package:ppocket/views/report_bug/all_reports_screen.dart';
 import 'package:ppocket/views/report_bug/report_bug_screen.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
@@ -78,25 +77,7 @@ class NavigationScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AllBugReportsScreen(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 20),
-              ),
-              child: const Text(
-                'All Bug Reports',
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            ),
-                        const SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -107,7 +88,7 @@ class NavigationScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: Colors.green,
                 padding: const EdgeInsets.symmetric(vertical: 20),
               ),
               child: const Text(
