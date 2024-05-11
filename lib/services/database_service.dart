@@ -447,4 +447,5 @@ static Future<List<Map<String, dynamic>>> getAllBugReports() async {
 
     return bugReports;
   }
+
 }

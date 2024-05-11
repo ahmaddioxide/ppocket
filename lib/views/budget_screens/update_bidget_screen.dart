@@ -35,6 +35,7 @@ class UpdateTransactionScreen extends StatelessWidget {
               onChanged: (value) {
                 selectedName = value!;
               },
+<<<<<<< Updated upstream
               items: [
                 'Food',
                 'Transfer',
@@ -42,6 +43,10 @@ class UpdateTransactionScreen extends StatelessWidget {
                 'Education',
                 'Receipt Scan'
               ].map<DropdownMenuItem<String>>((String value) {
+=======
+              items: ['Food', 'Transfer', 'Transportation', 'Education','Receipt Scan']
+                  .map<DropdownMenuItem<String>>((String value) {
+>>>>>>> Stashed changes
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -75,7 +80,7 @@ class UpdateTransactionScreen extends StatelessWidget {
               onChanged: (value) {
                 selectedCategory = value!;
               },
-              items: ['Expense', 'Income']
+              items: ['Expense', 'Income', 'Receipt Scan']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

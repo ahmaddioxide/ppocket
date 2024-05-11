@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
+import 'package:ppocket/views/expense_predictions/expense_prediction_screen.dart';
 import 'package:ppocket/views/report_bug/all_reports_screen.dart';
 import 'package:ppocket/views/report_bug/report_bug_screen.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
@@ -10,14 +11,14 @@ class NavigationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Navigation Screen'),
+        title: const Text('Navigation Screen'),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -29,14 +30,14 @@ class NavigationScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
               ),
-              child: Text(
+              child: const Text(
                 'Report an Issue',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -50,14 +51,14 @@ class NavigationScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
               ),
-              child: Text(
+              child: const Text(
                 'Set Budget Goal',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -69,14 +70,14 @@ class NavigationScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
               ),
-              child: Text(
+              child: const Text(
                 'Search Receipts',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -88,13 +89,33 @@ class NavigationScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
               ),
-              child: Text(
+              child: const Text(
                 'All Bug Reports',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
+                        const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExpensePredictionScreen(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+              ),
+              child: const Text(
+                'Expense Predictions',
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ),
+
           ],
         ),
       ),
