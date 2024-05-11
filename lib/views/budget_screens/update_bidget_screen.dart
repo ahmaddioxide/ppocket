@@ -35,18 +35,8 @@ class UpdateTransactionScreen extends StatelessWidget {
               onChanged: (value) {
                 selectedName = value!;
               },
-<<<<<<< Updated upstream
-              items: [
-                'Food',
-                'Transfer',
-                'Transportation',
-                'Education',
-                'Receipt Scan'
-              ].map<DropdownMenuItem<String>>((String value) {
-=======
               items: ['Food', 'Transfer', 'Transportation', 'Education','Receipt Scan']
                   .map<DropdownMenuItem<String>>((String value) {
->>>>>>> Stashed changes
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -98,8 +88,7 @@ class UpdateTransactionScreen extends StatelessWidget {
                 TransactionModel updatedTransaction = TransactionModel(
                   name: selectedName,
                   amount: amountController.text.trim(),
-                  date: Timestamp.fromDate(
-                      DateTime.parse(dateController.text.trim())),
+                  date: Timestamp.fromDate(DateTime.parse(dateController.text.trim())),
                   category: selectedCategory,
                   isIncome: selectedCategory == 'Income' ? true : false,
                   id: transaction.id,
@@ -112,8 +101,7 @@ class UpdateTransactionScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
-              child: const Text('Update Transaction',
-                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              child: const Text('Update Transaction', style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           ],
         ),
