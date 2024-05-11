@@ -3,12 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
-import 'package:ppocket/views/budget_screens/budget_goal.dart';
 import 'package:ppocket/views/budget_screens/update_bidget_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
-import 'package:ppocket/views/report_bug/report_bug_screen.dart';
 import 'package:ppocket/views/search_navigation_screens/navigation_screen.dart';
-import 'package:ppocket/views/search_reciepts/search_reciepts.dart';
 
 import 'package:ppocket/views/budget_screens/budget_search.dart';
 
@@ -36,21 +33,7 @@ class BudgetHome extends StatelessWidget {
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.monetization_on, color: Colors.white),
-            onPressed: () {
-              // Navigate to the report bug screen
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BugReportScreen(),
-                ),
-              );
-              
-            },
-          ),
-          IconButton(
+        actions: [          IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {
               // Navigate to the add transaction screen
@@ -137,15 +120,72 @@ class BudgetHome extends StatelessWidget {
 
                               Column(
                                 children: [
-
-                                  ElevatedButton(onPressed: (
-                                  ){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => BudgetGoalScreen()));
-                                  }, child: Text("Goal")),
-
-                        
-                                  // Text("Goal"),
-                                  // Text(goal != null ? goal.amount.toString() : "No goal set")
+                                  Container(
+                                              child: FutureBuilder(
+            future: budgetController.getBudgetGoalForCurrentMonth(),
+            builder: (context, AsyncSnapshot<Map> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                final goalData = snapshot.data!;
+                final goalAmount = goalData['amount'];
+                return Center(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10, top: 10),
+                        child: Text(
+                          'Budget Goal',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '$goalAmount',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                // return Text('No Budget Goal Set for the Current Month');
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Goal Not Set',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                       ],
+                  ),
+                );
+              }
+            },
+          ),
+       
+                                  ),
+                                  
                                 ],
                               ),
                             ],
@@ -372,7 +412,7 @@ class BudgetHome extends StatelessWidget {
                                             color: Colors.green,
                                           ),
                                           onPressed: () {
-                                              // Navigate to the update transaction screen
+                                               // Navigate to the update transaction screen
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
