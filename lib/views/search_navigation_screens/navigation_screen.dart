@@ -77,13 +77,12 @@ class NavigationScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ExpensePredictionScreen(),
+                    builder: (context) => PredictionScreen(),
                   ),
                 );
               },
@@ -96,7 +95,6 @@ class NavigationScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
-
           ],
         ),
       ),
