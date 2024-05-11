@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/budget_search_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
+import 'package:ppocket/theme/app_colors.dart';
 import 'package:ppocket/views/budget_screens/budget_goal.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
@@ -87,7 +88,7 @@ class BudgetHome extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),
-                        color: Colors.green[600],
+                        color: AppColors.secondaryColor,
                         //elevation
                         boxShadow: [
                           BoxShadow(
@@ -162,7 +163,7 @@ class BudgetHome extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.36,
                                 child: Card(
                                   elevation: 5,
-                                  color: Colors.blueAccent,
+                                  color: AppColors.primaryColor,
                                   child: Center(
                                     child: Column(
                                       mainAxisAlignment:
@@ -275,7 +276,7 @@ class BudgetHome extends StatelessWidget {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: AppColors.secondaryColor,
                       ),
                       onPressed: () {
                         // Navigate to the search screen

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
+import 'package:ppocket/theme/app_colors.dart';
 
 class BudgetSearchScreen extends StatelessWidget {
   final BudgetController _budgetController = Get.find<BudgetController>();
@@ -30,7 +31,7 @@ class BudgetSearchScreen extends StatelessWidget {
                 _budgetController.searchTransactionsByDate();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: AppColors.secondaryColor,
               ),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,

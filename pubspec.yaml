@@ -49,6 +49,7 @@ dependencies:
   intl: any
   uuid: ^3.0.4
   cached_network_image: ^3.3.1
+  hexcolor: ^3.0.1
 
 #  image_picker: ^1.0.7
 

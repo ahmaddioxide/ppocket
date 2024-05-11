@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
+import 'package:ppocket/theme/app_colors.dart';
 import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 
 class BudgetGoalScreen extends StatelessWidget {
@@ -22,7 +23,7 @@ class BudgetGoalScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.8,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: FutureBuilder(

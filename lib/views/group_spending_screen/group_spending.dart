@@ -70,7 +70,7 @@ class GroupSpending extends StatelessWidget {
                       group: groups[index],
                       onTap: () {
                         Get.to(
-                          () => GroupSpendingDetails(group: groups[index]),
+                          () => GroupSpendingDetails(group: groups[index], ),
                         );
                       },
                     );

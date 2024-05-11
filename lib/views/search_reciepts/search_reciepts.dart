@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/reciept_controller.dart';
+import 'package:ppocket/theme/app_colors.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/receipt_detail_screen/receipt_details_screen.dart';
 
@@ -74,7 +75,7 @@ class SearchReceipts extends StatelessWidget {
             const SizedBox(height: 16.0),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: AppColors.secondaryColor,
               ),
               onPressed: () {
                 _searchController.searchReceiptsByDate(

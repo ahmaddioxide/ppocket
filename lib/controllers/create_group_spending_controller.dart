@@ -10,12 +10,15 @@ class CreateGroupSpendingController extends GetxController {
   final spendingAmountController = TextEditingController();
   final spendingDescriptionController = TextEditingController();
 
+  RxString selectedSplitType = 'equally'.obs;
+
+
   final isLoading = false.obs;
 
   void addSpending({
     required double spendingAmount,
+    required String splitType,
     required String spendingDescription,
-    String splitType = 'equally',
     required GroupModel group,
   }) async {
     isLoading.value = true;

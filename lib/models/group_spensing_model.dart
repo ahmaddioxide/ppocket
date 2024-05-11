@@ -36,6 +36,7 @@ class GroupSpendingModel {
     return {
       'groupID': groupID,
       'totalAmount': totalAmount,
+
       'divisionType': divisionType,
       'payor': payor,
       'date': date,
@@ -80,6 +81,7 @@ class GroupSpendingModel {
       date: date ?? this.date,
       description: description ?? this.description,
       debtors: debtors ?? this.debtors,
+
     );
   }
 
@@ -101,11 +103,11 @@ class GroupSpendingModel {
   @override
   int get hashCode {
     return groupID.hashCode ^
-        totalAmount.hashCode ^
-        divisionType.hashCode ^
-        payor.hashCode ^
-        date.hashCode ^
-        description.hashCode ^
-        debtors.hashCode;
+    totalAmount.hashCode ^
+    divisionType.hashCode ^
+    payor.hashCode ^
+    date.hashCode ^
+    description.hashCode ^
+    debtors.hashCode;
   }
 }
