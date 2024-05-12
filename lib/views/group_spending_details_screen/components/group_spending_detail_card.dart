@@ -30,8 +30,6 @@ class GroupSpendingDetailCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ExpenseDetailsScreen(
                 groupSpending: groupSpending,
-                memberNames:memberNames,
-                allocatedAmounts: [],
 
               ),
             ),

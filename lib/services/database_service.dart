@@ -450,47 +450,67 @@ static Future<void> updateTransaction({
     }
 
 
-    Future<void> addDebtorsToGroupSpending(String spendingId,
-        String groupId,
-        List<DebtorsModel> debtors,) async {
-      final debtorsCollection = groupsCollection
-          .doc(groupId)
-          .collection('spendings')
-          .doc(spendingId)
-          .collection('debtors');
-      for (var debtor in debtors) {
-        await debtorsCollection.add(debtor.toMap()).then((value) {
-          value.update({'id': value.id});
-        }).onError((error, stackTrace) {
-          AppSnackBar.errorSnackbar(
-            title: 'Error',
-            message: 'Error Adding Debtors to Group Spending in FireStore',
-          ).then((value) {
-            debugPrint('Error Adding Debtors to Group Spending in FireStore');
-          });
-          debugPrintStack(stackTrace: stackTrace, label: error.toString());
-          return Future.error(error.toString());
-        });
-      }
-    }
-
+    // Future<void> addDebtorsToGroupSpending(String spendingId,
+    //     String groupId,
+    //     List<DebtorsModel> debtors,) async {
+    //   final debtorsCollection = groupsCollection
+    //       .doc(groupId)
+    //       .collection('spendings')
+    //       .doc(spendingId)
+    //       .collection('debtors');
+    //   for (var debtor in debtors) {
+    //     await debtorsCollection.add(debtor.toMap()).then((value) {
+    //       value.update({'id': value.id});
+    //     }).onError((error, stackTrace) {
+    //       AppSnackBar.errorSnackbar(
+    //         title: 'Error',
+    //         message: 'Error Adding Debtors to Group Spending in FireStore',
+    //       ).then((value) {
+    //         debugPrint('Error Adding Debtors to Group Spending in FireStore');
+    //       });
+    //       debugPrintStack(stackTrace: stackTrace, label: error.toString());
+    //       return Future.error(error.toString());
+    //     });
+    //   }
+    // }
+  // Future<void> addDebtorsToGroupSpending(String spendingId,
+  //     String groupId,
+  //     List<DebtorsModel> debtors,) async {
+  //   final debtorsCollection = groupsCollection
+  //       .doc(groupId)
+  //       .collection('spendings')
+  //       .doc(spendingId)
+  //       .collection('debtors');
+  //   for (var debtor in debtors) {
+  //     await debtorsCollection.add(debtor.toMap()).then((value) {
+  //       value.update({'id': value.id});
+  //     }).onError((error, stackTrace) {
+  //       AppSnackBar.errorSnackbar(
+  //         title: 'Error',
+  //         message: 'Error Adding Debtors to Group Spending in FireStore',
+  //       ).then((value) {
+  //         debugPrint('Error Adding Debtors to Group Spending in FireStore');
+  //       });
+  //       debugPrintStack(stackTrace: stackTrace, label: error.toString());
+  //       return Future.error(error.toString());
+  //     });
+  //   }
+  // }
     Future<void> addGroupSpending(GroupSpendingModel spending) async {
       final spendingCollection =
       groupsCollection.doc(spending.groupID).collection('spendings');
       await spendingCollection.add(spending.toMap()).then((value) async {
-        value.update({'id': value.id});
-        await addDebtorsToGroupSpending(
-          value.id,
-          spending.groupID,
-          spending.debtors,
-        );
+      await  value.update({'id': value.id});
+        // await addDebtorsToGroupSpending(
+        //   value.id,
+        //   spending.groupID,
+        //   spending.debtors,
+        // );
       }).onError((error, stackTrace) {
         AppSnackBar.errorSnackbar(
           title: 'Error',
           message: 'Error Adding Group Spending to FireStore',
-        ).then((value) {
-          debugPrint('Error Adding Group Spending to FireStore');
-        });
+        );
         debugPrintStack(stackTrace: stackTrace, label: error.toString());
         return Future.error(error.toString());
       });
@@ -525,6 +545,11 @@ static Future<void> updateTransaction({
         throw error.toString();
       }
     }
+
+  // static Future<List<DebtorsModel>> getDebtorsFromFirestore(String spendingId, String groupId) async {
+  //
+  //
+  // }
   }
 
 

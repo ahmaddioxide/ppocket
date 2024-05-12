@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:ppocket/controllers/bug_report_controller.dart';
-import 'package:ppocket/controllers/models/report_bug_model.dart';
 import 'package:ppocket/controllers/report_bug_controller.dart';
 // import 'package:ppocket/views/report_bug/get_bugs_screen.dart';
 

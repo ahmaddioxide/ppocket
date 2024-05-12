@@ -302,7 +302,7 @@ Future<void> updateTransaction(
       final List<TransactionModel> searched = transactions
           .where((TransactionModel transaction) =>
               transaction.date.toDate().toString().substring(0, 10) ==
-              searchDate)
+              searchDate,)
           .toList();
 
       searchedTransactions.assignAll(searched);

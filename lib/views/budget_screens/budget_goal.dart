@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
-import 'package:ppocket/theme/app_colors.dart';
-import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 
 class BudgetGoalScreen extends StatelessWidget {
   const BudgetGoalScreen({Key? key}) : super(key: key);

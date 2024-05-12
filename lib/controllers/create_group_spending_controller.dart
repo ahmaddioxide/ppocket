@@ -15,7 +15,7 @@ class CreateGroupSpendingController extends GetxController {
 
   final isLoading = false.obs;
 
-  void addSpending({
+  Future<void> addSpending({
     required double spendingAmount,
     required String splitType,
     required String spendingDescription,

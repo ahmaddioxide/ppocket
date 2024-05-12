@@ -18,7 +18,6 @@ class GroupSpendingDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final spendingAmountController = TextEditingController();
     final spendingDescriptionController = TextEditingController();
@@ -162,8 +161,11 @@ class GroupSpendingDetails extends StatelessWidget {
       return memberNames;
     }
 
-    void _showPercentageAllocationDialog(BuildContext context,
-        double totalExpenseAmount, List<String> memberNames) {
+    void _showPercentageAllocationDialog(
+      BuildContext context,
+      double totalExpenseAmount,
+      List<String> memberNames,
+    ) {
       List<double> percentageValues = List.generate(
         memberNames.length,
         (index) => 0.0,
@@ -206,7 +208,8 @@ class GroupSpendingDetails extends StatelessWidget {
                                     ),
                                     onChanged: (value) {
                                       double percentage = double.parse(
-                                          value.isEmpty ? '0' : value);
+                                        value.isEmpty ? '0' : value,
+                                      );
                                       percentageValues[index] = percentage;
                                     },
                                   ),
@@ -233,7 +236,8 @@ class GroupSpendingDetails extends StatelessWidget {
                       builder: (context) => AlertDialog(
                         title: const Text('Error'),
                         content: const Text(
-                            'Please allocate percentages for all members.'),
+                          'Please allocate percentages for all members.',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -258,7 +262,8 @@ class GroupSpendingDetails extends StatelessWidget {
                       builder: (context) => AlertDialog(
                         title: const Text('Error'),
                         content: const Text(
-                            'Total percentage should be 100%. Please adjust the percentages.'),
+                          'Total percentage should be 100%. Please adjust the percentages.',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -274,8 +279,9 @@ class GroupSpendingDetails extends StatelessWidget {
 
                   // Allocate expense amount
                   List<double> allocatedAmounts = percentageValues
-                      .map((percentage) =>
-                          (percentage / 100) * totalExpenseAmount)
+                      .map(
+                        (percentage) => (percentage / 100) * totalExpenseAmount,
+                      )
                       .toList();
 
                   // Show allocated amounts
@@ -289,7 +295,8 @@ class GroupSpendingDetails extends StatelessWidget {
                         children: List.generate(
                           memberNames.length,
                           (index) => Text(
-                              '${memberNames[index]}: \$${allocatedAmounts[index].toStringAsFixed(2)}'),
+                            '${memberNames[index]}: \$${allocatedAmounts[index].toStringAsFixed(2)}',
+                          ),
                         ),
                       ),
                       actions: [
@@ -343,8 +350,9 @@ class GroupSpendingDetails extends StatelessWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text('Confirm Deletion'),
-                    content:
-                        const Text('Are you sure you want to delete this group?'),
+                    content: const Text(
+                      'Are you sure you want to delete this group?',
+                    ),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
@@ -377,7 +385,9 @@ class GroupSpendingDetails extends StatelessWidget {
                 height: height * .9,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 20.0),
+                    horizontal: 20.0,
+                    vertical: 20.0,
+                  ),
                   child: Form(
                     key: formKey,
                     child: Column(
@@ -488,22 +498,26 @@ class GroupSpendingDetails extends StatelessWidget {
                           spacing: 10,
                           children: [
                             ChoiceChip(
-                                label: const Text('Equally'),
-                                selected: true,
-                                onSelected: (value) {}),
+                              label: const Text('Equally'),
+                              selected: true,
+                              onSelected: (value) {},
+                            ),
                             ChoiceChip(
-                                label: const Text('Percentage'),
-                                selected: false,
-                                onSelected: (value) async {
-                                  List<String> memberNames =
-                                      await fetchMemberNames(group.members);
-                                  // Call the function to show the percentage allocation dialog
-                                  _showPercentageAllocationDialog(
-                                      context,
-                                      double.parse(
-                                          spendingAmountController.text),
-                                      memberNames);
-                                }),
+                              label: const Text('Percentage'),
+                              selected: false,
+                              onSelected: (value) async {
+                                List<String> memberNames =
+                                    await fetchMemberNames(group.members);
+                                // Call the function to show the percentage allocation dialog
+                                _showPercentageAllocationDialog(
+                                  context,
+                                  double.parse(
+                                    spendingAmountController.text,
+                                  ),
+                                  memberNames,
+                                );
+                              },
+                            ),
                             ChoiceChip(
                               label: const Text('Amount'),
                               selected: false,
@@ -524,48 +538,56 @@ class GroupSpendingDetails extends StatelessWidget {
                         Center(
                           child: Obx(
                             () => BlackButton(
-                                text: 'Create Spending',
-                                isLoading: groupSpendingScreenController
-                                    .isLoading.value,
-                                onPressed: () async {
-                                  if (formKey.currentState!.validate()) {
-                                    // Extract the spending amount and description
-                                    double spendingAmount = double.parse(
-                                        spendingAmountController.text);
-                                    String spendingDescription =
-                                        spendingDescriptionController.text;
+                              text: 'Create Spending',
+                              isLoading:
+                                  groupSpendingScreenController.isLoading.value,
+                              onPressed: () async {
+                                if (formKey.currentState!.validate()) {
+                                  // Extract the spending amount and description
+                                  double spendingAmount = double.parse(
+                                    spendingAmountController.text,
+                                  );
+                                  String spendingDescription =
+                                      spendingDescriptionController.text;
 
-                                    // Check which split type is selected
-                                    if (groupSpendingScreenController
-                                            .selectedSplitType.value ==
-                                        'equally') {
-                                      // If split type is equally, show equally spending popup
-                                      createAndShowEquallySpending(context);
-                                    } else if (groupSpendingScreenController
-                                            .selectedSplitType.value ==
-                                        'percentage') {
-                                      // If split type is percentage, show percentage allocation dialog
-                                      List<String> memberNames =
-                                          await fetchMemberNames(group.members);
-                                      _showPercentageAllocationDialog(
-                                        context,
-                                        spendingAmount,
-                                        memberNames,
-                                      );
-                                    }
-
-                                    // Add the spending
-                                    groupSpendingScreenController.addSpending(
-                                      spendingAmount: spendingAmount,
-                                      spendingDescription: spendingDescription,
-                                      splitType: groupSpendingScreenController
-                                          .selectedSplitType.value,
-                                      group: group,
+                                  // Check which split type is selected
+                                  if (groupSpendingScreenController
+                                          .selectedSplitType.value ==
+                                      'equally') {
+                                    // If split type is equally, show equally spending popup
+                                    createAndShowEquallySpending(context);
+                                  } else if (groupSpendingScreenController
+                                          .selectedSplitType.value ==
+                                      'percentage') {
+                                    // If split type is percentage, show percentage allocation dialog
+                                    List<String> memberNames =
+                                        await fetchMemberNames(group.members);
+                                    _showPercentageAllocationDialog(
+                                      context,
+                                      spendingAmount,
+                                      memberNames,
                                     );
                                   }
-                                }),
+
+                                  // Add the spending
+                                  groupSpendingScreenController
+                                      .addSpending(
+                                    spendingAmount: spendingAmount,
+                                    spendingDescription: spendingDescription,
+                                    splitType: groupSpendingScreenController
+                                        .selectedSplitType.value,
+                                    group: group,
+                                  )
+                                      .then((value) {
+                                    spendingAmountController.clear();
+                                    spendingDescriptionController.clear();
+                                    Navigator.pop(context);
+                                  });
+                                }
+                              },
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -596,68 +618,75 @@ class GroupSpendingDetails extends StatelessWidget {
             height: Get.height * .04,
           ),
           StreamBuilder(
-              stream: groupSpendingScreenController.getAllSpending(group.id!),
-              builder: (
-                context,
-                snapshot,
-              ) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('An error occurred ${snapshot.error}'),
-                  );
-                }
-                if (snapshot.data == null) {
-                  return const Center(
-                    child: Text('No spending yet'),
-                  );
-                }
-                final data = snapshot.data as List<GroupSpendingModel>;
-                double Expense = calculateTotalExpense(
-                    data); // Calculate total expense amount
-                return Expanded(
-                    child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.redAccent, // Set the color to red
-
-                      ),
-                      padding: const EdgeInsets.all(15),
-                      child: Center(
-                        child: Text(
-                          'Total Expense \$${Expense.toStringAsFixed(2)}', // Display total expense amount
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.white, // Set the text color to white
+            stream: groupSpendingScreenController.getAllSpending(group.id!),
+            builder: (
+              context,
+              snapshot,
+            ) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('An error occurred ${snapshot.error}'),
+                );
+              }
+              if (snapshot.data == null) {
+                return const Center(
+                  child: Text('No spending yet'),
+                );
+              }
+              final data = snapshot.data as List<GroupSpendingModel>;
+              double Expense = calculateTotalExpense(
+                data,
+              ); // Calculate total expense amount
+              return Expanded(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.redAccent, // Set the color to red
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: Center(
+                          child: Text(
+                            'Total Expense \$${Expense.toStringAsFixed(2)}',
+                            // Display total expense amount
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color:
+                                  Colors.white, // Set the text color to white
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView.builder(
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.builder(
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           final spending = data[index];
                           return GroupSpendingDetailCard(
                             groupSpending: spending,
-                            memberNames:[],
+                            memberNames: [],
                             allocatedAmounts: [],
                             splitType: 'equally',
                           );
-                        }),
-                  )
-                ]));
-              }),
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

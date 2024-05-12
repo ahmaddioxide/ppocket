@@ -27,7 +27,7 @@ class BudgetSearchController extends GetxController {
       return transactions
           .where((TransactionModel transaction) =>
       transaction.date.toDate().toString().substring(0, 10) ==
-          searchDate)
+          searchDate,)
           .toList();
     }).onError((error, stackTrace) {
       AppSnackBar.errorSnackbar(

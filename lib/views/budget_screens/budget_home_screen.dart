@@ -4,8 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:ppocket/controllers/budget_controller.dart';
 import 'package:ppocket/controllers/models/transaction_model.dart';
 import 'package:ppocket/theme/app_colors.dart';
-import 'package:ppocket/views/budget_screens/budget_goal.dart';
-import 'package:ppocket/views/budget_screens/set_budget_goal_screen.dart';
 import 'package:ppocket/views/budget_screens/update_bidget_screen.dart';
 import 'package:ppocket/views/components/loading_widget.dart';
 import 'package:ppocket/views/search_navigation_screens/navigation_screen.dart';
@@ -36,7 +34,8 @@ class BudgetHome extends StatelessWidget {
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
         ),
-        actions: [          IconButton(
+        actions: [
+          IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {
               // Navigate to the add transaction screen
@@ -120,75 +119,82 @@ class BudgetHome extends StatelessWidget {
                                 width: 2,
                                 color: Colors.white,
                               ),
-
                               Column(
                                 children: [
                                   Container(
-                                              child: FutureBuilder(
-            future: budgetController.getBudgetGoalForCurrentMonth(),
-            builder: (context, AsyncSnapshot<Map> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                final goalData = snapshot.data!;
-                final goalAmount = goalData['amount'];
-                return Center(
-                  child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10, top: 10),
-                        child: Text(
-                          'Budget Goal',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '$goalAmount',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                // return Text('No Budget Goal Set for the Current Month');
-                return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Goal Not Set',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                       ],
-                  ),
-                );
-              }
-            },
-          ),
-       
+                                    child: FutureBuilder(
+                                      future: budgetController
+                                          .getBudgetGoalForCurrentMonth(),
+                                      builder: (context,
+                                          AsyncSnapshot<Map> snapshot,) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                              child: LoadingWidget(),);
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}',);
+                                        } else if (snapshot.hasData &&
+                                            snapshot.data!.isNotEmpty) {
+                                          final goalData = snapshot.data!;
+                                          final goalAmount = goalData['amount'];
+                                          return Center(
+                                            child: Column(
+                                              // mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 10, top: 10,),
+                                                  child: Text(
+                                                    'Budget Goal',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '$goalAmount',
+                                                  style: const TextStyle(
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          // return Text('No Budget Goal Set for the Current Month');
+                                          return const Center(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Center(
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        'Goal Not Set',
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ),
-                                  
                                 ],
                               ),
                             ],
@@ -415,15 +421,17 @@ class BudgetHome extends StatelessWidget {
                                             color: Colors.green,
                                           ),
                                           onPressed: () {
-                                               // Navigate to the update transaction screen
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => UpdateTransactionScreen(
-                                                    transaction: transactionsList[index],
-                                                  ),
+                                            // Navigate to the update transaction screen
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateTransactionScreen(
+                                                  transaction:
+                                                      transactionsList[index],
                                                 ),
-                                              );
+                                              ),
+                                            );
                                           },
                                         ),
                                       ),
@@ -437,7 +445,6 @@ class BudgetHome extends StatelessWidget {
                       );
                     },
                   ),
-                
                 ),
               ],
             );

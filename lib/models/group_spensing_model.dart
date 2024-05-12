@@ -34,13 +34,16 @@ class GroupSpendingModel {
 
   Map<String, dynamic> toMap() {
     return {
+      //debtors to Map List
+
       'groupID': groupID,
       'totalAmount': totalAmount,
-
       'divisionType': divisionType,
       'payor': payor,
       'date': date,
       'description': description,
+      //debtors to list of maps
+      'debtors': debtors.map((debtor) => debtor.toMap()).toList(),
     };
   }
 
@@ -81,7 +84,6 @@ class GroupSpendingModel {
       date: date ?? this.date,
       description: description ?? this.description,
       debtors: debtors ?? this.debtors,
-
     );
   }
 
@@ -95,19 +97,23 @@ class GroupSpendingModel {
       payor: documentSnapshot['payor'],
       date: documentSnapshot['date'].toDate(),
       description: documentSnapshot['description'],
-      //debtors is a separate collection
-      debtors: [],
+      //debtors from list of maps
+      debtors: List<DebtorsModel>.from(
+        documentSnapshot['debtors']
+            .map((debtor) => DebtorsModel.fromMap(debtor))
+            .toList(),
+      ),
     );
   }
 
   @override
   int get hashCode {
     return groupID.hashCode ^
-    totalAmount.hashCode ^
-    divisionType.hashCode ^
-    payor.hashCode ^
-    date.hashCode ^
-    description.hashCode ^
-    debtors.hashCode;
+        totalAmount.hashCode ^
+        divisionType.hashCode ^
+        payor.hashCode ^
+        date.hashCode ^
+        description.hashCode ^
+        debtors.hashCode;
   }
 }
