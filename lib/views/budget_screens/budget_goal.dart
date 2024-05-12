@@ -13,7 +13,6 @@ class BudgetGoalScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Budget Goal'),
       ),
-
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 40, right: 40),
         child: Container(
@@ -78,7 +77,7 @@ class BudgetGoalScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-                       ],
+                    ],
                   ),
                 );
               }

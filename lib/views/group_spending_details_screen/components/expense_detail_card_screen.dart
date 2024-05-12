@@ -49,7 +49,7 @@ class ExpenseDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              '\$${groupSpending.totalAmount}',
+              '${groupSpending.totalAmount}',
               style: const TextStyle(
                 fontSize: 18,
               ),
@@ -98,7 +98,7 @@ class ExpenseDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            '\$${groupSpending.debtors[index].amount}',
+                            '${groupSpending.debtors[index].amount}',
                             style: const TextStyle(
                               fontSize: 16,
                             ),

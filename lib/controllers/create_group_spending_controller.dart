@@ -26,11 +26,15 @@ class CreateGroupSpendingController extends GetxController {
 
     if (splitType == 'equally') {
       final amountPerPerson = spendingAmount / group.members.length;
+
+      //2 decimal places from double to double
+      final amountPerPersonRounded = double.parse((amountPerPerson).toStringAsFixed(2));
+
       final List<Map<String, dynamic>> debtors = group.members
           .map(
             (member) => {
               'debtorID': member,
-              'amount': amountPerPerson,
+              'amount': amountPerPersonRounded,
               'debtStatus': payorId == member ? 'paid' : 'unpaid',
             },
           )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppocket/theme/app_colors.dart';
 import 'package:ppocket/views/budget_screens/add_budget_screen.dart';
 import 'package:ppocket/views/budget_screens/budget_home_screen.dart';
 import 'package:ppocket/views/group_spending_screen/group_spending.dart';
@@ -32,7 +33,7 @@ class _BottomState extends State<BottomNav> {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => const AddBudget()));
         },
-        backgroundColor: Colors.green[600],
+        backgroundColor: AppColors.secondaryColor,
         child: const Icon(
           Icons.add,
           color: Colors.white,

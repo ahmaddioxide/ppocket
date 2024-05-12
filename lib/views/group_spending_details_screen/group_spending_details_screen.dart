@@ -62,7 +62,7 @@ class GroupSpendingDetails extends StatelessWidget {
                       return const Text('Error fetching member name');
                     }
                     String memberName = snapshot.data!['name'];
-                    return Text('$memberName: \$${amount.toStringAsFixed(2)}');
+                    return Text('$memberName: ${amount.toStringAsFixed(2)}');
                   },
                 );
               }).toList(),
@@ -295,7 +295,7 @@ class GroupSpendingDetails extends StatelessWidget {
                         children: List.generate(
                           memberNames.length,
                           (index) => Text(
-                            '${memberNames[index]}: \$${allocatedAmounts[index].toStringAsFixed(2)}',
+                            '${memberNames[index]}: ${allocatedAmounts[index].toStringAsFixed(2)}',
                           ),
                         ),
                       ),
@@ -655,7 +655,7 @@ class GroupSpendingDetails extends StatelessWidget {
                         padding: const EdgeInsets.all(15),
                         child: Center(
                           child: Text(
-                            'Total Expense \$${Expense.toStringAsFixed(2)}',
+                            'Total Expense ${Expense.toStringAsFixed(2)}',
                             // Display total expense amount
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
