@@ -409,133 +409,124 @@ static Future<void> updateTransaction({
     return goal;
   }
 
-  Future<void> addDebtorsToGroupSpending(String spendingId,
-      String groupId,
-      List<DebtorsModel> debtors,) async {
-
-  static Future<void> reportBug({
-    required String userId,
-    required String bug,
-  }) async {
-    await FirebaseFirestore.instance
-        .collection('bugreports')
-        .add({'userId': userId, 'bug': bug}).then((_) {
-    }).catchError((error) {
-      AppSnackBar.errorSnackbar(
-        title: 'Error',
-        message: 'Error Reporting Bug to FireStore',
-      );
-      debugPrint('Error: $error');
-    });
-  }
+  // Future<void> addDebtorsToGroupSpending(String spendingId,
+  //     String groupId,
+  //     List<DebtorsModel> debtors,) async {
+    static Future<void> reportBug({
+      required String userId,
+      required String bug,
+    }) async {
+      await FirebaseFirestore.instance
+          .collection('bugreports')
+          .add({'userId': userId, 'bug': bug}).then((_) {}).catchError((error) {
+        AppSnackBar.errorSnackbar(
+          title: 'Error',
+          message: 'Error Reporting Bug to FireStore',
+        );
+        debugPrint('Error: $error');
+      });
+    }
 
 // Get all bug reports
-static Future<List<Map<String, dynamic>>> getAllBugReports() async {
-    final List<Map<String, dynamic>> bugReports = [];
+    static Future<List<Map<String, dynamic>>> getAllBugReports() async {
+      final List<Map<String, dynamic>> bugReports = [];
 
-    await bugReportsCollection.get().then((value) {
-      value.docs.forEach((doc) {
-        bugReports.add(doc.data() as Map<String, dynamic>);
-      });
-    }).onError((error, stackTrace) {
-      AppSnackBar.errorSnackbar(
-        title: 'Error',
-        message: 'Error Getting Bug Reports from FireStore',
-      );
-      if (kDebugMode) {
-        print('Error Getting Bug Reports from FireStore: $error');
-      }
-      return Future.error(error.toString());
-    });
-
-    return bugReports;
-  }
-
-
-  Future<void> addDebtorsToGroupSpending(
-    String spendingId,
-    String groupId,
-    List<DebtorsModel> debtors,
-  ) async {
-    final debtorsCollection = groupsCollection
-        .doc(groupId)
-        .collection('spendings')
-        .doc(spendingId)
-        .collection('debtors');
-    for (var debtor in debtors) {
-      await debtorsCollection.add(debtor.toMap()).then((value) {
-        value.update({'id': value.id});
+      await bugReportsCollection.get().then((value) {
+        value.docs.forEach((doc) {
+          bugReports.add(doc.data() as Map<String, dynamic>);
+        });
       }).onError((error, stackTrace) {
         AppSnackBar.errorSnackbar(
           title: 'Error',
-          message: 'Error Adding Debtors to Group Spending in FireStore',
+          message: 'Error Getting Bug Reports from FireStore',
+        );
+        if (kDebugMode) {
+          print('Error Getting Bug Reports from FireStore: $error');
+        }
+        return Future.error(error.toString());
+      });
+
+      return bugReports;
+    }
+
+
+    Future<void> addDebtorsToGroupSpending(String spendingId,
+        String groupId,
+        List<DebtorsModel> debtors,) async {
+      final debtorsCollection = groupsCollection
+          .doc(groupId)
+          .collection('spendings')
+          .doc(spendingId)
+          .collection('debtors');
+      for (var debtor in debtors) {
+        await debtorsCollection.add(debtor.toMap()).then((value) {
+          value.update({'id': value.id});
+        }).onError((error, stackTrace) {
+          AppSnackBar.errorSnackbar(
+            title: 'Error',
+            message: 'Error Adding Debtors to Group Spending in FireStore',
+          ).then((value) {
+            debugPrint('Error Adding Debtors to Group Spending in FireStore');
+          });
+          debugPrintStack(stackTrace: stackTrace, label: error.toString());
+          return Future.error(error.toString());
+        });
+      }
+    }
+
+    Future<void> addGroupSpending(GroupSpendingModel spending) async {
+      final spendingCollection =
+      groupsCollection.doc(spending.groupID).collection('spendings');
+      await spendingCollection.add(spending.toMap()).then((value) async {
+        value.update({'id': value.id});
+        await addDebtorsToGroupSpending(
+          value.id,
+          spending.groupID,
+          spending.debtors,
+        );
+      }).onError((error, stackTrace) {
+        AppSnackBar.errorSnackbar(
+          title: 'Error',
+          message: 'Error Adding Group Spending to FireStore',
         ).then((value) {
-          debugPrint('Error Adding Debtors to Group Spending in FireStore');
+          debugPrint('Error Adding Group Spending to FireStore');
         });
         debugPrintStack(stackTrace: stackTrace, label: error.toString());
         return Future.error(error.toString());
       });
     }
-  }
 
-  Future<void> addGroupSpending(GroupSpendingModel spending) async {
-    final spendingCollection =
-    groupsCollection.doc(spending.groupID).collection('spendings');
-    await spendingCollection.add(spending.toMap()).then((value) async {
-      value.update({'id': value.id});
-      await addDebtorsToGroupSpending(
-        value.id,
-        spending.groupID,
-        spending.debtors,
-      );
-    }).onError((error, stackTrace) {
-      AppSnackBar.errorSnackbar(
-        title: 'Error',
-        message: 'Error Adding Group Spending to FireStore',
-      ).then((value) {
-        debugPrint('Error Adding Group Spending to FireStore');
-      });
-      debugPrintStack(stackTrace: stackTrace, label: error.toString());
-      return Future.error(error.toString());
-    });
-  }
-
-  Stream<List<GroupSpendingModel>> getGroupSpending(String groupID) {
-    try {
-      return groupsCollection
-          .doc(groupID)
-          .collection('spendings')
-          .snapshots()
-          .map((event) {
-        return event.docs
-            .map(
-              (e) => GroupSpendingModel.fromDocumentSnapshot(e),
-        )
-            .toList();
-      });
-    } on Exception catch (e) {
-      AppSnackBar.errorSnackbar(
-        title: 'Error',
-        message: 'Error Getting Group Spending from FireStore',
-      );
-      debugPrintStack(stackTrace: StackTrace.current, label: e.toString());
-      return const Stream.empty();
+    Stream<List<GroupSpendingModel>> getGroupSpending(String groupID) {
+      try {
+        return groupsCollection
+            .doc(groupID)
+            .collection('spendings')
+            .snapshots()
+            .map((event) {
+          return event.docs
+              .map(
+                (e) => GroupSpendingModel.fromDocumentSnapshot(e),
+          )
+              .toList();
+        });
+      } on Exception catch (e) {
+        AppSnackBar.errorSnackbar(
+          title: 'Error',
+          message: 'Error Getting Group Spending from FireStore',
+        );
+        debugPrintStack(stackTrace: StackTrace.current, label: e.toString());
+        return const Stream.empty();
+      }
     }
-  }
-  static Future<void> deleteGroup(String groupID) async {
-    try {
-      await fireStore.collection('groups').doc(groupID).delete();
-    } catch (error) {
-      throw error.toString();
+    static Future<void> deleteGroup(String groupID) async {
+      try {
+        await fireStore.collection('groups').doc(groupID).delete();
+      } catch (error) {
+        throw error.toString();
+      }
     }
   }
 
 
 
 
-  }
-
-
-
-
-}
