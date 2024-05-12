@@ -621,16 +621,23 @@ class GroupSpendingDetails extends StatelessWidget {
                     data); // Calculate total expense amount
                 return Expanded(
                     child: Column(children: [
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: Colors.red, // Set the color to red
-                    child: Center(
-                      child: Text(
-                        'Total Expense \$${Expense.toStringAsFixed(2)}', // Display total expense amount
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.white, // Set the text color to white
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.redAccent, // Set the color to red
+
+                      ),
+                      padding: const EdgeInsets.all(15),
+                      child: Center(
+                        child: Text(
+                          'Total Expense \$${Expense.toStringAsFixed(2)}', // Display total expense amount
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white, // Set the text color to white
+                          ),
                         ),
                       ),
                     ),
