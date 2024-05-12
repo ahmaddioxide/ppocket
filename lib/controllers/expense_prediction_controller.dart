@@ -11,7 +11,7 @@ class PredictionController extends GetxController {
       final client = http.Client();
       final response = await client
           .get(
-            Uri.parse('http://127.0.0.3:5000/get_prediction'),
+            Uri.parse('http://127.0.0.1:5000/get_prediction'),
           )
           .timeout(const Duration(seconds: 5));
       print("!!Response Code : ${response.statusCode}");
