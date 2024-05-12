@@ -45,51 +45,23 @@ class StatsController extends GetxController {
   }
 
   Future<List<BudgetDataModel>> getPaymentPerWeek() async {
-    // await Future.delayed(const Duration(seconds: 2));
-    // return [
-    //   BudgetDataModel('Week 1', 350),
-    //   BudgetDataModel('Week 2', 228),
-    //   BudgetDataModel('Week 3', 500),
-    //   BudgetDataModel('Week 4', 158),
-    // ];
-
     List<BudgetDataModel> data = [];
-    // tome to week number
-    //transaction of this week only
-
-    final lastWeek = DateTime.now().subtract(const Duration(days: 7));
+    // Get the date of the start of the current week
+    DateTime startOfWeek = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
     for (var transaction in transactions) {
-      if (transaction.date.toDate().isAfter(lastWeek) && transaction.date.toDate().isBefore(DateTime.now())) {
+      if (transaction.date.toDate().isAfter(startOfWeek) && transaction.date.toDate().isBefore(DateTime.now())) {
         data.add(BudgetDataModel(timeStampToString(transaction.date), double.parse(transaction.amount)));
       }
     }
     return data;
-
-
   }
 
   Future<List<BudgetDataModel>> getPaymentPerMonth() async {
-    // await Future.delayed(const Duration(seconds: 2));
-    // return [
-    //   BudgetDataModel('Jan', 350),
-    //   BudgetDataModel('Feb', 228),
-    //   BudgetDataModel('Mar', 500),
-    //   BudgetDataModel('Apr', 158),
-    //   BudgetDataModel('May', 989),
-    //   BudgetDataModel('Jun', 120),
-    //   BudgetDataModel('Jul', 700),
-    //   BudgetDataModel('Aug', 350),
-    //   BudgetDataModel('Sep', 228),
-    //   BudgetDataModel('Oct', 500),
-    //   BudgetDataModel('Nov', 158),
-    //   BudgetDataModel('Dec', 989),
-    // ];
-
-    //this month only
     List<BudgetDataModel> data = [];
-    final lastMonth = DateTime.now().subtract(const Duration(days: 30));
+    // Get the date of the start of the current month
+    DateTime startOfMonth = DateTime(DateTime.now().year, DateTime.now().month, 1);
     for (var transaction in transactions) {
-      if (transaction.date.toDate().isAfter(lastMonth) && transaction.date.toDate().isBefore(DateTime.now())) {
+      if (transaction.date.toDate().isAfter(startOfMonth) && transaction.date.toDate().isBefore(DateTime.now())) {
         data.add(BudgetDataModel(timeStampToString(transaction.date), double.parse(transaction.amount)));
       }
     }
@@ -97,18 +69,23 @@ class StatsController extends GetxController {
   }
 
   Future<List<BudgetDataModel>> getPaymentPerYear() async {
-    // await Future.delayed(const Duration(seconds: 2));
-    // return [
-    //   BudgetDataModel('2020', 350),
-    //   BudgetDataModel('2021', 228),
-    //   BudgetDataModel('2022', 500),
-    //   BudgetDataModel('2023', 158),
-    // ];
-
     List<BudgetDataModel> data = [];
-    final lastYear = DateTime.now().subtract(const Duration(days: 365));
+    // Get the date of the start of the current year
+    DateTime startOfYear = DateTime(DateTime.now().year, 1, 1);
     for (var transaction in transactions) {
-      if (transaction.date.toDate().isAfter(lastYear) && transaction.date.toDate().isBefore(DateTime.now())) {
+      if (transaction.date.toDate().isAfter(startOfYear) && transaction.date.toDate().isBefore(DateTime.now())) {
+        data.add(BudgetDataModel(timeStampToString(transaction.date), double.parse(transaction.amount)));
+      }
+    }
+    return data;
+  }
+
+  Future<List<BudgetDataModel>> getPaymentPerDay() async {
+    List<BudgetDataModel> data = [];
+    // Get the date of the start of the current day
+    DateTime startOfDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    for (var transaction in transactions) {
+      if (transaction.date.toDate().isAfter(startOfDay) && transaction.date.toDate().isBefore(DateTime.now())) {
         data.add(BudgetDataModel(timeStampToString(transaction.date), double.parse(transaction.amount)));
       }
     }

@@ -13,9 +13,9 @@ class BudgetChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<StatsController>();
-    return FutureBuilder(
+    return FutureBuilder<List<BudgetDataModel>>(
       future: selectedIndex == 0
-          ? controller.getPaymentPerDays()
+          ? controller.getPaymentPerDay()
           : selectedIndex == 1
               ? controller.getPaymentPerWeek()
               : selectedIndex == 2
@@ -32,11 +32,16 @@ class BudgetChart extends StatelessWidget {
             child: Text('Error: ${snapshot.error}'),
           );
         }
-        final List<BudgetDataModel> data =
-            snapshot.data as List<BudgetDataModel>;
+        final List<BudgetDataModel> data = snapshot.data ?? [];
 
         return SfCartesianChart(
           primaryXAxis: CategoryAxis(),
+          primaryYAxis: selectedIndex == 0
+              ? NumericAxis(
+                  minimum: 0,
+                  maximum: 10000,
+                )
+              : null,
           series: <SplineSeries<BudgetDataModel, String>>[
             SplineSeries<BudgetDataModel, String>(
               dataSource: data,

@@ -45,7 +45,6 @@ class SetBudgetGoalScreen extends StatelessWidget {
                 backgroundColor: Colors.green,
               ),
               onPressed: () {
-                // Utilize the BudgetController and Goal model for logic implementation
                 String goalAmount = goalController.text.trim();
                 Goal goal = Goal(id: DateTime.now().toString(), amount: double.parse(goalAmount), date: DateTime.now());
                 budgetController.saveGoalToFirestore(goal); // Save goal using the controller

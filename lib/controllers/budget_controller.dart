@@ -146,6 +146,32 @@ class BudgetController extends GetxController {
   }
 
 // Update transaction
+// Update transaction
+Future<void> updateTransaction(
+  String transactionId,
+  TransactionModel updatedTransaction,
+) async {
+  try {
+    await FireStoreService.updateTransaction(
+      userId: FirebaseAuthService.currentUserId,
+      transactionId: transactionId,
+      updatedTransaction: updatedTransaction.toMap(),
+    );
+    AppSnackBar.successSnackbar(
+      title: 'Success',
+      message: 'Transaction Updated Successfully',
+    );
+  } catch (error) {
+    AppSnackBar.errorSnackbar(
+      title: 'Error Updating Transaction',
+      message: error.toString(),
+    );
+  }
+}
+
+
+
+
 
 // Set up Budget Goal
   Goal? _goal;
@@ -219,6 +245,43 @@ class BudgetController extends GetxController {
   final TextEditingController searchDateController = TextEditingController();
   RxList<TransactionModel> searchedTransactions = <TransactionModel>[].obs;
 
+  // Future<void> searchTransactionsByDate() async {
+  //   final String searchDate = searchDateController.text.trim();
+
+  //   if (searchDate.isEmpty) {
+  //     AppSnackBar.errorSnackbar(
+  //       title: 'Error',
+  //       message: 'Please enter a date to search',
+  //     );
+  //     return;
+  //   }
+
+  //   final List<TransactionModel> transactions =
+  //   await FireStoreService.getTransactionsOfUser(
+  //     userId: FirebaseAuthService.currentUserId,
+  //   ).then((List<TransactionModel> transactions) {
+  //     return transactions
+  //         .where((TransactionModel transaction) =>
+  //     transaction.date.toDate().toString().substring(0, 10) ==
+  //         searchDate)
+  //         .toList();
+  //   }).onError((error, stackTrace) {
+  //     AppSnackBar.errorSnackbar(
+  //       title: 'Error',
+  //       message: error.toString(),
+  //     );
+  //     return [];
+  //   });
+
+  //   searchedTransactions.assignAll(transactions);
+  // }
+
+  void onClose() {
+    // Dispose of the searchDateController when the controller is closed.
+    searchDateController.dispose();
+    super.onClose();
+  }
+
   Future<void> searchTransactionsByDate() async {
     final String searchDate = searchDateController.text.trim();
 
@@ -230,24 +293,29 @@ class BudgetController extends GetxController {
       return;
     }
 
-    final List<TransactionModel> transactions =
-    await FireStoreService.getTransactionsOfUser(
-      userId: FirebaseAuthService.currentUserId,
-    ).then((List<TransactionModel> transactions) {
-      return transactions
+    try {
+      final List<TransactionModel> transactions =
+          await FireStoreService.getTransactionsOfUser(
+        userId: FirebaseAuthService.currentUserId,
+      );
+
+      final List<TransactionModel> searched = transactions
           .where((TransactionModel transaction) =>
-      transaction.date.toDate().toString().substring(0, 10) ==
-          searchDate)
+              transaction.date.toDate().toString().substring(0, 10) ==
+              searchDate)
           .toList();
-    }).onError((error, stackTrace) {
+
+      searchedTransactions.assignAll(searched);
+
+      // Clear the input after displaying the results
+      searchDateController.clear();
+    } catch (error) {
       AppSnackBar.errorSnackbar(
         title: 'Error',
         message: error.toString(),
       );
-      return [];
-    });
-
-    searchedTransactions.assignAll(transactions);
+    }
   }
+
 
  }
