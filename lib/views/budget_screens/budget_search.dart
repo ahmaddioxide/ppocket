@@ -11,102 +11,112 @@ class BudgetSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Budget Search'),
+        title: const Text('Budget Search'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _budgetController.searchDateController,
-              decoration: InputDecoration(
-                labelText: 'Enter Date (YYYY-MM-DD)',
+            InkWell(
+              onTap: () {
+                _selectDate(context);
+              },
+              child: IgnorePointer(
+                child: TextField(
+                  controller: _budgetController.searchDateController,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter Date (YYYY-MM-DD)',
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
+            const SizedBox(height: 20.0),
+            ElevatedButton.icon(
               onPressed: () {
                 _budgetController.searchTransactionsByDate();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Search',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(width: 8.0),
-                  Icon(Icons.search, color: Colors.white, size: 20.0),
-                ],
-              ),
+              icon: const Icon(Icons.search),
+              label: const Text('Search'),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _budgetController.searchedTransactions.length,
-                itemBuilder: (context, index) {
-                  TransactionModel transaction =
-                  _budgetController.searchedTransactions[index];
-                  return InkWell(
-                    onTap: () {},
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset(
-                              'assets/images/ppocket_logo.png',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          title: Text(
-                            transaction.name,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          subtitle: Text(
-                            DateFormat('kk:mm | yyyy-MM-dd').format(
-                              transaction.date.toDate(),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                transaction.amount.toString(),
+              child: Obx(
+                () {
+                  if (_budgetController.searchedTransactions.isEmpty) {
+                    return const Center(
+                      child: Text('No transactions found for the selected date'),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: _budgetController.searchedTransactions.length,
+                      itemBuilder: (context, index) {
+                        TransactionModel transaction = _budgetController.searchedTransactions[index];
+                        return InkWell(
+                          onTap: () {},
+                          child: Card(
+                            child: ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.asset(
+                                  'assets/images/ppocket_logo.png',
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Text(
+                                transaction.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              subtitle: Text(
+                                DateFormat('kk:mm | yyyy-MM-dd').format(
+                                  transaction.date.toDate(),
+                                ),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              trailing: Text(
+                                '${transaction.amount}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   color: transaction.isIncome ? Colors.green : Colors.redAccent,
                                 ),
                               ),
-
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  }
                 },
               ),
-
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
+      _budgetController.searchDateController.text = formattedDate;
+    }
   }
 }

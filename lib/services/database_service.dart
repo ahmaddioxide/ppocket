@@ -19,6 +19,9 @@ class FireStoreService {
   static final CollectionReference groupsCollection =
       fireStore.collection('groups');
 
+    static final CollectionReference bugReportsCollection =
+      fireStore.collection('bugreports');
+
   static Future<void> addUserToFireStore({required UserOfApp userOfApp}) async {
     await fireStore
         .collection('users')
@@ -236,6 +239,23 @@ class FireStoreService {
   }
 
 // Update Transaction
+static Future<void> updateTransaction({
+  required String userId,
+  required String transactionId,
+  required Map<String, dynamic> updatedTransaction,
+}) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('transactions')
+        .doc(transactionId)
+        .update(updatedTransaction);
+  } catch (error) {
+    throw error.toString();
+  }
+}
+
 
 // Set up Budget goal
   static Future<void> addGoalToFirestore({
@@ -391,6 +411,46 @@ class FireStoreService {
     return goal;
   }
 
+
+  static Future<void> reportBug({
+    required String userId,
+    required String bug,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection('bugreports')
+        .add({'userId': userId, 'bug': bug}).then((_) {
+    }).catchError((error) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Reporting Bug to FireStore',
+      );
+      debugPrint('Error: $error');
+    });
+  }
+
+// Get all bug reports
+static Future<List<Map<String, dynamic>>> getAllBugReports() async {
+    final List<Map<String, dynamic>> bugReports = [];
+
+    await bugReportsCollection.get().then((value) {
+      value.docs.forEach((doc) {
+        bugReports.add(doc.data() as Map<String, dynamic>);
+      });
+    }).onError((error, stackTrace) {
+      AppSnackBar.errorSnackbar(
+        title: 'Error',
+        message: 'Error Getting Bug Reports from FireStore',
+      );
+      if (kDebugMode) {
+        print('Error Getting Bug Reports from FireStore: $error');
+      }
+      return Future.error(error.toString());
+    });
+
+    return bugReports;
+  }
+
+
   Future<void> addDebtorsToGroupSpending(
     String spendingId,
     String groupId,
@@ -461,4 +521,5 @@ class FireStoreService {
       return const Stream.empty();
     }
   }
+
 }

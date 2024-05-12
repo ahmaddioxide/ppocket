@@ -126,7 +126,9 @@ class _StatScreenState extends State<StatScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                 BudgetChart(selectedIndex: indexColor,),
+                BudgetChart(
+                  selectedIndex: indexColor,
+                ),
               ],
             ),
           ),
