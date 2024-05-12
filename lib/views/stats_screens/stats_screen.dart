@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/controllers/stats_controller.dart';
+import 'package:ppocket/theme/app_colors.dart';
 import 'package:ppocket/views/stats_screens/stats/budget_chart.dart';
 
 class StatScreen extends StatefulWidget {
@@ -66,7 +67,7 @@ class _StatScreenState extends State<StatScreen> {
                             width: 80,
                             decoration: BoxDecoration(
                               color: indexColor == index
-                                  ? Colors.green[600]
+                                  ? AppColors.secondaryColor
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(10),
                             ),

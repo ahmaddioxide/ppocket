@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:ppocket/theme/app_colors.dart';
 
-class Button extends StatelessWidget {
+class BlackButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isLoading;
 
-  const Button({
+  const BlackButton({
     super.key,
     required this.text,
     required this.onPressed,
@@ -21,7 +22,7 @@ class Button extends StatelessWidget {
       width: Get.width * .80,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+        style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryColor),
         child: isLoading
             ? const SpinKitFadingFour(
                 color: Colors.white,
@@ -53,7 +54,7 @@ class ButtonGreen extends StatelessWidget {
       width: Get.height * .35,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+        style: ElevatedButton.styleFrom(backgroundColor: AppColors.secondaryColor),
         child: Text(
           text,
           style: const TextStyle(color: Colors.white, fontSize: 20),

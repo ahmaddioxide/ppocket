@@ -105,7 +105,7 @@ class UserProfileScreen extends StatelessWidget {
                           ),
                           SizedBox(height: Get.height * 0.02),
                           Obx(
-                            () => Button(
+                            () => BlackButton(
                               text: 'Update',
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {

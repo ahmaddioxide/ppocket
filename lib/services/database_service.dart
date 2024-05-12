@@ -12,12 +12,12 @@ class FireStoreService {
   static final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   static final CollectionReference usersCollection =
-      fireStore.collection('users');
+  fireStore.collection('users');
   static final CollectionReference receiptsCollection =
-      fireStore.collection('receipts');
+  fireStore.collection('receipts');
 
   static final CollectionReference groupsCollection =
-      fireStore.collection('groups');
+  fireStore.collection('groups');
 
     static final CollectionReference bugReportsCollection =
       fireStore.collection('bugreports');
@@ -54,7 +54,7 @@ class FireStoreService {
     required String userId,
   }) async {
     final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await fireStore.collection('users').doc(userId).get();
+    await fireStore.collection('users').doc(userId).get();
     if (kDebugMode) {
       print('documentSnapshot.exists ${documentSnapshot.exists}');
     }
@@ -114,7 +114,7 @@ class FireStoreService {
       return value.docs
           .map(
             (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
-          )
+      )
           .toList();
     }).onError((error, stackTrace) => Future.error(error.toString()));
 
@@ -135,7 +135,7 @@ class FireStoreService {
       return event.docs
           .map(
             (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
-          )
+      )
           .toList();
     });
   }
@@ -148,7 +148,7 @@ class FireStoreService {
         .get()
         .then(
           (value) => ReceiptModel.fromDocumentSnapshot(documentSnapshot: value),
-        )
+    )
         .onError((error, stackTrace) {
       AppSnackBar.errorSnackbar(
         title: 'Error',
@@ -175,9 +175,7 @@ class FireStoreService {
     });
   }
 
-  static Stream<List<GroupModel>> getAllGroupsThatUserIsPartOf(
-    String userId,
-  ) {
+  static Stream<List<GroupModel>> getAllGroupsThatUserIsPartOf(String userId,) {
     try {
       return groupsCollection
           .where('members', arrayContains: userId)
@@ -186,7 +184,7 @@ class FireStoreService {
         return event.docs
             .map(
               (e) => GroupModel.fromDocumentSnapshot(e),
-            )
+        )
             .toList();
       });
     } on Exception catch (e) {
@@ -349,7 +347,7 @@ static Future<void> updateTransaction({
       final docs = value.docs
           .map(
             (e) => TransactionModel.fromDocumentSnapshot(documentSnapshot: e),
-          )
+      )
           .toList();
       debugPrint('docs length of search query ${docs.length}');
       return docs;
@@ -411,6 +409,9 @@ static Future<void> updateTransaction({
     return goal;
   }
 
+  Future<void> addDebtorsToGroupSpending(String spendingId,
+      String groupId,
+      List<DebtorsModel> debtors,) async {
 
   static Future<void> reportBug({
     required String userId,
@@ -479,7 +480,7 @@ static Future<List<Map<String, dynamic>>> getAllBugReports() async {
 
   Future<void> addGroupSpending(GroupSpendingModel spending) async {
     final spendingCollection =
-        groupsCollection.doc(spending.groupID).collection('spendings');
+    groupsCollection.doc(spending.groupID).collection('spendings');
     await spendingCollection.add(spending.toMap()).then((value) async {
       value.update({'id': value.id});
       await addDebtorsToGroupSpending(
@@ -509,7 +510,7 @@ static Future<List<Map<String, dynamic>>> getAllBugReports() async {
         return event.docs
             .map(
               (e) => GroupSpendingModel.fromDocumentSnapshot(e),
-            )
+        )
             .toList();
       });
     } on Exception catch (e) {
@@ -521,5 +522,20 @@ static Future<List<Map<String, dynamic>>> getAllBugReports() async {
       return const Stream.empty();
     }
   }
+  static Future<void> deleteGroup(String groupID) async {
+    try {
+      await fireStore.collection('groups').doc(groupID).delete();
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+
+
+
+  }
+
+
+
 
 }

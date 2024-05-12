@@ -111,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: Get.height * .03),
                   Obx(
-                    () => Button(
+                    () => BlackButton(
                       text: 'Login',
                       onPressed: () {
                         if (formKey.currentState!.validate()) {

@@ -174,7 +174,9 @@ class _AddBudgetState extends State<AddBudget> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Colors.green,
+
+                        color: const Color(0xff098670),
+
                       ),
                       width: 150,
                       height: 50,

@@ -144,7 +144,7 @@ class SignUpPage extends StatelessWidget {
                 ),
                 SizedBox(height: Get.height * .05),
                 Obx(
-                  () => Button(
+                  () => BlackButton(
                     text: 'Sign Up',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
