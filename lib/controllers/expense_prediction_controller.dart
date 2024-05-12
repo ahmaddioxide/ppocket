@@ -8,21 +8,26 @@ class PredictionController extends GetxController {
 
   Future<void> fetchPrediction() async {
     try {
-      final response = await http.get(
-        Uri.parse('http://127.0.0.3:5000/get_prediction'),
-      );
+      final client = http.Client();
+      final response = await client
+          .get(
+            Uri.parse('http://127.0.0.3:5000/get_prediction'),
+          )
+          .timeout(const Duration(seconds: 5));
+      print("!!Response Code : ${response.statusCode}");
+      print(("!! Response Body ${response.body}"));
+
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         predictionResult.value = result.toString();
       } else {
-
         predictionResult.value = response.statusCode.toString();
       }
+
+      client.close(); // Don't forget to close the client
     } catch (e) {
       predictionResult.value = e.toString();
-      
-        print(e.toString());
-      
+      print(e.toString());
     }
   }
 }
