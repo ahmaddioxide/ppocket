@@ -56,11 +56,7 @@ class MyApp extends StatelessWidget {
       home: FirebaseAuthService.currentUser == null
           ? const LoginScreen()
           : const BottomNav(),
-      // home: const BudgetHome(),
-      // home: const StatScreen(),
-      // home: const BottomNav(),
 
-      // home: const ScanQr(),
     );
   }
 }
