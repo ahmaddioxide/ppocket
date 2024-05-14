@@ -16,9 +16,12 @@ class PredictionScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                predictionController.postExpenseTransactions().then((_) {
-                  predictionController.fetchPrediction();
+              onPressed: () async {
+               await predictionController.postExpenseTransactions().then((_) {
+                  Future.delayed(const Duration(seconds: 1), () {
+                    predictionController.fetchPrediction();
+
+                  });
                 });
               },
               child: Text('Get Prediction'),

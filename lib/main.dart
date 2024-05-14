@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ppocket/services/auth_service.dart';
+import 'package:ppocket/theme/app_colors.dart';
 import 'package:ppocket/views/bottom_navigation/bottom_nav.dart';
 import 'package:ppocket/views/login.dart';
 
@@ -48,6 +49,16 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.primaryColor,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.white),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
         ),
 

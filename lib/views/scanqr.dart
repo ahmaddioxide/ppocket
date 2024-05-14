@@ -118,12 +118,12 @@ class _ScanQrState extends State<ScanQr> {
               SizedBox(
                 height: Get.height * .02,
               ),
-              ButtonGreen(
-                text: 'Scan the QR Code',
-                onPressed: () {
-                  // debugPrint("Scan the QR Please");
-                },
-              ),
+              // ButtonGreen(
+              //   text: 'Scan the QR Code',
+              //   onPressed: () {
+              //     // debugPrint("Scan the QR Please");
+              //   },
+              // ),
             ],
           ),
         ),

@@ -24,14 +24,16 @@ class PredictionController extends GetxController {
             Uri.parse('http://127.0.0.1:5000/get_prediction'),
           )
           .timeout(const Duration(seconds: 5));
-      print("!!Response Code : ${response.statusCode}");
-      print(("!! Response Body ${response.body}"));
+      print('!!Response Code of fetchPrediction Request : ${response.statusCode}');
+      print(('!! Response Body fetchPrediction Request ${response.body}'));
 
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
+        print('Result: $result');
         predictionResult.value = result.toString();
       } else {
-        predictionResult.value = response.statusCode.toString();
+        print('!! Response is not 200 so Response Code : ${response.statusCode}');
+        // predictionResult.value = response.statusCode.toString();
       }
 
       // client.close();
@@ -58,16 +60,18 @@ class PredictionController extends GetxController {
         headers: {'Content-Type': 'application/json'},
       );
 
-      print("Response Code : ${response.statusCode}");
-      print("Response Body ${response.body}");
+      print('Response Code  of Post Request: ${response.statusCode}');
+      print('Response Body of Post Request ${response.body}');
 
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         predictionResult.value = result.toString();
       } else {
-        predictionResult.value = response.statusCode.toString();
+        print('!!Response Code is not 200 so it is: ${response.statusCode}');
+        // predictionResult.value = response.statusCode.toString();
       }
     } catch (e) {
+
       predictionResult.value = e.toString();
       print(e.toString());
     }
